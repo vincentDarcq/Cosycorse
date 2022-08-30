@@ -1,0 +1,9 @@
+<div class="component">
+    <form class="formulaire" (ngSubmit)="login()" #loginForm="ngForm">
+        <input type="text" name="nom" placeholder="identifiant" required [(ngModel)]="nom">
+        <input type="password" name="password" placeholder="mot de passe" required [(ngModel)]="password">
+        <a routerLink="/creation_compte">Pas de compte ? créez un compte</a>
+        <button type="submit" [disabled]="!loginForm.form.valid">Connexion</button>
+        <p *ngIf="error"> {{ error }}</p>
+    </form>
+</div>

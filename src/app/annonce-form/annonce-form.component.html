@@ -1,0 +1,106 @@
+<div class="component">
+    <form (ngSubmit)="submit()" #annonceForm="ngForm">
+      <div class="step" fxLayout="row">
+        <div class="item">
+            Quel type de logement proposez-vous ?
+        </div>
+        <mat-radio-group [(ngModel)]="logement" name="logement" required fxLayoutGap="3%">
+            <mat-radio-button *ngFor="let l of logementsType" value="{{l}}">{{l}}</mat-radio-button>
+            <div class="validator" *ngIf="noLogement">Séléctionnez un type</div>     
+        </mat-radio-group>   
+      </div>
+      <div class="step">
+        <mat-form-field class="item addresse">
+            <div fxLayout="column" fxLayoutGap="5px">
+              <div class="input_addresse" fxLayout="row" fxLayoutGap="5px">
+                <input type="text" matInput [(ngModel)]="addresse" name="addresse" id="addresse" [matAutocomplete]="auto"
+                  class="form-control" placeholder="Entrez l'adresse" />
+                  <span class="searchLocation" (click)="addresseFromGeoApi()">Chercher</span>
+                </div>
+              <div class="validator" *ngIf="mauvaiseAdresse">Cette adresse n'est pas en corse</div>
+              <div class="validator" *ngIf="noSearch">Cliquez sur le bouton Chercher pour vérifier la bonne localisation</div>
+              <div class="validator" *ngIf="noAdresse">L'addresse ne peut pas être vide</div> 
+              <div id="map" leaflet *ngIf="displayMap" (leafletMapReady)="onMapReady($event)"
+                [leafletOptions]="mapOptions"></div>
+            </div>
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let result of searchResults"   
+              [value]="result.address" 
+              (click)="selectAdresse(result)">
+                {{ result.address }}
+              </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div class="step">
+        <div fxLayout="row" fxLayoutGap="10px">
+          <mat-form-field class="item field" fxLayoutGap="20px">
+            <label class="number">Combien de voyageurs ?</label>
+            <input matInput type="number" name="nbVoyageur" [(ngModel)]="nbVoyageur">
+            <div class="validator" *ngIf="noVoyageur">Le nombre doit être > 0</div> 
+          </mat-form-field>
+          <mat-form-field class="field" fxLayoutGap="20px">
+            <label class="number">Combien de lits avez-vous ?</label>
+            <input matInput type="number" name="nbLits" [(ngModel)]="nbLits">
+            <div class="validator" *ngIf="noLits">Le nombre doit être > 0</div> 
+          </mat-form-field>
+          <mat-form-field class="field" fxLayoutGap="20px">
+            <label class="number">Combien de salle de bain ?</label>
+            <input matInput type="number" name="nbSdb" [(ngModel)]="nbSdb">
+            <div class="validator" *ngIf="noSdb">Le nombre doit être > 0</div> 
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="step" fxLayout="row">
+        <div class="item">
+            Equipements de votre logement ?
+        </div>
+        <div>
+            <mat-checkbox *ngFor="let e of equipementsList" value="{{e.element}}" (change)="valueChange(e.element, $event)">
+              <i [ngClass]="e.logo"></i>
+              {{e.element}}</mat-checkbox>
+        </div>        
+        <div>
+          <mat-checkbox *ngFor="let e of equipementsSecuriteList" value="{{e.element}}" (change)="valueChange(e.element, $event)">
+            <i [ngClass]="e.logo"></i>
+            {{e.element}}</mat-checkbox>
+        </div>  
+      </div>
+      <div class="step">
+        <ngx-dropzone (change)="onDropZone($event)">
+          <ngx-dropzone-label>Ajoutez/Deposez des photos</ngx-dropzone-label>
+          <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+            <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+          </ngx-dropzone-preview>
+        </ngx-dropzone>
+      </div>
+      <div class="step" fxLayout="row">
+        <div class="item">
+            Décrivez plus amplement votre logement :
+        </div>
+        <div>
+          <textarea
+                type="text"
+                placeholder="Description"
+                [(ngModel)]="description"
+                name="description"
+                id="description"
+                rows="4"
+            ></textarea>
+        </div>        
+      </div>
+      <div class="step">
+        <div fxLayout="row" fxLayoutGap="10px">
+          <mat-form-field class="item field" fxLayoutGap="20px">
+            <label class="number">Prix à la nuit ?</label>
+            <div fxLayout="row">
+              <input matInput type="number" name="prix" [(ngModel)]="prix">
+              <span>€</span>
+            </div>
+            <div class="validator" *ngIf="noPrix">Le nombre doit être > 0</div> 
+          </mat-form-field>
+        </div>
+      </div>
+      <button class="submit" type="submit">Créer l'annonce</button>
+    </form>
+</div>

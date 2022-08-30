@@ -1,0 +1,30 @@
+<div class="header d-flex">
+    <img class="p-1" src="../../assets/cosycorse.png" alt="logo" routerLink="/">
+    <h2 class="p-1 m-3">COSYCORSE</h2>
+    <div class="p-1 m-3 link" routerLink="/logements">
+        <i class="fas fa-home fa-2x"></i><button>Logements</button>
+    </div>
+    <div class="p-1 m-3 link" routerLink="/activites">
+        <i class="fas fa-hiking fa-2x"></i><button>Activités</button>
+    </div>
+    <div class="p-1 m-3 link" routerLink="/lieux">
+        <i class="fas fa-map-marker fa-2x"></i><button>Lieux</button>
+    </div>
+    <div class="ms-auto p-1 m-3 link" *ngIf="!user.name" routerLink="/connexion">
+        <i class="fas fa-user fa-2x"></i><button>Connexion</button>
+    </div>
+    <div class="ms-auto p-1 m-3" *ngIf="user.name">
+        <i class="fas fa-user fa-2x"></i>{{ user.name }}
+    </div>
+    <i class="p-3 m-3 fas fa-dot-circle" *ngIf="user.name" (click)="displayList()"></i>
+    <div *ngIf="list" class="select-bars">
+        <div class="popup">
+            <div>
+                <div class="link popup-item" (click)="displayList()" routerLink="/creation_annonce">Ajouter une annonce</div>
+                <div class="link popup-item" (click)="displayList()" routerLink="/mon_compte">Voir mes annonces</div>
+                <div class="link popup-item" (click)="logOut()">Deconnexion</div>
+            </div>
+            <a class="fas fa-times" (click)="displayList()"></a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,66 @@
+.header {
+    border-bottom: solid 1px gray; 
+}
+
+img{
+    height: 90px;
+    width: 60px;
+}
+
+h2{
+    background: -webkit-linear-gradient(rgb(255, 255, 255), rgb(0, 0, 0));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: 'Calibri', sans-serif;
+    padding-top: 1%;
+    padding-left: 1%;
+}
+
+button{
+    height: 3rem;
+    border: none;
+    background-color: transparent;
+    font-size:larger;
+}
+
+.link:hover{
+    border-radius: 10%;
+    background-color: rgb(233, 230, 230);
+    cursor: pointer;
+}
+
+.fas{
+    margin-right: 8px;
+}
+
+.ml-auto{
+    margin-left: auto;
+}
+
+.popup{
+    display: flex;
+    flex-direction: row;
+}
+
+.select-bars{
+    display: block;
+    padding: 10px;
+    position: absolute;
+    background: white;
+    height: 25%;
+    width: 10%;
+    top: 5px;
+    right: 15px;
+    z-index:999;
+    border: solid 1px rgba(41, 41, 41, 0.988);
+    border-radius: 5px;
+}
+
+.fa-times {
+    text-decoration: none;
+    color: black;
+}
+
+.popup-item{
+    margin-bottom: 10%;
+}
