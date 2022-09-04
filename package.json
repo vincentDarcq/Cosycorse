@@ -1,6 +1,9 @@
 {
   "name": "cosycorse",
   "version": "0.0.0",
+  "overrides": {
+    "autoprefixer": "10.4.5"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
@@ -28,6 +31,7 @@
     "bootstrap": "^5.2.0",
     "leaflet": "^1.7.1",
     "ngx-dropzone": "^3.1.0",
+    "ngx-gallery": "^5.10.0",
     "ngx-material-timepicker": "^5.5.3",
     "rxjs": "~6.6.0",
     "sweetalert2": "^11.4.29",

@@ -20,6 +20,11 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "leaflet",
+              "sweetalert2",
+              "luxon"
+            ],
             "outputPath": "../cosycorseNode/public",
             "index": "src/index.html",
             "main": "src/main.ts",

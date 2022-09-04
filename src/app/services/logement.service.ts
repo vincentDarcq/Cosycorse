@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Logement } from '../models/logement';
 
 @Injectable({
@@ -8,7 +8,12 @@ import { Logement } from '../models/logement';
 })
 export class LogementService {
 
-  constructor(private http: HttpClient) { }
+  public logementsRandom!: BehaviorSubject<Array<Logement>>;
+
+  constructor(private http: HttpClient) {
+    this.logementsRandom = new BehaviorSubject(Array<Logement>());
+    this.getRecentsLogement();
+  }
 
   public createLogement(logement: Logement): Observable<Logement>{
     return this.http.post<Logement>(`/api/logements/create`, logement);
@@ -52,6 +57,15 @@ export class LogementService {
       params: {
         annonceur: annonceur
       }
+    });
+  }
+
+  public getRecentsLogement(){
+    return this.http.get<Array<Logement>>(`/api/logements/getRandom`).subscribe( (logements: Array<Logement>) => {
+      logements.forEach(l => {
+        l.indexImage = 0;
+      })
+      this.logementsRandom?.next(logements);
     });
   }
 }

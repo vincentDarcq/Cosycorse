@@ -11,5 +11,6 @@ export const Equipements = [
     {element: 'Climatisation', logo: 'fas fa-solid fa-snowflake'},
     {element: 'Parking gratuit', logo: 'fas fa-parking'},
     {element: 'Voiture', logo: 'fas fa-car'},
-    {element: 'Vélo', logo: 'fas fa-solid fa-bicycle'}
+    {element: 'Vélo', logo: 'fas fa-solid fa-bicycle'},
+    {element: 'Linge de Maison', logo: 'fas fa-solid fa-bed'}
 ]

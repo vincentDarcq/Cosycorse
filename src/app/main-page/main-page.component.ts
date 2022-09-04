@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, style, animate, transition, state } from '@angular/animations';
+import { LogementService } from '../services/logement.service';
 
 @Component({
   selector: 'app-main-page',
@@ -19,6 +20,12 @@ import { trigger, style, animate, transition, state } from '@angular/animations'
   ]
 })
 export class MainPageComponent implements OnInit {
+
+  constructor(
+    private logementService: LogementService
+  ){
+
+  }
   ngOnInit(): void {
 
   }

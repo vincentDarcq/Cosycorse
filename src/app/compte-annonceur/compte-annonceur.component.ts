@@ -38,14 +38,6 @@ export class CompteAnnonceurComponent implements OnInit, OnDestroy {
       this.user = new User(user?._id, user?.email, user?.name);
       this.subLogements = this.logementService.getLogementsByAnnonceur(this.user.name).subscribe( (logements: Array<Logement>) => {
         logements.forEach( (logement: Logement) => {
-          logement.gallery = new Array();
-          logement.images?.forEach( image => {
-            logement.gallery.push({
-              small: "",
-              medium: this.serverImg+image,
-              big: this.serverImg+image
-            });
-          })
           const indexImages = typeof logement.images === "undefined" ? 0 : logement.images.length;
           this.modifyLogement.push(
             new ModifyLogement(logement, indexImages, new Array())

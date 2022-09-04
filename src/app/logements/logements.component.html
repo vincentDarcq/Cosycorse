@@ -1,1 +1,23 @@
-<p>logements works!</p>
+<div class="component">
+    <div class="search" fxLayout="row">
+        <input type="text" id="villeSearch" placeholder="ville" [(ngModel)]="villeSearch">
+        <input type="number" id="nbVoyageurs" placeholder="nombre de voyageurs" [(ngModel)]="nbVoyageurs">
+        <input type="number" id="nbLits" placeholder="nombre de Lits" [(ngModel)]="nbLits">
+    </div>
+    <div class="logements">
+        <div class="randomPropositions">
+            <div class="photo" *ngFor="let logement of logementsRandom; let indexLogement = index"
+            [ngStyle]="{'background-image': 'url(' + serverImg + (logement.images && logement.images[logement.indexImage]) + ')'}">
+            <div class="arrow-right" (click)="selectArrow(indexLogement, logement.indexImage)"></div>
+            <div class="arrow-left" (click)="selectLeftArrow(indexLogement, logement.indexImage)"></div>
+                <div class="details" fxLayout="column">
+                    <span>{{ logement.description }}</span>
+                    <span>{{ logement.logement }} | {{ logement.ville }}</span>
+                    <span>{{ logement.prix }}€/nuit</span>
+                </div>
+            </div>
+        </div>
+        <div id="map" leaflet *ngIf="displayMap" (leafletMapReady)="onMapReady($event)"
+                [leafletOptions]="mapOptions"></div>
+    </div>
+</div>

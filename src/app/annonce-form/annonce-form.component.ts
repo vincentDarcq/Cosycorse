@@ -2,6 +2,7 @@ import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { GeoResponse } from '../models/geo-response.model';
 import { LogementsType } from '../models/logement-type';
 import { Equipements } from '../models/equipements';
+import { Villes } from '../models/villes';
 import { EquipementsSecurite } from '../models/equipementsSecurite';
 import { GeoService } from '../services/geo.service';
 import { Map, marker, MapOptions, tileLayer, latLng } from 'leaflet';
@@ -26,15 +27,21 @@ export class AnnonceFormComponent implements OnInit, OnDestroy {
   public user!: User;
   formData = new FormData();
   logementsType = LogementsType;
+  villes = Villes;
+  villeAutoComplete = Villes;
   equipementsList = Equipements;
   equipementsSecuriteList = EquipementsSecurite;
   logement: string = "";
   addresse: string = "";
+  ville: string = "";
   description: string = "";
   nbVoyageur!: number;
   nbLits!: number;
   nbSdb!: number;
   prix!: number;
+  fumeur: boolean = false;
+  animaux: boolean = false;
+  access_handicap: boolean = false;
   equipements: string[] = new Array<string>();
   latAdresse!: number;
   longAdresse!: number;
@@ -53,6 +60,7 @@ export class AnnonceFormComponent implements OnInit, OnDestroy {
   noSdb: boolean = false;
   noVoyageur: boolean = false;
   noPrix: boolean = false;
+  noVille: boolean = false;
 
   constructor(
     private geoService: GeoService,
@@ -80,11 +88,12 @@ export class AnnonceFormComponent implements OnInit, OnDestroy {
     });
   }
 
-  // enter(event: KeyboardEvent){
-  //   if (event.code === "Enter" || event.code === "NumpadEnter") {
-  //     this.addresseFromGeoApi();
-  //   }
-  // }
+  affineVille(){
+    this.villeAutoComplete = this.villes.filter(v => v.toLowerCase().indexOf(this.ville.toLowerCase()) !== -1)
+    if(this.ville.length === 0){
+      this.villeAutoComplete = this.villes;
+    }
+  }
 
   public onMapReady(map: Map) {
     this.map = map;
@@ -96,7 +105,7 @@ export class AnnonceFormComponent implements OnInit, OnDestroy {
         console.log("You clicked the map at latitude: " + lat + " and longitude: " + lng);
       })
     })
-    this.newPoint(this.latAdresse, this.longAdresse);
+    this.mapPoint = this.mapService.newPoint(this.latAdresse, this.longAdresse);
     const point = this.mapService.createPoint(this.mapPoint)
     this.lastLayer = marker(point).setIcon(this.mapService.getRedIcon()).addTo(this.map);
   }
@@ -119,33 +128,16 @@ export class AnnonceFormComponent implements OnInit, OnDestroy {
   }
 
   private initializeMap() {
-    this.mapOptions = {
-      center: latLng(this.latAdresse, this.longAdresse),
-      zoom: 15,
-      layers: [
-        tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          maxZoom: 18,
-          attribution: 'Map data © OpenStreetMap contributors',
-        }),
-      ],
-    };
+    this.mapOptions = this.mapService.getMapOptions(15, 18, this.latAdresse, this.longAdresse);
     this.displayMap = true;
   }
 
   private updateMap() {
     if (this.map && this.map.hasLayer(this.lastLayer)) {
       this.map.removeLayer(this.lastLayer);
-      this.newPoint(this.latAdresse, this.longAdresse);
+      this.mapPoint = this.mapService.newPoint(this.latAdresse, this.longAdresse);
       this.createMarker();
     }
-  }
-
-  private newPoint(latitude: number, longitude: number, address?: string) {
-    this.mapPoint = {
-      latitude: latitude,
-      longitude: longitude,
-      address: ""
-    };
   }
 
   private createMarker() {
@@ -181,27 +173,34 @@ export class AnnonceFormComponent implements OnInit, OnDestroy {
   }
 
   submit(){
-    this.validation();
-    const createLogement = new Logement(this.addresse, this.description, this.logement, this.nbVoyageur,
-      this.nbLits, this.nbSdb, this.latAdresse, this.longAdresse, this.user.name, this.prix, this.equipements);
-    this.logementService.createLogement(createLogement).subscribe( (log: Logement) => {
-      this.logementService.uploadPhotos(this.formData, log._id ).subscribe( (l: Logement) => {
-        console.log(l)
-        this.router.navigate(['/']);
+    if(this.valid()){
+      const createLogement = new Logement(
+        this.addresse, this.ville, this.description, this.logement, this.nbVoyageur,
+        this.nbLits, this.nbSdb, this.latAdresse, this.longAdresse, this.user.name,
+        this.prix, this.equipements, this.fumeur, this.animaux, this.access_handicap);
+      this.logementService.createLogement(createLogement).subscribe( (log: Logement) => {
+        this.logementService.uploadPhotos(this.formData, log._id ).subscribe( (l: Logement) => {
+          this.router.navigate(['/']);
+        })
       })
-    })
+    }
   }
   
-  validation(){
+  valid(){
+    if(this.ville.length === 0){
+      this.noVille = true;
+    }else {
+      this.noVille = false;
+    }
     if(typeof this.latAdresse === "undefined"){
       this.noSearch = true;
     }
-    if(this.addresse.length == 0){
+    if(this.addresse.length === 0){
       this.noAdresse = true;
     }else {
       this.noAdresse = false;
     }
-    if(this.logement.length == 0){
+    if(this.logement.length === 0){
       this.noLogement = true;
     }else {
       this.noLogement = false;
@@ -226,9 +225,10 @@ export class AnnonceFormComponent implements OnInit, OnDestroy {
     }else {
       this.noPrix = false;
     }
-    if(this.noAdresse || this.noLogement || this.noLits || this.noSdb || this.noVoyageur){
-      return;
+    if(this.noAdresse || this.noLogement || this.noLits || this.noSdb || this.noVoyageur || this.noVille){
+      return false;
     }
+    return true;
   }
 
   ngOnDestroy(): void {

@@ -14,8 +14,14 @@
     margin: 0 10% 5% 0;
 }
 
+.ville{
+    border-radius: 5px;
+    margin: 2% 5% 0 0;
+}
+
 mat-radio-group{
     width: 100% !important;
+    margin-top: 20px;
 }
 
 .step, ngx-dropzone{
@@ -66,4 +72,8 @@ mat-checkbox{
 
 textarea{
     width: 100vh;
+}
+
+#prix{
+    width: 50px;
 }

@@ -7,7 +7,17 @@
         <mat-radio-group [(ngModel)]="logement" name="logement" required fxLayoutGap="3%">
             <mat-radio-button *ngFor="let l of logementsType" value="{{l}}">{{l}}</mat-radio-button>
             <div class="validator" *ngIf="noLogement">Séléctionnez un type</div>     
-        </mat-radio-group>   
+        </mat-radio-group>
+        <div class="ville" fxLayout="column">
+          <input type="text" name="ville" required placeholder="ville" (keyup)="affineVille()" [(ngModel)]="ville" [matAutocomplete]="villescomplete">
+          <mat-autocomplete #villescomplete="matAutocomplete">
+            <mat-option *ngFor="let ville of villeAutoComplete"   
+            [value]="ville">
+              {{ ville }}
+            </mat-option>
+          </mat-autocomplete>
+          <div class="validator" *ngIf="noVille">Indiquez la ville</div> 
+        </div>
       </div>
       <div class="step">
         <mat-form-field class="item addresse">
@@ -91,10 +101,22 @@
       </div>
       <div class="step">
         <div fxLayout="row" fxLayoutGap="10px">
+          <mat-radio-group [(ngModel)]="fumeur" name="fumeur" required fxLayoutGap="3%">
+            <mat-radio-button value="true">fumeur autorisé</mat-radio-button>
+            <mat-radio-button value="false">non fumeur</mat-radio-button>
+          </mat-radio-group>
+          <mat-radio-group [(ngModel)]="animaux" name="animaux" required fxLayoutGap="3%">
+            <mat-radio-button value="true">animaux autorisés</mat-radio-button>
+            <mat-radio-button value="false">animaux non autorisés</mat-radio-button>
+          </mat-radio-group>
+          <mat-radio-group [(ngModel)]="access_handicap" name="access_handicap" required fxLayoutGap="3%">
+            <mat-radio-button value="true">accessibilité handicapé</mat-radio-button>
+            <mat-radio-button value="false">pas d'accès handicapé</mat-radio-button>
+          </mat-radio-group>
           <mat-form-field class="item field" fxLayoutGap="20px">
             <label class="number">Prix à la nuit ?</label>
             <div fxLayout="row">
-              <input matInput type="number" name="prix" [(ngModel)]="prix">
+              <input matInput type="number" id="prix" name="prix" [(ngModel)]="prix">
               <span>€</span>
             </div>
             <div class="validator" *ngIf="noPrix">Le nombre doit être > 0</div> 
