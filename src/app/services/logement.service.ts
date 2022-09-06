@@ -2,17 +2,23 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Logement } from '../models/logement';
+import { Villes } from '../models/villes';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LogementService {
 
+  villes = Villes;
+
   public logementsRandom!: BehaviorSubject<Array<Logement>>;
 
   constructor(private http: HttpClient) {
     this.logementsRandom = new BehaviorSubject(Array<Logement>());
-    this.getRecentsLogement();
+    this.villes.forEach(ville => {
+      this.getRecentsLogementForVille(ville);
+    })
+    //this.getRecentsLogement();
   }
 
   public createLogement(logement: Logement): Observable<Logement>{
@@ -66,6 +72,21 @@ export class LogementService {
         l.indexImage = 0;
       })
       this.logementsRandom?.next(logements);
+    });
+  }
+
+  public getRecentsLogementForVille(ville: string){
+    return this.http.get<Logement>(`/api/logements/getRandomForVille`, {
+      params: {
+        ville: ville
+      }
+    }).subscribe( (logement: Logement) => {
+        if(logement !== null){
+          logement.indexImage = 0;
+          let logements = this.logementsRandom.value;
+          logements.push(logement);
+          this.logementsRandom.next(logements);
+        }
     });
   }
 }

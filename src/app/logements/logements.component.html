@@ -8,13 +8,13 @@
         <div class="randomPropositions">
             <div class="photo" *ngFor="let logement of logementsRandom; let indexLogement = index"
             [ngStyle]="{'background-image': 'url(' + serverImg + (logement.images && logement.images[logement.indexImage]) + ')'}">
-            <div class="arrow-right" (click)="selectArrow(indexLogement, logement.indexImage)"></div>
-            <div class="arrow-left" (click)="selectLeftArrow(indexLogement, logement.indexImage)"></div>
-                <div class="details" fxLayout="column">
-                    <span>{{ logement.description }}</span>
-                    <span>{{ logement.logement }} | {{ logement.ville }}</span>
-                    <span>{{ logement.prix }}€/nuit</span>
-                </div>
+                <div class="arrow-right" (click)="selectArrow(indexLogement, logement.indexImage)"></div>
+                <div class="arrow-left" (click)="selectLeftArrow(indexLogement, logement.indexImage)"></div>
+                    <div class="details" fxLayout="column">
+                        <span>{{ logement.description }}</span>
+                        <span>{{ logement.logement }} | {{ logement.ville }}</span>
+                        <span>{{ logement.prix }}€/nuit</span>
+                    </div>
             </div>
         </div>
         <div id="map" leaflet *ngIf="displayMap" (leafletMapReady)="onMapReady($event)"

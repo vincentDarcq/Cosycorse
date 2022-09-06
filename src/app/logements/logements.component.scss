@@ -22,13 +22,29 @@
 }
 
 .photo {
+    float: none;
+    clear: none;
+    border-style: none;
+    border-width: 1px;
+    border-color: rgba(7, 0, 0, 0.98);
+    border-radius: 20px;
+    box-shadow: inset -2px -2px 5px 0 #000;
+    -webkit-backface-visibility: visible;
+    backface-visibility: visible;
+    -webkit-perspective: 824px;
+    perspective: 824px;
+    -webkit-transform: perspective(216px);
+    transform: perspective(216px);
+    font-weight: 400;
+    background-clip: padding-box;
     width: 40vh;
     height: 25vh;
     margin: 1%;
     background-repeat: no-repeat;
     background-size: 100%;
 }
-#map {
+#map {    
+    border-radius: 20px;
     width: 50vh;
     height: 75vh;
 }
@@ -43,7 +59,7 @@
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
     
-    border-left: 20px solid #000;
+    border-left: 20px solid rgb(255, 255, 255);
     left: 250px;
     position: relative;
     top: 90px;
@@ -57,7 +73,7 @@
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent; 
     
-    border-right: 20px solid #000; 
+    border-right: 20px solid rgb(255, 255, 255); 
     position: relative;
     left: 10px;
     top: 70px;
