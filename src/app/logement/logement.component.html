@@ -1,9 +1,5 @@
-<mdb-carousel *ngIf="logement" [isControls]="true" class="carousel slide" [animation]="'slide'">
-  <mdb-carousel-item *ngFor="let image of logement?.images">
-    <div class="view w-20">
-      <img class="d-block w-20" [src]="serverImg+image"
-           alt="slide">
-      <div class="mask rgba-black-light waves-light" mdbWavesEffect></div>
-    </div>
-  </mdb-carousel-item>
-</mdb-carousel>
+<div class="gallery-wrapper" *ngIf="(logement && logement.galleryImages)">
+  <ngx-gallery 
+  [options]="galleryOptions"
+  [images]="logement.galleryImages" class="ngx-gallery"></ngx-gallery>
+</div>

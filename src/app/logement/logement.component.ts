@@ -1,6 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NgxGalleryOptions } from '@kolkov/ngx-gallery';
 import { Subscription } from 'rxjs';
+import { galleryImage } from '../models/galleryImage';
+import { galleryOptions } from '../models/galleryOptons';
 import { Logement } from '../models/logement';
 import { LogementService } from '../services/logement.service';
 
@@ -16,6 +19,7 @@ export class LogementComponent implements OnInit, OnDestroy {
   public subLogements?: Subscription;
   id?: string | null;
   serverImg: String = "/upload?img=";
+  galleryOptions: NgxGalleryOptions[] = galleryOptions;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -30,6 +34,10 @@ export class LogementComponent implements OnInit, OnDestroy {
       this.subLogements = this.logementService.logementsRandom.subscribe( (logements:Array<Logement>) => {
         if(logements.length > 0){
           this.logement = this.logementService.getLogementById(this.id!);
+          this.logement!.galleryImages = [];
+          this.logement?.images?.forEach( image => {
+            this.logement?.galleryImages?.push(new galleryImage(this.serverImg+image, this.serverImg+image, this.serverImg+image))
+          })
         }
       });
     });

@@ -1,3 +1,5 @@
+import { NgxGalleryImage } from "@kolkov/ngx-gallery";
+
 export class Logement {
     _id!: string;
     addresse!: string;
@@ -17,6 +19,7 @@ export class Logement {
     animaux?: boolean;
     access_handicap?: boolean;
     indexImage: number = 0;
+    galleryImages?: NgxGalleryImage[];
 
     constructor(
         addresse: string,

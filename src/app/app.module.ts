@@ -15,7 +15,6 @@ import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -55,8 +54,7 @@ import { LogementComponent } from './logement/logement.component';
     LeafletModule,
     NgxDropzoneModule,
     ReactiveFormsModule,
-    NgxGalleryModule,
-    MdbCheckboxModule
+    NgxGalleryModule
   ],
   providers: [
     {
