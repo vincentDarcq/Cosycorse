@@ -1,5 +1,5 @@
 <div class="component">
-    <form (ngSubmit)="submit()" #annonceForm="ngForm">
+    <form (keydown.enter)="$event.preventDefault()" (ngSubmit)="submit()" #annonceForm="ngForm">
       <div class="step" fxLayout="row">
         <div class="item">
             Quel type de logement proposez-vous ?
@@ -24,7 +24,7 @@
             <div fxLayout="column" fxLayoutGap="5px">
               <div class="input_addresse" fxLayout="row" fxLayoutGap="5px">
                 <input type="text" matInput [(ngModel)]="addresse" name="addresse" id="addresse" [matAutocomplete]="auto"
-                  class="form-control" placeholder="Entrez l'adresse" />
+                  class="form-control" placeholder="Entrez l'adresse" (keyup)="enter($event)"/>
                   <span class="searchLocation" (click)="addresseFromGeoApi()">Chercher</span>
                 </div>
               <div class="validator" *ngIf="mauvaiseAdresse">Cette adresse n'est pas en corse</div>

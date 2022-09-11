@@ -1,8 +1,21 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LoginComponent } from './login/login.component';
+
+//Material
+import { AngularMaterialModule } from './material/angular-material.module';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+
+import { NgxGalleryModule } from '@kolkov/ngx-gallery';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,22 +24,10 @@ import { LogementsComponent } from './logements/logements.component';
 import { ActivitesComponent } from './activites/activites.component';
 import { LieuxComponent } from './lieux/lieux.component';
 import { MainPageComponent } from './main-page/main-page.component';
-
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginComponent } from './login/login.component';
+import { CompteAnnonceurComponent } from './compte-annonceur/compte-annonceur.component';
 import { SignupComponent } from './signup/signup.component';
 import { AnnonceFormComponent } from './annonce-form/annonce-form.component';
-
-//Material
-import { AngularMaterialModule } from './material/angular-material.module';
-import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
-
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-import { NgxDropzoneModule } from 'ngx-dropzone';
-import { CompteAnnonceurComponent } from './compte-annonceur/compte-annonceur.component';
-
-import { NgxGalleryModule } from '@kolkov/ngx-gallery';
+import { LogementComponent } from './logement/logement.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { NgxGalleryModule } from '@kolkov/ngx-gallery';
     LoginComponent,
     SignupComponent,
     AnnonceFormComponent,
-    CompteAnnonceurComponent
+    CompteAnnonceurComponent,
+    LogementComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +55,8 @@ import { NgxGalleryModule } from '@kolkov/ngx-gallery';
     LeafletModule,
     NgxDropzoneModule,
     ReactiveFormsModule,
-    NgxGalleryModule
+    NgxGalleryModule,
+    MdbCheckboxModule
   ],
   providers: [
     {
@@ -63,6 +66,7 @@ import { NgxGalleryModule } from '@kolkov/ngx-gallery';
       multi: true
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class AppModule { }

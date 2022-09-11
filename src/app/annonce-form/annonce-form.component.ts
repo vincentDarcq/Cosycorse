@@ -88,6 +88,12 @@ export class AnnonceFormComponent implements OnInit, OnDestroy {
     });
   }
 
+  enter(event: KeyboardEvent) {
+    if (event.code === "Enter" || event.code === "NumpadEnter") {
+      this.addresseFromGeoApi();
+    }
+  }
+
   affineVille(){
     this.villeAutoComplete = this.villes.filter(v => v.toLowerCase().indexOf(this.ville.toLowerCase()) !== -1)
     if(this.ville.length === 0){

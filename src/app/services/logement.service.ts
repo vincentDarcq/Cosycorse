@@ -25,6 +25,10 @@ export class LogementService {
     return this.http.post<Logement>(`/api/logements/create`, logement);
   }
 
+  public getLogementById(logementId?: string): Logement | undefined{
+    return this.logementsRandom.value.find(l => l._id === logementId);
+  }
+
   public deleteLogement(logementId: string){
     return this.http.get<Logement>(`/api/logements/delete`, {
       params: {

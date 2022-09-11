@@ -1,8 +1,5 @@
 .component{
-    // width: 100%;
-    // height: 100%;
-    // position: fixed;
-    background-color: rgb(223, 222, 222);
+    background-color: rgb(243, 243, 243);
 }
 
 #villeSearch, #nbVoyageurs, #nbLits{
@@ -21,11 +18,15 @@
     flex-wrap: wrap;
 }
 
-.photo {
+.logement {
+    margin: 1%;
+}
+
+.button-effect{
     float: none;
     clear: none;
     border-style: none;
-    border-width: 1px;
+    border-width: 2px;
     border-color: rgba(7, 0, 0, 0.98);
     border-radius: 20px;
     box-shadow: inset -2px -2px 5px 0 #000;
@@ -35,13 +36,16 @@
     perspective: 824px;
     -webkit-transform: perspective(216px);
     transform: perspective(216px);
-    font-weight: 400;
     background-clip: padding-box;
+
+}
+
+img{
+    padding: 3px;
+    border-radius: 20px;
     width: 40vh;
     height: 25vh;
-    margin: 1%;
-    background-repeat: no-repeat;
-    background-size: 100%;
+
 }
 #map {    
     border-radius: 20px;
@@ -50,7 +54,7 @@
 }
 
 .details{
-    margin-top: 19vh;
+    padding: 5%;
 }
 
 .arrow-right {
@@ -62,7 +66,7 @@
     border-left: 20px solid rgb(255, 255, 255);
     left: 250px;
     position: relative;
-    top: 90px;
+    bottom: 80px;
     cursor: pointer;
     opacity: 1;
   }
@@ -76,7 +80,7 @@
     border-right: 20px solid rgb(255, 255, 255); 
     position: relative;
     left: 10px;
-    top: 70px;
+    bottom: 100px;
     cursor: pointer;
     opacity: 1;
   }

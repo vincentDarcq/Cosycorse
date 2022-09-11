@@ -4,6 +4,7 @@ import { ActivitesComponent } from './activites/activites.component';
 import { AnnonceFormComponent } from './annonce-form/annonce-form.component';
 import { CompteAnnonceurComponent } from './compte-annonceur/compte-annonceur.component';
 import { LieuxComponent } from './lieux/lieux.component';
+import { LogementComponent } from './logement/logement.component';
 import { LogementsComponent } from './logements/logements.component';
 import { LoginComponent } from './login/login.component';
 import { MainPageComponent } from './main-page/main-page.component';
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'creation_compte', component: SignupComponent},
   { path: 'creation_annonce', component: AnnonceFormComponent},
   { path: 'mon_compte', component: CompteAnnonceurComponent},
+  { path: 'logement/:id', component: LogementComponent},
   { path: '', component: MainPageComponent }
 ];
 

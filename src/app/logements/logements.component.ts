@@ -4,6 +4,7 @@ import { Logement } from '../models/logement';
 import { LogementService } from '../services/logement.service';
 import { Map, MapOptions, latLng, tileLayer, marker, Layer } from 'leaflet';
 import { MapService } from '../services/map.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-logements',
@@ -26,7 +27,8 @@ export class LogementsComponent implements OnInit {
     
   constructor(
     private logementService: LogementService,
-    private mapService: MapService
+    private mapService: MapService,
+    private router: Router
   ) { 
     
   }
@@ -85,6 +87,13 @@ export class LogementsComponent implements OnInit {
     if (index > 0) {
       this.logementsRandom[indexLogement].indexImage--;
     }
+  }
+
+  openLogementInNewWindow(id: string) {
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree(["/logement", id])
+    );
+    window.open(url);
   }
 
 }
