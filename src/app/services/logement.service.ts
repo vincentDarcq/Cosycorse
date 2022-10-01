@@ -18,18 +18,25 @@ export class LogementService {
     this.villes.forEach(ville => {
       this.getRecentsLogementForVille(ville);
     })
-    //this.getRecentsLogement();
   }
 
-  public createLogement(logement: Logement): Observable<Logement>{
+  public createLogement(logement: Logement): Observable<Logement> {
     return this.http.post<Logement>(`/api/logements/create`, logement);
   }
 
-  public getLogementById(logementId?: string): Logement | undefined{
+  public getLogementById(logementId: string): Logement | undefined {
     return this.logementsRandom.value.find(l => l._id === logementId);
   }
 
-  public deleteLogement(logementId: string){
+  public fetchLogementById(logementId: string) {
+    return this.http.get<Logement>(`/api/logements/getLogementById`, {
+      params: {
+        logementId: logementId
+      }
+    })
+  }
+
+  public deleteLogement(logementId: string) {
     return this.http.get<Logement>(`/api/logements/delete`, {
       params: {
         logementId: logementId
@@ -37,7 +44,7 @@ export class LogementService {
     });
   }
 
-  public updateLogement(logement: Logement){
+  public updateLogement(logement: Logement) {
     return this.http.post<Logement>(`/api/logements/update`, logement, {
       params: {
         logementId: logement._id
@@ -45,7 +52,7 @@ export class LogementService {
     });
   }
 
-  public deleteImage(logementId: string, imageIndex: string){
+  public deleteImage(logementId: string, imageIndex: string) {
     return this.http.get<Logement>(`/api/logements/deleteImage`, {
       params: {
         logementId: logementId,
@@ -54,7 +61,7 @@ export class LogementService {
     });
   }
 
-  public uploadPhotos(photos: FormData, logementId: string){
+  public uploadPhotos(photos: FormData, logementId: string) {
     return this.http.post<Logement>(`/api/logements/uploadImages`, photos, {
       params: {
         logementId: logementId
@@ -62,7 +69,7 @@ export class LogementService {
     });
   }
 
-  public getLogementsByAnnonceur(annonceur: string){
+  public getLogementsByAnnonceur(annonceur: string) {
     return this.http.get<Array<Logement>>(`/api/logements/getByAnnonceur`, {
       params: {
         annonceur: annonceur
@@ -70,8 +77,8 @@ export class LogementService {
     });
   }
 
-  public getRecentsLogement(){
-    return this.http.get<Array<Logement>>(`/api/logements/getRandom`).subscribe( (logements: Array<Logement>) => {
+  public getRecentsLogement() {
+    return this.http.get<Array<Logement>>(`/api/logements/getRandom`).subscribe((logements: Array<Logement>) => {
       logements.forEach(l => {
         l.indexImage = 0;
       })
@@ -79,18 +86,18 @@ export class LogementService {
     });
   }
 
-  public getRecentsLogementForVille(ville: string){
+  public getRecentsLogementForVille(ville: string) {
     return this.http.get<Logement>(`/api/logements/getRandomForVille`, {
       params: {
         ville: ville
       }
-    }).subscribe( (logement: Logement) => {
-        if(logement !== null){
-          logement.indexImage = 0;
-          let logements = this.logementsRandom.value;
-          logements.push(logement);
-          this.logementsRandom.next(logements);
-        }
+    }).subscribe((logement: Logement) => {
+      if (logement !== null) {
+        logement.indexImage = 0;
+        let logements = this.logementsRandom.value;
+        logements.push(logement);
+        this.logementsRandom.next(logements);
+      }
     });
   }
 }

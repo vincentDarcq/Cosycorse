@@ -24,17 +24,17 @@ export class LogementsComponent implements OnInit {
   mapOptions!: MapOptions;
   layers: Array<Layer> = [];
   pagination: any = false;
-    
+
   constructor(
     private logementService: LogementService,
     private mapService: MapService,
     private router: Router
-  ) { 
-    
+  ) {
+
   }
-      
+
   ngOnInit(): void {
-    this.subscription = this.logementService.logementsRandom.subscribe( (logements: Array<Logement>) => {
+    this.subscription = this.logementService.logementsRandom.subscribe((logements: Array<Logement>) => {
       this.logementsRandom = logements;
       this.initializeMap();
     })
@@ -56,34 +56,36 @@ export class LogementsComponent implements OnInit {
 
   public async onMapReady(map: Map) {
     this.map = map;
-    while(this.logementsRandom.length === 0){
+    while (this.logementsRandom.length === 0) {
       await new Promise(f => setTimeout(f, 200));
     }
-    this.logementsRandom.forEach( l => {
+    this.logementsRandom.forEach(l => {
       const coordinates = this.mapService.newPoint(l.latitude, l.longitude);
       const point = this.mapService.createPoint(coordinates)
       const layer = marker(point)
-            .setIcon(this.mapService.getRedIcon())
-            .addTo(this.map)
-            .bindTooltip("<div style='background:white; width: 30px;'><b>" + l.prix.toString()+"€" + "</b></div>", 
-            {
-                direction: 'right',
-                permanent: true,
-                offset: [10, 0],
-                opacity: 0.75,
-                className: 'leaflet-tooltip'
-            });
+        .setIcon(this.mapService.getRedIcon())
+        .addTo(this.map)
+        .bindTooltip("<div style='background:white; width: 30px;'><b>" + l.prix.toString() + "€" + "</b></div>",
+          {
+            direction: 'right',
+            permanent: true,
+            offset: [10, 0],
+            opacity: 0.75,
+            className: 'leaflet-tooltip'
+          });
       this.layers.push(layer);
     })
   }
 
-  selectArrow(indexLogement: number, index: number) {
+  selectArrow(indexLogement: number, index: number, event: any) {
+    event.stopPropagation()
     if (index < (this.logementsRandom[indexLogement].images!.length - 1)) {
       this.logementsRandom[indexLogement].indexImage++;
     }
   }
 
-  selectLeftArrow(indexLogement: number, index: number) {
+  selectLeftArrow(indexLogement: number, index: number, event: any) {
+    event.stopPropagation()
     if (index > 0) {
       this.logementsRandom[indexLogement].indexImage--;
     }

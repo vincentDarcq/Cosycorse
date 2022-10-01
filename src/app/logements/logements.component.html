@@ -6,12 +6,14 @@
     </div>
     <div class="logements">
         <div class="randomPropositions">
-            <div class="logement button-effect" *ngFor="let logement of logementsRandom; let indexLogement = index" 
-            [routerLink]="['/logement', logement._id]"
-            >
-                <img *ngIf="logement && logement.images" [src]="serverImg + logement.images[logement.indexImage]" alt="">
-                <div class="arrow-right" (click)="selectArrow(indexLogement, logement.indexImage)"></div>
-                <div class="arrow-left" (click)="selectLeftArrow(indexLogement, logement.indexImage)"></div>
+            <div class="logement button-effect" *ngFor="let logement of logementsRandom; let indexLogement = index"
+                (click)="openLogementInNewWindow(logement._id)">
+                <img *ngIf="logement && logement.images" [src]="serverImg + logement.images[logement.indexImage]"
+                    alt="">
+                <i class='fas fa-angle-right arrow-right'
+                    (click)="selectArrow(indexLogement, logement.indexImage, $event)"></i>
+                <i class='fas fa-angle-left arrow-left'
+                    (click)="selectLeftArrow(indexLogement, logement.indexImage, $event)"></i>
                 <div class="details" fxLayout="column">
                     <span>{{ logement.description }}</span>
                     <span>{{ logement.logement }} | {{ logement.ville }}</span>
@@ -19,7 +21,7 @@
                 </div>
             </div>
         </div>
-        <div id="map" leaflet *ngIf="displayMap" (leafletMapReady)="onMapReady($event)"
-                [leafletOptions]="mapOptions"></div>
+        <div id="map" leaflet *ngIf="displayMap" (leafletMapReady)="onMapReady($event)" [leafletOptions]="mapOptions">
+        </div>
     </div>
 </div>

@@ -1,9 +1,11 @@
-.component{
+.component {
     background-color: rgb(243, 243, 243);
 }
 
-#villeSearch, #nbVoyageurs, #nbLits{
-    margin:  2% 2%;
+#villeSearch,
+#nbVoyageurs,
+#nbLits {
+    margin: 2% 2%;
     padding-left: 5px;
     border-radius: 5px;
 }
@@ -12,7 +14,8 @@
     display: grid;
     grid-template-columns: 70% 20%;
 }
-.randomPropositions{
+
+.randomPropositions {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -22,69 +25,65 @@
     margin: 1%;
 }
 
-.button-effect{
-    float: none;
-    clear: none;
+.button-effect {
+    // float: none;
+    // clear: none;
     border-style: none;
     border-width: 2px;
     border-color: rgba(7, 0, 0, 0.98);
     border-radius: 20px;
     box-shadow: inset -2px -2px 5px 0 #000;
-    -webkit-backface-visibility: visible;
-    backface-visibility: visible;
-    -webkit-perspective: 824px;
-    perspective: 824px;
-    -webkit-transform: perspective(216px);
-    transform: perspective(216px);
-    background-clip: padding-box;
-
+    // -webkit-backface-visibility: visible;
+    // backface-visibility: visible;
+    // -webkit-perspective: 424px;
+    // perspective: 424px;
+    // -webkit-transform: perspective(216px);
+    // transform: perspective(216px);
+    // background-clip: padding-box;
 }
 
-img{
+img {
     padding: 3px;
     border-radius: 20px;
     width: 40vh;
     height: 25vh;
 
 }
-#map {    
+
+#map {
     border-radius: 20px;
     width: 50vh;
     height: 75vh;
 }
 
-.details{
+.details {
     padding: 5%;
 }
 
+.fas {
+    width: 0;
+    height: 0;
+    font-size: 36px;
+    cursor: pointer;
+    opacity: 1;
+    -webkit-text-fill-color: white;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: black;
+}
+
 .arrow-right {
-    width: 0; 
-    height: 0; 
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    
-    border-left: 20px solid rgb(255, 255, 255);
-    left: 250px;
     position: relative;
-    bottom: 80px;
-    cursor: pointer;
-    opacity: 1;
-  }
-  
-  .arrow-left {
-    width: 0; 
-    height: 0; 
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent; 
-    
-    border-right: 20px solid rgb(255, 255, 255); 
+    left: -15%;
+    bottom: -10%;
+}
+
+.arrow-left {
     position: relative;
-    left: 10px;
-    bottom: 100px;
-    cursor: pointer;
-    opacity: 1;
-  }
-  
-  .arrow-left:hover, .arrow-right:hover{
+    left: -95%;
+    bottom: -10%;
+}
+
+.arrow-left:hover,
+.arrow-right:hover {
     opacity: .4;
-  }
+}
