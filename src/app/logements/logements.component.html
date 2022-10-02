@@ -7,7 +7,7 @@
     <div class="logements">
         <div class="randomPropositions">
             <div class="logement button-effect" *ngFor="let logement of logementsRandom; let indexLogement = index"
-                (click)="openLogementInNewWindow(logement._id)">
+                [routerLink]="['/logement', logement._id]">
                 <img *ngIf="logement && logement.images" [src]="serverImg + logement.images[logement.indexImage]"
                     alt="">
                 <i class='fas fa-angle-right arrow-right'

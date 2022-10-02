@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, style, animate, transition, state } from '@angular/animations';
 import { LogementService } from '../services/logement.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-main-page',
@@ -22,8 +23,9 @@ import { LogementService } from '../services/logement.service';
 export class MainPageComponent implements OnInit {
 
   constructor(
-    private logementService: LogementService
-  ){
+    private logementService: LogementService,
+    private userService: UserService
+  ) {
 
   }
   ngOnInit(): void {
@@ -91,9 +93,9 @@ export class MainPageComponent implements OnInit {
   toogle2 = true;
   count2: number = 0;
   onFade(event: any) {
-      if (event.fromState)
-        this.count = (this.count + 1) % 2;
-      this.toogle = !this.toogle;
+    if (event.fromState)
+      this.count = (this.count + 1) % 2;
+    this.toogle = !this.toogle;
   }
 
 }

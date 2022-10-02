@@ -6,24 +6,26 @@ import { User } from '../models/user.model';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService implements OnDestroy{
+export class UserService implements OnDestroy {
 
   public currentUser: BehaviorSubject<User> = new BehaviorSubject(new User());
   public subscription!: Subscription;
 
-  constructor(private http: HttpClient) { }
-  
+  constructor(private http: HttpClient) {
+    this.getCurrentUser();
+  }
+
   getCurrentUser() {
     this.subscription = this.http.get<User>('/api/auth/current').subscribe((user: User) => {
       this.currentUser.next(user);
     });
   }
-  
-  logOut(){
+
+  logOut() {
     this.currentUser.next(new User());
   }
 
   ngOnDestroy(): void {
-    if(this.subscription){this.subscription.unsubscribe();}
+    if (this.subscription) { this.subscription.unsubscribe(); }
   }
 }
