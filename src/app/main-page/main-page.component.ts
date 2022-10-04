@@ -24,7 +24,6 @@ export class MainPageComponent implements OnInit {
 
   constructor(
     private logementService: LogementService,
-    private userService: UserService
   ) {
 
   }

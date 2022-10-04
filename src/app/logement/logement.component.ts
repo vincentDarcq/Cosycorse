@@ -8,7 +8,11 @@ import { Logement } from '../models/logement';
 import { LogementService } from '../services/logement.service';
 import { Equipements } from '../models/equipements';
 import { EquipementsSecurite } from '../models/equipementsSecurite';
-import { DateFilterFn } from '@angular/material/datepicker';
+import { MailsService } from '../services/mails.service';
+import { MatDialog } from '@angular/material/dialog';
+import { PopupContacterLogementAnnonceComponent } from '../popup-contacter-logement-annonce/popup-contacter-logement-annonce.component';
+import { MailContactLogement } from '../models/mailContactLogement';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-logement',
@@ -32,10 +36,13 @@ export class LogementComponent implements OnInit, OnDestroy {
   calendarMaxDate: Date = new Date(8640000000000000);
   maxDate: Date = this.calendarMaxDate;
   datesUnavailable = [new Date("10-04-2022"), new Date("10-08-2022"), new Date("10-18-2022")];
+  mail: MailContactLogement = new MailContactLogement();
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private logementService: LogementService
+    private logementService: LogementService,
+    private mailsService: MailsService,
+    private dialog: MatDialog
   ) {
   }
 
@@ -87,6 +94,35 @@ export class LogementComponent implements OnInit, OnDestroy {
     } else {
       this.maxDate = this.calendarMaxDate;
     }
+  }
+
+  openFormContact() {
+    const dialogRef = this.dialog.open(PopupContacterLogementAnnonceComponent, {
+      width: '450px',
+      data: new MailContactLogement(),
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.mail.message = result.message;
+      this.mail.from = result.from;
+      this.mail.to = this.logement!.annonceur;
+      this.mail.subject = this.logement!.ville + " " + this.logement!.addresse;
+      this.mailsService.sendMail(this.mail).subscribe(
+        res => {
+          this.popupInfo("mail envoyé avec succès");
+        },
+        err => {
+          this.popupInfo(`Une erreur s'est produite lors de l'envoi du mail : ${err}`);
+        })
+    });
+  }
+
+  popupInfo(message: string) {
+    Swal.fire({
+      title: message,
+      showCancelButton: false,
+      confirmButtonText: 'Ok'
+    })
   }
 
   clearSelection() {

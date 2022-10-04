@@ -27,6 +27,7 @@ import { CompteAnnonceurComponent } from './compte-annonceur/compte-annonceur.co
 import { SignupComponent } from './signup/signup.component';
 import { AnnonceFormComponent } from './annonce-form/annonce-form.component';
 import { LogementComponent } from './logement/logement.component';
+import { PopupContacterLogementAnnonceComponent } from './popup-contacter-logement-annonce/popup-contacter-logement-annonce.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { LogementComponent } from './logement/logement.component';
     SignupComponent,
     AnnonceFormComponent,
     CompteAnnonceurComponent,
-    LogementComponent
+    LogementComponent,
+    PopupContacterLogementAnnonceComponent
   ],
   imports: [
     BrowserModule,

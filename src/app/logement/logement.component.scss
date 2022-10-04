@@ -1,6 +1,6 @@
 .component {
   text-align: center;
-  background-color: rgb(243, 243, 243);
+  background-color: rgb(247, 253, 254);
 }
 
 .first_row {
@@ -11,8 +11,16 @@
   font-weight: 800;
 }
 
+.commodites {
+  margin-bottom: 2%;
+}
+
+.commodites>span {
+  font-weight: 600;
+}
+
 .equipements {
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(231, 254, 253);
   border: solid 1px rgb(243, 243, 243);
   border-radius: 10px;
   display: flex;
@@ -36,4 +44,13 @@
 
 .date_picker {
   margin-left: 1%;
+}
+
+::ng-deep .mat-form-field-wrapper {
+  padding-bottom: 0 !important;
+}
+
+.prix_nuit {
+  background-color: rgb(242, 254, 253);
+  border-radius: 5px;
 }

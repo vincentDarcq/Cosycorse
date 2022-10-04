@@ -1,39 +1,45 @@
-.component{
+.component {
     width: 100%;
-    background-color: rgb(223, 222, 222);
+    background-color: rgb(247, 253, 254);
 }
 
-.item, mat-radio-group{
+.item,
+mat-radio-group {
     font-size: 1rem;
     margin: 0 5% 1% 5%;
 }
 
-.number{
+.input_ville {
+    width: 150px !important;
+}
+
+.number {
     width: 80%;
     height: 20%;
     margin: 0 10% 5% 0;
 }
 
-.ville{
+.ville {
     border-radius: 5px;
     margin: 2% 5% 0 0;
 }
 
-mat-radio-group{
+mat-radio-group {
     width: 100% !important;
     margin-top: 20px;
 }
 
-.step, ngx-dropzone{
+.step,
+ngx-dropzone {
     background-color: rgb(243, 248, 234);
     margin: 5px 0;
 }
 
-.addresse{
+.addresse {
     width: 80%;
 }
 
-.searchLocation{
+.searchLocation {
     color: white;
     background-color: rgb(0, 170, 255);
     border: solid 1px rgb(1, 138, 207);
@@ -54,11 +60,11 @@ mat-radio-group{
     width: 20%;
 }
 
-input[type=number]{
+input[type=number] {
     width: 20%;
 }
 
-mat-checkbox{
+mat-checkbox {
     margin-right: 15px;
 }
 
@@ -70,10 +76,10 @@ mat-checkbox{
     background-color: rgb(187, 247, 74);
 }
 
-textarea{
+textarea {
     width: 100vh;
 }
 
-#prix{
+#prix {
     width: 50px;
 }

@@ -11,7 +11,7 @@ export class Logement {
     sdbs!: Number;
     latitude!: number;
     longitude!: number;
-    annonceur!: String;
+    annonceur!: string;
     prix!: Number;
     equipements!: Array<string>;
     images?: Array<string>;
@@ -31,14 +31,14 @@ export class Logement {
         sdbs: Number,
         latitude: number,
         longitude: number,
-        annonceur: String,
+        annonceur: string,
         prix: Number,
         equipements: Array<string>,
         fumeur: boolean,
         animaux: boolean,
         access_handicap: boolean,
         images?: Array<string>,
-    ){
+    ) {
         this.addresse = addresse;
         this.ville = ville;
         this.description = description;
@@ -57,8 +57,8 @@ export class Logement {
         this.images = images;
     }
 
-    setId(id: string){
+    setId(id: string) {
         this._id = id;
     }
-  
-  }
+
+}

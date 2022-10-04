@@ -4,8 +4,17 @@
       <h5>{{ logement.addresse }} - {{ logement.ville }}</h5>
       <h6>{{ logement.description }}</h6>
     </div>
-    <ngx-gallery *ngIf="logement.galleryImages" [options]="galleryOptions" [images]="logement.galleryImages"
-      class="ngx-gallery"></ngx-gallery>
+    <div class="logement" fxLayout="column">
+      <ngx-gallery *ngIf="logement.galleryImages" [options]="galleryOptions" [images]="logement.galleryImages"
+        class="ngx-gallery"></ngx-gallery>
+      <div class="commodites" fxLayout="row" fxLayoutGap="10px">
+        <span *ngIf="logement.fumeur">fumeur</span>
+        <span *ngIf="!logement.fumeur">non fumeur</span>
+        <span *ngIf="logement.animaux">animaux acceptés</span>
+        <span *ngIf="!logement.animaux">animaux non acceptés</span>
+        <span *ngIf="logement.access_handicap">accès handicapé</span>
+      </div>
+    </div>
     <div class="date_picker" fxLayout="column" fxLayoutGap="10px">
       <mat-form-field class="custom-filter-field" appearance="outline">
         <mat-label>Dates</mat-label>
@@ -16,7 +25,9 @@
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-date-range-picker #picker></mat-date-range-picker>
       </mat-form-field>
-      <button type="button" class="btn btn-primary" (click)="clearSelection()">Vider les dates</button>
+      <p class="prix_nuit">{{ logement.prix }}€/nuit</p>
+      <button type="button" class="btn btn-info" (click)="clearSelection()">Vider les dates</button>
+      <button type="button" class="btn btn-primary" (click)="openFormContact()">Contacter l'hôte</button>
       <button type="button" class="btn btn-success" (click)="schedule()">Réserver</button>
     </div>
   </div>

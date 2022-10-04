@@ -1,8 +1,15 @@
 <div class="component">
-    <div class="search" fxLayout="row">
-        <input type="text" id="villeSearch" placeholder="ville" [(ngModel)]="villeSearch">
-        <input type="number" id="nbVoyageurs" placeholder="nombre de voyageurs" [(ngModel)]="nbVoyageurs">
-        <input type="number" id="nbLits" placeholder="nombre de Lits" [(ngModel)]="nbLits">
+    <div class="search" fxLayout="row" fxLayoutGap="20px">
+        <mat-form-field class="input_text" fxLayoutGap="20px">
+            <input matInput type="text" name="villeSearch" placeholder="ville" [(ngModel)]="villeSearch">
+        </mat-form-field>
+        <mat-form-field class="input_number" fxLayoutGap="20px">
+            <input matInput type="number" name="nbVoyageurs" placeholder="nombre de voyageurs"
+                [(ngModel)]="nbVoyageurs">
+        </mat-form-field>
+        <mat-form-field class="input_number" fxLayoutGap="20px">
+            <input matInput type="number" name="nbVoyageurs" placeholder="nombre de Lits" [(ngModel)]="nbLits">
+        </mat-form-field>
     </div>
     <div class="logements">
         <div class="randomPropositions">

@@ -1,6 +1,11 @@
 .component {
-    background-color: rgb(243, 243, 243);
+    background-color: rgb(247, 253, 254);
 }
+
+.search {
+    padding: 1%;
+}
+
 
 #villeSearch,
 #nbVoyageurs,
@@ -33,6 +38,7 @@
     border-color: rgba(7, 0, 0, 0.98);
     border-radius: 20px;
     box-shadow: inset -2px -2px 5px 0 #000;
+    background-color: rgb(235, 249, 251);
     // -webkit-backface-visibility: visible;
     // backface-visibility: visible;
     // -webkit-perspective: 424px;
