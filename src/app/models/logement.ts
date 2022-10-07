@@ -12,7 +12,7 @@ export class Logement {
     latitude!: number;
     longitude!: number;
     annonceur!: string;
-    prix!: Number;
+    prix!: number;
     equipements!: Array<string>;
     images?: Array<string>;
     fumeur?: boolean;
@@ -32,7 +32,7 @@ export class Logement {
         latitude: number,
         longitude: number,
         annonceur: string,
-        prix: Number,
+        prix: number,
         equipements: Array<string>,
         fumeur: boolean,
         animaux: boolean,

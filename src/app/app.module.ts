@@ -27,7 +27,8 @@ import { CompteAnnonceurComponent } from './compte-annonceur/compte-annonceur.co
 import { SignupComponent } from './signup/signup.component';
 import { AnnonceFormComponent } from './annonce-form/annonce-form.component';
 import { LogementComponent } from './logement/logement.component';
-import { PopupContacterLogementAnnonceComponent } from './popup-contacter-logement-annonce/popup-contacter-logement-annonce.component';
+import { PopupContacterLogementAnnonceComponent } from './popups/popup-contacter-logement-annonce/popup-contacter-logement-annonce.component';
+import { PopupReservationLogementComponent } from './popups/popup-reservation-logement/popup-reservation-logement.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { PopupContacterLogementAnnonceComponent } from './popup-contacter-logeme
     AnnonceFormComponent,
     CompteAnnonceurComponent,
     LogementComponent,
-    PopupContacterLogementAnnonceComponent
+    PopupContacterLogementAnnonceComponent,
+    PopupReservationLogementComponent
   ],
   imports: [
     BrowserModule,

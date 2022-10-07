@@ -1,0 +1,16 @@
+<div mat-dialog-content fxLayout="column">
+    <p>Réservation du {{ logementRservation.dateDebut }} au {{ logementRservation.dateFin }}</p>
+    <p>Prix : {{ logementRservation.prix }}€</p>
+    <mat-form-field appearance="fill">
+      <mat-label>Votre email</mat-label>
+      <input matInput placeholder="Votre email *" [(ngModel)]="logementRservation.emailDemandeur">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Message (facultatif):</mat-label>
+      <textarea matInput placeholder="" [(ngModel)]="logementRservation.message" rows="4"></textarea>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="cancel()">Annuler</button>
+    <button mat-button [mat-dialog-close]="logementRservation" cdkFocusInitial>Ok</button>
+  </div>

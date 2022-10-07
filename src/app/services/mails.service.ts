@@ -10,7 +10,8 @@ export class MailsService {
 
   constructor(private http: HttpClient) { }
 
-  public sendMail(mail: MailContactLogement): Observable<String> {
-    return this.http.post<String>(`/api/mails/send-email`, mail);
+  public contactHost(mail: MailContactLogement): Observable<String> {
+    return this.http.post<String>(`/api/mails/contactHost`, mail);
   }
+
 }

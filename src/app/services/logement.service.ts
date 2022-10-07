@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Logement } from '../models/logement';
+import { LogementReservation } from '../models/logementReservation';
 import { Villes } from '../models/villes';
 
 @Injectable({
@@ -100,4 +101,17 @@ export class LogementService {
       }
     });
   }
+
+  public reserverLocation(logementReservation: LogementReservation): Observable<string>{
+    return this.http.post<string>(`/api/logementReservation/create`, logementReservation);
+  }
+
+  public getReservationsByLogementId(logementId: string): Observable<Array<LogementReservation>>{
+    return this.http.get<Array<LogementReservation>>(`/api/logementReservation/getReservations`, {
+      params : {
+        logementId : logementId
+      }
+    });
+  }
+
 }

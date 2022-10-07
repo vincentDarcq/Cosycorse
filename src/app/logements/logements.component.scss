@@ -2,11 +2,6 @@
     background-color: rgb(247, 253, 254);
 }
 
-.search {
-    padding: 1%;
-}
-
-
 #villeSearch,
 #nbVoyageurs,
 #nbLits {
@@ -39,6 +34,7 @@
     border-radius: 20px;
     box-shadow: inset -2px -2px 5px 0 #000;
     background-color: rgb(235, 249, 251);
+    cursor: pointer;
     // -webkit-backface-visibility: visible;
     // backface-visibility: visible;
     // -webkit-perspective: 424px;
@@ -93,3 +89,7 @@ img {
 .arrow-right:hover {
     opacity: .4;
 }
+
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-wrapper .mat-form-field-underline{
+    display: none;
+  }

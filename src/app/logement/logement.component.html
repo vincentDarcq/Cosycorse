@@ -20,12 +20,13 @@
         <mat-label>Dates</mat-label>
         <mat-date-range-input [rangePicker]="picker" [dateFilter]="filterDates" [max]="maxDate">
           <input matStartDate placeholder="Arrivée" (dateChange)="startDateChanged($event)" [(ngModel)]="dateDebut">
-          <input matEndDate placeholder="Départ" [(ngModel)]="dateFin">
+          <input matEndDate placeholder="Départ" (dateChange)="endDateChanged()" [(ngModel)]="dateFin">
         </mat-date-range-input>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-date-range-picker #picker></mat-date-range-picker>
       </mat-form-field>
       <p class="prix_nuit">{{ logement.prix }}€/nuit</p>
+      <p class="prix_nuit" *ngIf="prixTotal">Prix total : {{ prixTotal }}€</p>
       <button type="button" class="btn btn-info" (click)="clearSelection()">Vider les dates</button>
       <button type="button" class="btn btn-primary" (click)="openFormContact()">Contacter l'hôte</button>
       <button type="button" class="btn btn-success" (click)="schedule()">Réserver</button>
