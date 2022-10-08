@@ -12,7 +12,6 @@ import { MailsService } from '../services/mails.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupContacterLogementAnnonceComponent } from '../popups/popup-contacter-logement-annonce/popup-contacter-logement-annonce.component';
 import { MailContactLogement } from '../models/mailContactLogement';
-import Swal from 'sweetalert2';
 import { LogementReservation } from '../models/logementReservation';
 import { PopupReservationLogementComponent } from '../popups/popup-reservation-logement/popup-reservation-logement.component';
 import { InfoService } from '../services/info.service';
@@ -57,16 +56,16 @@ export class LogementComponent implements OnInit, OnDestroy {
       this.subLogements = this.logementService.logementsRandom.subscribe((logements: Array<Logement>) => {
         if (logements.length > 0) {
           this.logement = this.logementService.getLogementById(this.id!);
-          if (typeof this.logement === "undefined") {
-            this.logementService.fetchLogementById(this.id).subscribe((logement: Logement) => {
-              this.logement = logement;
-              this.completeLogement();
-              this.getReservations();
-            })
-          } else {
+        }
+        if (typeof this.logement === "undefined") {
+          this.logementService.fetchLogementById(this.id).subscribe((logement: Logement) => {
+            this.logement = logement;
             this.completeLogement();
             this.getReservations();
-          }
+          })
+        } else {
+          this.completeLogement();
+          this.getReservations();
         }
       });
     });

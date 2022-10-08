@@ -16,9 +16,14 @@ export class LogementService {
 
   constructor(private http: HttpClient) {
     this.logementsRandom = new BehaviorSubject(Array<Logement>());
-    this.villes.forEach(ville => {
-      this.getRecentsLogementForVille(ville);
-    })
+  }
+  
+  public getRecentsLogement(){
+    if(this.logementsRandom.value.length === 0){
+      this.villes.forEach(ville => {
+        this.getRecentsLogementForVille(ville);
+      })
+    }
   }
 
   public createLogement(logement: Logement): Observable<Logement> {
@@ -78,14 +83,14 @@ export class LogementService {
     });
   }
 
-  public getRecentsLogement() {
-    return this.http.get<Array<Logement>>(`/api/logements/getRandom`).subscribe((logements: Array<Logement>) => {
-      logements.forEach(l => {
-        l.indexImage = 0;
-      })
-      this.logementsRandom?.next(logements);
-    });
-  }
+  // public getRecentsLogement() {
+  //   return this.http.get<Array<Logement>>(`/api/logements/getRandom`).subscribe((logements: Array<Logement>) => {
+  //     logements.forEach(l => {
+  //       l.indexImage = 0;
+  //     })
+  //     this.logementsRandom?.next(logements);
+  //   });
+  // }
 
   public getRecentsLogementForVille(ville: string) {
     return this.http.get<Logement>(`/api/logements/getRandomForVille`, {

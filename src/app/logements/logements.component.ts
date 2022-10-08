@@ -1,4 +1,4 @@
-import { Component, ElementRef, NgZone, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, NgZone, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Logement } from '../models/logement';
 import { LogementService } from '../services/logement.service';
@@ -46,7 +46,7 @@ export class LogementsComponent implements OnInit {
     private zone: NgZone,
     private infoService: InfoService
   ) {
-
+    this.logementService.getRecentsLogement();
   }
 
   ngOnInit(): void {

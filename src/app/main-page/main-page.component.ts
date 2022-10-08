@@ -28,7 +28,7 @@ export class MainPageComponent implements OnInit {
 
   }
   ngOnInit(): void {
-
+    this.logementService.getRecentsLogement();
   }
 
   imageArray1 = [

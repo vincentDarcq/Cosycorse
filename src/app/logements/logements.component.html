@@ -36,7 +36,7 @@
     <div class="logements">
         <div class="propositions" *ngIf="logementsFiltres.length === 0">
             <div class="logement button-effect" *ngFor="let logement of logementsRandom; let indexLogement = index"
-                [routerLink]="['/logement', logement._id]">
+                (click)="openLogementInNewWindow(logement._id)">
                 <img *ngIf="logement && logement.images" [src]="serverImg + logement.images[logement.indexImage]"
                     alt="">
                 <i class='fas fa-angle-right arrow-right'
@@ -54,7 +54,7 @@
         </div>
         <div class="propositions" *ngIf="logementsFiltres.length > 0">
             <div class="logement button-effect" *ngFor="let logement of logementsFiltres; let indexLogement = index"
-                [routerLink]="['/logement', logement._id]">
+            (click)="openLogementInNewWindow(logement._id)">
                 <img *ngIf="logement && logement.images" [src]="serverImg + logement.images[logement.indexImage]"
                     alt="">
                 <i class='fas fa-angle-right arrow-right'
