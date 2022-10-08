@@ -19,7 +19,8 @@ const routes: Routes = [
   { path: 'creation_annonce', component: AnnonceFormComponent},
   { path: 'mon_compte', component: CompteAnnonceurComponent},
   { path: 'logement/:id', component: LogementComponent},
-  { path: '', component: MainPageComponent }
+  { path: '', component: MainPageComponent },
+  { path: '**', component: MainPageComponent }
 ];
 
 @NgModule({

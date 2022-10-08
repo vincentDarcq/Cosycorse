@@ -102,6 +102,26 @@ export class LogementService {
     });
   }
 
+  public getLogementByFiltres(
+    ville: string, 
+    voyageurs: number, 
+    lits: number, 
+    sdbs: number, 
+    prix: number,
+    equipements: Array<string>
+  ): Observable<Array<Logement>> {
+    return this.http.get<Array<Logement>>(`/api/logements/getByFiltres`, {
+      params: {
+        ville: ville,
+        voyageurs: voyageurs,
+        lits: lits,
+        sdbs: sdbs,
+        prix: prix,
+        equipements: equipements
+      }
+    });
+  }
+
   public reserverLocation(logementReservation: LogementReservation): Observable<string>{
     return this.http.post<string>(`/api/logementReservation/create`, logementReservation);
   }

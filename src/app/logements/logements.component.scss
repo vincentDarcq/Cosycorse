@@ -2,20 +2,12 @@
     background-color: rgb(247, 253, 254);
 }
 
-#villeSearch,
-#nbVoyageurs,
-#nbLits {
-    margin: 2% 2%;
-    padding-left: 5px;
-    border-radius: 5px;
-}
-
 .logements {
     display: grid;
     grid-template-columns: 70% 20%;
 }
 
-.randomPropositions {
+.propositions {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -35,6 +27,7 @@
     box-shadow: inset -2px -2px 5px 0 #000;
     background-color: rgb(235, 249, 251);
     cursor: pointer;
+    height:fit-content;
     // -webkit-backface-visibility: visible;
     // backface-visibility: visible;
     // -webkit-perspective: 424px;
@@ -90,6 +83,20 @@ img {
     opacity: .4;
 }
 
-::ng-deep .mat-form-field-appearance-fill .mat-form-field-wrapper .mat-form-field-underline{
-    display: none;
-  }
+mat-form-field{
+    margin: 1%;
+    width: 10%;
+}
+
+::ng-deep mat-form-field > .mat-form-field-wrapper > .mat-form-field-underline{
+    display: none !important;
+}
+
+.btn-primary, .btn-success{
+    height: 50%;
+    margin-top: 2%;
+}
+
+mat-checkbox{
+    margin: 1%;
+}

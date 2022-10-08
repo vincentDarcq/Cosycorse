@@ -15,6 +15,7 @@ import { MailContactLogement } from '../models/mailContactLogement';
 import Swal from 'sweetalert2';
 import { LogementReservation } from '../models/logementReservation';
 import { PopupReservationLogementComponent } from '../popups/popup-reservation-logement/popup-reservation-logement.component';
+import { InfoService } from '../services/info.service';
 
 @Component({
   selector: 'app-logement',
@@ -45,7 +46,8 @@ export class LogementComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private logementService: LogementService,
     private mailsService: MailsService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private infoService: InfoService
   ) {
   }
 
@@ -59,29 +61,44 @@ export class LogementComponent implements OnInit, OnDestroy {
             this.logementService.fetchLogementById(this.id).subscribe((logement: Logement) => {
               this.logement = logement;
               this.completeLogement();
+              this.getReservations();
             })
           } else {
             this.completeLogement();
+            this.getReservations();
           }
         }
-        this.logementService.getReservationsByLogementId(this.logement!._id).subscribe( (reservations: Array<LogementReservation>) => {
-          reservations.forEach( res => {
-            const dd = res.dateDebut?.split("/");
-            const df = res.dateFin?.split("/");
-            // df![0] = df![0].length === 1 ? "0"+df![0] : df![0];
-            // df![1] = df![1].length === 1 ? "0"+df![1] : df![1];
-            const dateFin = df![1] + "-" + df![0] + "-" + df![2];
-            // dd![0] = dd![0].length === 1 ? "0"+dd![0] : dd![0];
-            // dd![1] = dd![1].length === 1 ? "0"+dd![1] : dd![1];
-            const dateDebut = dd![1] + "-" + dd![0] + "-" + dd![2];
-            const nuits = this.getNbNuits(new Date(dateFin), new Date(dateDebut));
-            for(let i = 0; i < nuits; i++){
-              this.datesUnavailable.push(new Date(new Date(dateDebut).getTime() + i*(1000 * 60 * 60 * 24)))
-            }
-          })
-        })
       });
     });
+  }
+
+  getReservations(){
+    this.logementService.getReservationsByLogementId(this.logement!._id).subscribe( (reservations: Array<LogementReservation>) => {
+      reservations.forEach( res => {
+        const dd = res.dateDebut?.split("/");
+        const df = res.dateFin?.split("/");
+        const dateFin = df![1] + "-" + df![0] + "-" + df![2];
+        const dateDebut = dd![1] + "-" + dd![0] + "-" + dd![2];
+        const nuits = this.getNbNuits(new Date(dateFin), new Date(dateDebut));
+        for(let i = 0; i < nuits; i++){
+          this.datesUnavailable.push(new Date(new Date(dateDebut).getTime() + i*(1000 * 60 * 60 * 24)))
+        }
+      })
+    })
+  }
+
+  completeLogement() {
+    this.logement!.galleryImages = [];
+    this.logement?.images?.forEach(image => {
+      this.logement?.galleryImages?.push(new galleryImage(this.serverImg + image, this.serverImg + image, this.serverImg + image))
+    })
+    this.logement?.equipements.forEach(equipement => {
+      let eq = this.equipementsList.find(e => e.element === equipement);
+      if (typeof eq === "undefined") {
+        eq = this.equipementsSecuriteList.find(e => e.element === equipement);
+      }
+      this.equipements.push(eq);
+    })
   }
 
   filterDates = (d: Date | null): boolean => {
@@ -141,21 +158,13 @@ export class LogementComponent implements OnInit, OnDestroy {
         this.mail.subject = this.logement!.ville + " " + this.logement!.addresse;
         this.mailsService.contactHost(this.mail).subscribe(
           res => {
-            this.popupInfo("mail envoyé avec succès");
+            this.infoService.popupInfo("mail envoyé avec succès");
           },
           err => {
-            this.popupInfo("Une erreur s'est produite lors de l'envoi du mail : "+err.statusText);
+            this.infoService.popupInfo("Une erreur s'est produite lors de l'envoi du mail : "+err.statusText);
           })
       }
     });
-  }
-
-  popupInfo(message: string) {
-    Swal.fire({
-      title: message,
-      showCancelButton: false,
-      confirmButtonText: 'Ok'
-    })
   }
 
   clearSelection() {
@@ -166,7 +175,7 @@ export class LogementComponent implements OnInit, OnDestroy {
 
   schedule() {
     if(this.dateFin === null || this.dateDebut === null){
-      this.popupInfo("Les dates séléctionnées sont invalides");
+      this.infoService.popupInfo("Les dates séléctionnées sont invalides");
       return;
     }
     let logementReservation : LogementReservation = new LogementReservation();
@@ -189,10 +198,10 @@ export class LogementComponent implements OnInit, OnDestroy {
         logementReservation.emailDemandeur = result.emailDemandeur;
         logementReservation.message = result.message;
         this.logementService.reserverLocation(logementReservation).subscribe( (res: string) => {
-          this.popupInfo(res);
+          this.infoService.popupInfo(res);
         },
         err => {
-          this.popupInfo(err.statusText);
+          this.infoService.popupInfo(err.statusText);
         })
       }
     });
@@ -201,20 +210,6 @@ export class LogementComponent implements OnInit, OnDestroy {
   getNbNuits(dateFin: Date, dateDebut: Date): number {
     const time = dateFin.getTime() - dateDebut.getTime();
     return Math.floor((time / 1000) / 3600) / 24;
-  }
-
-  completeLogement() {
-    this.logement!.galleryImages = [];
-    this.logement?.images?.forEach(image => {
-      this.logement?.galleryImages?.push(new galleryImage(this.serverImg + image, this.serverImg + image, this.serverImg + image))
-    })
-    this.logement?.equipements.forEach(equipement => {
-      let eq = this.equipementsList.find(e => e.element === equipement);
-      if (typeof eq === "undefined") {
-        eq = this.equipementsSecuriteList.find(e => e.element === equipement);
-      }
-      this.equipements.push(eq);
-    })
   }
 
   ngOnDestroy(): void {

@@ -1,30 +1,72 @@
 <div class="component">
-    <div class="search" fxLayout="row" fxLayoutGap="20px">
-        <mat-form-field class="input_text" fxLayoutGap="20px">
-            <input matInput type="text" name="villeSearch" placeholder="ville" [(ngModel)]="villeSearch">
+    <div class="search" fxLayout="row" fxLayoutGap="10px">
+        <mat-form-field class="input_text">
+            <input matInput type="text" name="villeSearch" placeholder="ville"
+             [(ngModel)]="villeSearch" [matAutocomplete]="villescomplete">
         </mat-form-field>
-        <mat-form-field class="input_number" fxLayoutGap="20px">
-            <input matInput type="number" name="nbVoyageurs" placeholder="nombre de voyageurs"
+        <mat-autocomplete #villescomplete="matAutocomplete">
+            <mat-option *ngFor="let ville of villes" [value]="ville">
+              {{ ville }}
+            </mat-option>
+          </mat-autocomplete>
+        <mat-form-field class="input_number">
+            <input matInput type="number" name="nbVoyageurs" placeholder="voyageurs"
                 [(ngModel)]="nbVoyageurs">
         </mat-form-field>
-        <mat-form-field class="input_number" fxLayoutGap="20px">
-            <input matInput type="number" name="nbVoyageurs" placeholder="nombre de Lits" [(ngModel)]="nbLits">
+        <mat-form-field class="input_number">
+            <input matInput type="number" name="nbVoyageurs" placeholder="lits" [(ngModel)]="nbLits">
         </mat-form-field>
+        <mat-form-field class="input_number">
+            <input matInput type="number" name="nbSdbs" placeholder="Salles de bain" [(ngModel)]="nbSdbs">
+        </mat-form-field>
+        <mat-form-field class="input_number">
+            <input matInput type="number" name="prix" placeholder="prix max" [(ngModel)]="prix_max">
+        </mat-form-field>
+        <button class="btn btn-primary" (click)="actualiser()">Actualiser</button>
+        <button class="btn btn-success" (click)="effacerFiltres()">Effacer les filtres</button>
     </div>
+    <mat-checkbox #checkbox *ngFor="let e of equipementsList" value="{{e.element}}" 
+    (change)="valueChange(e.element, $event)">
+        <span>{{e.element}}</span>
+    </mat-checkbox>
+    <mat-checkbox #checkbox *ngFor="let e of equipementsSecuriteList" value="{{e.element}}"
+        (change)="valueChange(e.element, $event)">
+        <span>{{e.element}}</span>
+    </mat-checkbox>
     <div class="logements">
-        <div class="randomPropositions">
+        <div class="propositions" *ngIf="logementsFiltres.length === 0">
             <div class="logement button-effect" *ngFor="let logement of logementsRandom; let indexLogement = index"
                 [routerLink]="['/logement', logement._id]">
                 <img *ngIf="logement && logement.images" [src]="serverImg + logement.images[logement.indexImage]"
                     alt="">
                 <i class='fas fa-angle-right arrow-right'
-                    (click)="selectArrow(indexLogement, logement.indexImage, $event)"></i>
+                    (click)="selectArrow(logementsRandom, indexLogement, logement.indexImage, $event)"></i>
                 <i class='fas fa-angle-left arrow-left'
-                    (click)="selectLeftArrow(indexLogement, logement.indexImage, $event)"></i>
+                    (click)="selectLeftArrow(logementsRandom, indexLogement, logement.indexImage, $event)"></i>
                 <div class="details" fxLayout="column">
-                    <span>{{ logement.description }}</span>
                     <span>{{ logement.logement }} | {{ logement.ville }}</span>
-                    <span>{{ logement.prix }}€/nuit</span>
+                    <span>{{ logement.prix + (logement.prix*10/100) }}€/nuit</span>
+                    <span>{{ logement.voyageurs }} voyageurs</span>
+                    <span>{{ logement.lits }} lits</span>
+                    <span>{{ logement.sdbs }} salles de bain</span>
+                </div>
+            </div>
+        </div>
+        <div class="propositions" *ngIf="logementsFiltres.length > 0">
+            <div class="logement button-effect" *ngFor="let logement of logementsFiltres; let indexLogement = index"
+                [routerLink]="['/logement', logement._id]">
+                <img *ngIf="logement && logement.images" [src]="serverImg + logement.images[logement.indexImage]"
+                    alt="">
+                <i class='fas fa-angle-right arrow-right'
+                    (click)="selectArrow(logementsFiltres, indexLogement, logement.indexImage, $event)"></i>
+                <i class='fas fa-angle-left arrow-left'
+                    (click)="selectLeftArrow(logementsFiltres, indexLogement, logement.indexImage, $event)"></i>
+                <div class="details" fxLayout="column">
+                    <span>{{ logement.logement }} | {{ logement.ville }}</span>
+                    <span>{{ logement.prix + (logement.prix*10/100) }}€/nuit</span>
+                    <span>{{ logement.voyageurs }} voyageurs</span>
+                    <span>{{ logement.lits }} lits</span>
+                    <span>{{ logement.sdbs }} salles de bain</span>
                 </div>
             </div>
         </div>

@@ -1,10 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, NgZone, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Logement } from '../models/logement';
 import { LogementService } from '../services/logement.service';
 import { Map, MapOptions, latLng, tileLayer, marker, Layer } from 'leaflet';
 import { MapService } from '../services/map.service';
 import { Router } from '@angular/router';
+import { Villes } from '../models/villes';
+import { Equipements } from '../models/equipements';
+import { EquipementsSecurite } from '../models/equipementsSecurite';
+import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
+import { InfoService } from '../services/info.service';
 
 @Component({
   selector: 'app-logements',
@@ -16,7 +21,11 @@ export class LogementsComponent implements OnInit {
   villeSearch: string = "";
   nbVoyageurs?: number;
   nbLits?: number;
+  nbSdbs?: number;
+  prix_max?: number;
+  equipementsFiltres: string[] = new Array<string>();
   logementsRandom: Array<Logement> = [];
+  logementsFiltres: Array<Logement> = [];
   serverImg: String = "/upload?img=";
   public subscription!: Subscription;
   displayMap: boolean = false;
@@ -24,11 +33,18 @@ export class LogementsComponent implements OnInit {
   mapOptions!: MapOptions;
   layers: Array<Layer> = [];
   pagination: any = false;
+  villes = Villes;
+  equipementsList = Equipements;
+  equipementsSecuriteList = EquipementsSecurite;
+
+  @ViewChildren('checkbox') private checkInput?: QueryList<MatCheckbox>;
 
   constructor(
     private logementService: LogementService,
     private mapService: MapService,
-    private router: Router
+    private router: Router,
+    private zone: NgZone,
+    private infoService: InfoService
   ) {
 
   }
@@ -59,12 +75,21 @@ export class LogementsComponent implements OnInit {
     while (this.logementsRandom.length === 0) {
       await new Promise(f => setTimeout(f, 200));
     }
-    this.logementsRandom.forEach(l => {
+    this.addLogementsOnMap(this.logementsRandom);
+  }
+  
+  addLogementsOnMap(logements: Array<Logement>){
+    logements.forEach(l => {
       const coordinates = this.mapService.newPoint(l.latitude, l.longitude);
       const point = this.mapService.createPoint(coordinates)
       const layer = marker(point)
         .setIcon(this.mapService.getRedIcon())
         .addTo(this.map)
+        .on('click', () => {
+          this.zone.run(() => {
+            this.openLogementInNewWindow(l._id);
+          })
+        })
         .bindTooltip("<div style='background:white; width: 30px;'><b>" + l.prix.toString() + "€" + "</b></div>",
           {
             direction: 'right',
@@ -77,17 +102,17 @@ export class LogementsComponent implements OnInit {
     })
   }
 
-  selectArrow(indexLogement: number, index: number, event: any) {
+  selectArrow(logements: Array<Logement>, indexLogement: number, index: number, event: any) {
     event.stopPropagation()
     if (index < (this.logementsRandom[indexLogement].images!.length - 1)) {
-      this.logementsRandom[indexLogement].indexImage++;
+      logements[indexLogement].indexImage++;
     }
   }
 
-  selectLeftArrow(indexLogement: number, index: number, event: any) {
+  selectLeftArrow(logements: Array<Logement>, indexLogement: number, index: number, event: any) {
     event.stopPropagation()
     if (index > 0) {
-      this.logementsRandom[indexLogement].indexImage--;
+      logements[indexLogement].indexImage--;
     }
   }
 
@@ -96,6 +121,43 @@ export class LogementsComponent implements OnInit {
       this.router.createUrlTree(["/logement", id])
     );
     window.open(url);
+  }
+
+  actualiser(){
+    this.logementService.getLogementByFiltres(
+      this.villeSearch, 
+      this.nbVoyageurs!, 
+      this.nbLits!, 
+      this.nbSdbs!, 
+      this.prix_max!,
+      this.equipementsFiltres
+    ).subscribe( (logements: Array<Logement>) => {
+        if(logements.length > 0){
+          this.logementsFiltres = logements;
+          this.logementsFiltres.forEach(l => l.indexImage = 0);
+          this.addLogementsOnMap(this.logementsFiltres);
+        }else {
+          this.infoService.popupInfo("Il n'y a pas de logements correspondant à vos critères vos critères");
+        }
+      })
+  }
+
+  effacerFiltres(){
+    this.villeSearch = "";
+    this.nbLits = this.nbVoyageurs = this.nbSdbs = this.prix_max = undefined;
+    this.logementsFiltres = this.equipementsFiltres = [];
+    this.checkInput!.forEach((element) => {
+      element.checked = false;
+});
+  }
+
+  valueChange(equipement: string, event: MatCheckboxChange){
+    if(event.checked){
+      this.equipementsFiltres.push(equipement);
+    }else {
+      const index = this.equipementsFiltres.findIndex(e => e === equipement);
+      this.equipementsFiltres.splice(index, 1);
+    }
   }
 
 }
