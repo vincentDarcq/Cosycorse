@@ -3,6 +3,7 @@
         <input type="text" name="nom" placeholder="identifiant" required [(ngModel)]="nom">
         <input type="password" name="password" placeholder="mot de passe" required [(ngModel)]="password">
         <a routerLink="/creation_compte">Pas de compte ? créez un compte</a>
+        <p class="reset_mdp" (click)="openPopupResetMdp()">Mot de passe oublié ?</p>
         <button type="submit" [disabled]="!loginForm.form.valid">Connexion</button>
         <p *ngIf="error"> {{ error }}</p>
     </form>

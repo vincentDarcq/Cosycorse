@@ -9,6 +9,7 @@ import { LogementsType } from '../models/logement-type';
 import { Equipements } from '../models/equipements';
 import { EquipementsSecurite } from '../models/equipementsSecurite';
 import Swal from 'sweetalert2';
+import { InfoService } from '../services/info.service';
 
 @Component({
   selector: 'app-compte-annonceur',
@@ -29,7 +30,8 @@ export class CompteAnnonceurComponent implements OnInit, OnDestroy {
 
   constructor(
     private logementService: LogementService,
-    private userService: UserService
+    private userService: UserService,
+    private infoService: InfoService
   ) {
   }
   
@@ -85,6 +87,7 @@ export class CompteAnnonceurComponent implements OnInit, OnDestroy {
   modifier(indexLogement: number){
     this.logementService.updateLogement(this.modifyLogement[indexLogement].logement).subscribe( (l: Logement) => {
       this.modifyLogement[indexLogement].logement = l;
+      this.infoService.popupInfo(`votre annonce pour l'adresse ${l.addresse} a bien été modifiée`)
     })
     let addImage = false;
     for(let i = 1; i < 14; i++){

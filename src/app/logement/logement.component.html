@@ -2,17 +2,24 @@
   <div class="first_row" fxLayout="row">
     <div class="details">
       <h5>{{ logement.addresse }} - {{ logement.ville }}</h5>
-      <h6>{{ logement.description }}</h6>
+      <p class="description">{{ logement.description }}</p>
     </div>
     <div class="logement" fxLayout="column">
       <ngx-gallery *ngIf="logement.galleryImages" [options]="galleryOptions" [images]="logement.galleryImages"
         class="ngx-gallery"></ngx-gallery>
-      <div class="commodites" fxLayout="row" fxLayoutGap="10px">
-        <span *ngIf="logement.fumeur">fumeur</span>
-        <span *ngIf="!logement.fumeur">non fumeur</span>
-        <span *ngIf="logement.animaux">animaux acceptés</span>
-        <span *ngIf="!logement.animaux">animaux non acceptés</span>
-        <span *ngIf="logement.access_handicap">accès handicapé</span>
+      <div class="commodites" fxLayout="column" fxLayoutGap="10px">
+        <div fxLayout="row" fxLayoutGap="10px">
+          <span>pour {{ logement.voyageurs }} voyageurs max</span>
+          <span>{{ logement.lits }} lits</span>
+          <span>{{ logement.sdbs }} salles de bain</span>
+        </div>
+        <div fxLayout="row" fxLayoutGap="10px">
+          <span *ngIf="logement.fumeur">fumeur</span>
+          <span *ngIf="!logement.fumeur">non fumeur</span>
+          <span *ngIf="logement.animaux">animaux acceptés</span>
+          <span *ngIf="!logement.animaux">animaux non acceptés</span>
+          <span *ngIf="logement.access_handicap">accès handicapé</span>
+        </div>
       </div>
     </div>
     <div class="date_picker" fxLayout="column" fxLayoutGap="10px">

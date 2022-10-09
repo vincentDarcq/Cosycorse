@@ -41,21 +41,21 @@ export class MetaAndTitleService implements OnDestroy {
         this.title.setTitle(metaData['/creation_annonce'].title);
         newTagDescription = {
           name: 'description',
-          content: metaData['/'].metas.description
+          content: metaData['/creation_annonce'].metas.description
         }
         break;
       case 'creation_compte':
         this.title.setTitle(metaData['/creation_compte'].title);
         newTagDescription = {
           name: 'description',
-          content: metaData['/'].metas.description
+          content: metaData['/creation_compte'].metas.description
         }
         break;
       case 'logements':
         this.title.setTitle(metaData['/logements'].title);
         newTagDescription = {
           name: 'description',
-          content: metaData['/'].metas.description
+          content: metaData['/logements'].metas.description
         }
         break;
       case 'logement':
@@ -69,21 +69,21 @@ export class MetaAndTitleService implements OnDestroy {
         this.title.setTitle(metaData['/mon_compte'].title);
         newTagDescription = {
           name: 'description',
-          content: metaData['/'].metas.description
+          content: metaData['/logement'].metas.description
         }
         break;
       case 'connexion':
         this.title.setTitle(metaData['/connexion'].title);
         newTagDescription = {
           name: 'description',
-          content: metaData['/'].metas.description
+          content: metaData['/connexion'].metas.description
         }
         break;
       case 'activites':
         this.title.setTitle(metaData['/activites'].title);
         newTagDescription = {
           name: 'description',
-          content: metaData['/'].metas.description
+          content: metaData['/activites'].metas.description
         }
         break;
     }

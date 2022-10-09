@@ -29,6 +29,7 @@ import { AnnonceFormComponent } from './annonce-form/annonce-form.component';
 import { LogementComponent } from './logement/logement.component';
 import { PopupContacterLogementAnnonceComponent } from './popups/popup-contacter-logement-annonce/popup-contacter-logement-annonce.component';
 import { PopupReservationLogementComponent } from './popups/popup-reservation-logement/popup-reservation-logement.component';
+import { PopupResetPasswordComponent } from './popups/popup-reset-password/popup-reset-password.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { PopupReservationLogementComponent } from './popups/popup-reservation-lo
     CompteAnnonceurComponent,
     LogementComponent,
     PopupContacterLogementAnnonceComponent,
-    PopupReservationLogementComponent
+    PopupReservationLogementComponent,
+    PopupResetPasswordComponent
   ],
   imports: [
     BrowserModule,

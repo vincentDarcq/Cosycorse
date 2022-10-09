@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from '../models/user.model';
+import { PopupResetPasswordComponent } from '../popups/popup-reset-password/popup-reset-password.component';
 import { AuthenticationService } from '../services/authentication.service';
+import { InfoService } from '../services/info.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +22,10 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private authenticationService: AuthenticationService,
-    private router: Router
+    private userService: UserService,
+    private infoService: InfoService,
+    private router: Router,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -33,6 +40,21 @@ export class LoginComponent implements OnInit {
     }, err => {
       this.error = err.error;
     })
+  }
+
+  openPopupResetMdp(){
+    const dialogRef = this.dialog.open(PopupResetPasswordComponent, {
+      width: '300px',
+      data: "",
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result.mail)
+      this.userService.resetPassword(result.mail).subscribe( (res: string) => {
+        console.log(res)
+        this.infoService.popupInfo(res);
+      })
+    });
   }
 
 }

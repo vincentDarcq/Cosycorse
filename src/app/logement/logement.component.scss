@@ -15,8 +15,13 @@
   margin-bottom: 2%;
 }
 
-.commodites>span {
+.commodites>div>span {
   font-weight: 600;
+  padding: 5px;
+  border: solid 1px rgb(69, 177, 244);
+  border-radius: 5px;
+  background-color: rgb(168, 251, 251);
+  width: fit-content;
 }
 
 .equipements {
@@ -32,6 +37,11 @@
 .details {
   margin: 1%;
   width: 25%;
+}
+
+.description{  
+  max-height: 60vh;
+  overflow-y: scroll;
 }
 
 .ngx-gallery {
