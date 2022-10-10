@@ -49,9 +49,7 @@ export class LoginComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result.mail)
-      this.userService.resetPassword(result.mail).subscribe( (res: string) => {
-        console.log(res)
+      this.userService.forgotPassword(result.mail).subscribe( (res: string) => {
         this.infoService.popupInfo(res);
       })
     });

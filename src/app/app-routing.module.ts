@@ -3,11 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { ActivitesComponent } from './activites/activites.component';
 import { AnnonceFormComponent } from './annonce-form/annonce-form.component';
 import { CompteAnnonceurComponent } from './compte-annonceur/compte-annonceur.component';
+import { AuthGuard } from './guards/auth.guard';
 import { LieuxComponent } from './lieux/lieux.component';
 import { LogementComponent } from './logement/logement.component';
 import { LogementsComponent } from './logements/logements.component';
 import { LoginComponent } from './login/login.component';
 import { MainPageComponent } from './main-page/main-page.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { SignupComponent } from './signup/signup.component';
 
 const routes: Routes = [
@@ -16,8 +18,9 @@ const routes: Routes = [
   { path: 'lieux', component: LieuxComponent },
   { path: 'connexion', component: LoginComponent },
   { path: 'creation_compte', component: SignupComponent},
-  { path: 'creation_annonce', component: AnnonceFormComponent},
-  { path: 'mon_compte', component: CompteAnnonceurComponent},
+  { path: 'creation_annonce', canActivate: [AuthGuard], component: AnnonceFormComponent},
+  { path: 'mon_compte', canActivate: [AuthGuard], component: CompteAnnonceurComponent},
+  { path: 'reset_password/:token', component: ResetPasswordComponent},
   { path: 'logement/:id', component: LogementComponent},
   { path: '', component: MainPageComponent },
   { path: '**', component: MainPageComponent }

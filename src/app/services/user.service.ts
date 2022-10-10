@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { ResetPassword } from '../models/resetPassword';
 import { User } from '../models/user.model';
 
 @Injectable({
@@ -27,12 +28,16 @@ export class UserService implements OnDestroy {
     this.currentUser.next(new User());
   }
 
-  public resetPassword(mail: string): Observable<string>{
+  public forgotPassword(mail: string): Observable<string>{
     return this.http.get<string>('/api/mails/forgotPass', {
       params: {
         mail: mail
       }
     });
+  }
+  
+  public resetPassword(resetPassword: ResetPassword){
+    return this.http.post<User>('/api/user/resetPass', resetPassword);
   }
 
   ngOnDestroy(): void {

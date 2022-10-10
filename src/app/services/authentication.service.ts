@@ -48,4 +48,12 @@ export class AuthenticationService {
     this.userService.logOut();
   }
 
+  public authentForResetPwd(token: string){
+    return this.http.get<User>("/api/auth/authent-withToken", {
+      params: {
+        token: token
+      }
+    })
+  }
+
 }
