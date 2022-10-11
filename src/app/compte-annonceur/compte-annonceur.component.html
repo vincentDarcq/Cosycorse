@@ -1,7 +1,7 @@
 <div class="component">
     <div class="logements" *ngFor="let l of modifyLogement; let indexLogement = index">
         <div class="logementType"><b>{{ l.logement.logement }}</b> | <b>{{ l.logement.ville }}</b></div>
-        <div class="addresse">{{ l.logement.addresse }}</div>
+        <div class="addresse">{{ l.logement.adresse }}</div>
         <div class="images">
             <div *ngFor="let im of l.logement.images; let i = index" fxLayout="column" class="img_box">
                 <img                 

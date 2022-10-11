@@ -36,6 +36,9 @@ export class CompteAnnonceurComponent implements OnInit, OnDestroy {
   }
   
   ngOnInit(): void {
+    if(sessionStorage.getItem("redirectUrl")){
+      sessionStorage.removeItem("redirectUrl")
+    }
     this.subUser = this.userService.currentUser.subscribe( (user: User | null) => {
       this.user = new User(user?._id, user?.email, user?.name);
       this.subLogements = this.logementService.getLogementsByAnnonceur(this.user.name).subscribe( (logements: Array<Logement>) => {
@@ -87,7 +90,7 @@ export class CompteAnnonceurComponent implements OnInit, OnDestroy {
   modifier(indexLogement: number){
     this.logementService.updateLogement(this.modifyLogement[indexLogement].logement).subscribe( (l: Logement) => {
       this.modifyLogement[indexLogement].logement = l;
-      this.infoService.popupInfo(`votre annonce pour l'adresse ${l.addresse} a bien été modifiée`)
+      this.infoService.popupInfo(`votre annonce pour l'adresse ${l.adresse} a bien été modifiée`)
     })
     let addImage = false;
     for(let i = 1; i < 14; i++){

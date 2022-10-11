@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     private userService: UserService,
     private infoService: InfoService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -36,7 +36,11 @@ export class LoginComponent implements OnInit {
     user.setName(this.nom);
     user.setPasword(this.password);
     this.loginSub = this.authenticationService.login(user).subscribe( () => {
-      this.router.navigate(['/']);
+      if(sessionStorage.getItem("redirectUrl")){
+        this.router.navigate([sessionStorage.getItem("redirectUrl")]);
+      }else {
+        this.router.navigate(['/']);
+      }
     }, err => {
       this.error = err.error;
     })

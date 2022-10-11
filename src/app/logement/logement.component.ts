@@ -51,6 +51,9 @@ export class LogementComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    if(sessionStorage.getItem("redirectUrl")){
+      sessionStorage.removeItem("redirectUrl")
+    }
     this.subActivatedRoute = this.activatedRoute.params.subscribe((params: any) => {
       this.id = params['id'];
       this.subLogements = this.logementService.logementsRandom.subscribe((logements: Array<Logement>) => {
@@ -154,7 +157,7 @@ export class LogementComponent implements OnInit, OnDestroy {
         this.mail.message = result.message;
         this.mail.from = result.from;
         this.mail.to = this.logement!.annonceur;
-        this.mail.subject = this.logement!.ville + " " + this.logement!.addresse;
+        this.mail.subject = this.logement!.ville + " " + this.logement!.adresse;
         this.mailsService.contactHost(this.mail).subscribe(
           res => {
             this.infoService.popupInfo("mail envoyé avec succès");

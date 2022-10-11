@@ -11,8 +11,8 @@ import { UserService } from './user.service';
 export class AuthenticationService {
 
   public jwtToken: BehaviorSubject<any> = new BehaviorSubject({
-    isAuthenticated: null,
-    token: null,
+    isAuthenticated: sessionStorage.getItem('jwt') ? true : false,
+    token: sessionStorage.getItem('jwt') ? sessionStorage.getItem('jwt') : null,
   });
 
   private signupSub!: Subscription;

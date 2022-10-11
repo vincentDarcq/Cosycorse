@@ -31,6 +31,7 @@ import { PopupContacterLogementAnnonceComponent } from './popups/popup-contacter
 import { PopupReservationLogementComponent } from './popups/popup-reservation-logement/popup-reservation-logement.component';
 import { PopupResetPasswordComponent } from './popups/popup-reset-password/popup-reset-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { MonCompteComponent } from './mon-compte/mon-compte.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     PopupContacterLogementAnnonceComponent,
     PopupReservationLogementComponent,
     PopupResetPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    MonCompteComponent
   ],
   imports: [
     BrowserModule,

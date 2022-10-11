@@ -29,7 +29,7 @@ export default {
       description: 'Description d\'une annonce de location sur Cosycorse'
     }
   },
-  '/mon_compte': {
+  '/mes_annonces': {
     title: 'Cosycorse : compte créateur',
     metas: {
       description: 'Liste de vos annonces sur Cosycorse'

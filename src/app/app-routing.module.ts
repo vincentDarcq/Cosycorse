@@ -9,6 +9,7 @@ import { LogementComponent } from './logement/logement.component';
 import { LogementsComponent } from './logements/logements.component';
 import { LoginComponent } from './login/login.component';
 import { MainPageComponent } from './main-page/main-page.component';
+import { MonCompteComponent } from './mon-compte/mon-compte.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { SignupComponent } from './signup/signup.component';
 
@@ -19,7 +20,8 @@ const routes: Routes = [
   { path: 'connexion', component: LoginComponent },
   { path: 'creation_compte', component: SignupComponent},
   { path: 'creation_annonce', canActivate: [AuthGuard], component: AnnonceFormComponent},
-  { path: 'mon_compte', canActivate: [AuthGuard], component: CompteAnnonceurComponent},
+  { path: 'mes_annonces/:id', canActivate: [AuthGuard], component: CompteAnnonceurComponent},
+  { path: 'mon_compte/:id', canActivate: [AuthGuard], component: MonCompteComponent},
   { path: 'reset_password/:token', component: ResetPasswordComponent},
   { path: 'logement/:id', component: LogementComponent},
   { path: '', component: MainPageComponent },

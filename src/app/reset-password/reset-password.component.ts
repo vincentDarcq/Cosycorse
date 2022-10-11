@@ -32,9 +32,14 @@ export class ResetPasswordComponent implements OnInit {
   ngOnInit(): void {
     this.subActivatedRoute = this.activatedRoute.params.subscribe((params: any) => {
       this.token = params['token'];
-      this.authentService.authentForResetPwd(this.token).subscribe( (user: User) => {
-        this.user = user;
-      })
+      this.authentService.authentForResetPwd(this.token).subscribe( 
+        (user: User) => {
+          this.user = user;
+        },
+        err => {
+          this.error = err.error;
+        }
+      )
     },
     err => {
       this.error = err;
@@ -67,7 +72,6 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   submit(){
-    //const resetPassword: ResetPassword = new ResetPassword(this.form.value)
     this.userService.resetPassword(this.form.value).subscribe( 
       (user: User) => {
         this.infoService.popupInfo("mot de passe modifié avec succès");
