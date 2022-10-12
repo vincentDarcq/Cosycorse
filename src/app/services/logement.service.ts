@@ -83,15 +83,6 @@ export class LogementService {
     });
   }
 
-  // public getRecentsLogement() {
-  //   return this.http.get<Array<Logement>>(`/api/logements/getRandom`).subscribe((logements: Array<Logement>) => {
-  //     logements.forEach(l => {
-  //       l.indexImage = 0;
-  //     })
-  //     this.logementsRandom?.next(logements);
-  //   });
-  // }
-
   public getRecentsLogementForVille(ville: string) {
     return this.http.get<Logement>(`/api/logements/getRandomForVille`, {
       params: {
@@ -132,9 +123,17 @@ export class LogementService {
   }
 
   public getReservationsByLogementId(logementId: string): Observable<Array<LogementReservation>>{
-    return this.http.get<Array<LogementReservation>>(`/api/logementReservation/getReservations`, {
+    return this.http.get<Array<LogementReservation>>(`/api/logementReservation/getReservationsByLogementId`, {
       params : {
         logementId : logementId
+      }
+    });
+  }
+
+  public getReservationsByUserEmail(userEmail: string): Observable<Array<LogementReservation>>{
+    return this.http.get<Array<LogementReservation>>(`/api/logementReservation/getReservationsByDemandeurEmail`, {
+      params : {
+        userEmail : userEmail
       }
     });
   }

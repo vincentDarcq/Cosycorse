@@ -30,9 +30,15 @@ export default {
     }
   },
   '/mes_annonces': {
-    title: 'Cosycorse : compte créateur',
+    title: 'Cosycorse : mes annonces',
     metas: {
       description: 'Liste de vos annonces sur Cosycorse'
+    }
+  },
+  '/mon_compte': {
+    title: 'Cosycorse : mon compte',
+    metas: {
+      description: 'Détails de votre compte Cosycorse'
     }
   },
   '/connexion': {

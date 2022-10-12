@@ -1,1 +1,21 @@
-<p>mon-compte works!</p>
+<div class="component">
+    <h3>Mes réservations</h3>
+    <div fxLayout="row" fxLayoutGap="2%"class="reservation">
+        <div class="button-effect" *ngFor="let mcr of monCompteReservations; let indexMCR = index">
+            <div class="details">
+                <p>{{ mcr.logementReservation.dateDebut }} - {{ mcr.logementReservation.dateFin }}</p>
+                <p>{{ mcr.logementReservation.prix }}€</p>
+                <img *ngIf="mcr.logement && mcr.logement.images" [src]="serverImg + mcr.logement.images[mcr.logement.indexImage]"
+                    alt="">
+                <i class='fas fa-angle-right arrow-right'
+                    (click)="selectArrow(monCompteReservations, indexMCR, mcr.logement.indexImage)"></i>
+                <i class='fas fa-angle-left arrow-left'
+                    (click)="selectLeftArrow(monCompteReservations, indexMCR, mcr.logement.indexImage)"></i>
+                <div fxLayout="row">
+                    <button [routerLink]="['/logement', mcr.logementReservation.logementId]" class="btn btn-primary">Voir l'annonce</button>
+                    <button (click)="annulerReservation()" class="btn btn-danger">Annuler</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

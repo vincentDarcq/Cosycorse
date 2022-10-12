@@ -1,0 +1,63 @@
+.component {
+    background-color: rgb(247, 253, 254);
+}
+
+.button-effect {
+    border-style: none;
+    border-width: 2px;
+    border-color: rgba(7, 0, 0, 0.98);
+    border-radius: 20px;
+    box-shadow: inset -2px -2px 5px 0 #000;
+    background-color: rgb(235, 249, 251);
+    cursor: pointer;
+    height:fit-content;
+    width: 20%;
+}
+
+.reservation{
+    padding: 1%;
+}
+
+.details{
+    padding: 5%;
+    text-align: center;
+}
+
+button{
+    margin: 2%;
+}
+
+img {
+    padding: 3px;
+    border-radius: 20px;
+    width: 40vh;
+    height: 25vh;
+}
+
+.fas {
+    width: 0;
+    height: 0;
+    font-size: 36px;
+    cursor: pointer;
+    opacity: 1;
+    -webkit-text-fill-color: white;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: black;
+}
+
+.arrow-right {
+    position: relative;
+    left: 35%;
+    bottom: 80px;
+}
+
+.arrow-left {
+    position: relative;
+    left: -45%;
+    bottom: 80px;
+}
+
+.arrow-left:hover,
+.arrow-right:hover {
+    opacity: .4;
+}

@@ -18,10 +18,11 @@
     </div>
     <i class="p-3 m-3 fas fa-dot-circle" *ngIf="user.name" (click)="displayList()"></i>
     <div *ngIf="list" class="select-bars">
-        <div class="popup">
+        <div fxLayout="row">
             <div>
                 <div class="link popup-item" (click)="displayList()" routerLink="/creation_annonce">Ajouter une annonce</div>
                 <div class="link popup-item" (click)="displayList()" routerLink="/mes_annonces">Voir mes annonces</div>
+                <div class="link popup-item" (click)="displayList()" routerLink="/mon_compte">Mon compte</div>
                 <div class="link popup-item" (click)="logOut()">Deconnexion</div>
             </div>
             <a class="fas fa-times" (click)="displayList()"></a>
