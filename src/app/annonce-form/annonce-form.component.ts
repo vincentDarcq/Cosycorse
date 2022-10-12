@@ -5,7 +5,7 @@ import { Equipements } from '../models/equipements';
 import { EquipementsSecurite } from '../models/equipementsSecurite';
 import { Villes } from '../models/villes';
 import { GeoService } from '../services/geo.service';
-import { Map, marker, MapOptions, tileLayer, latLng } from 'leaflet';
+import { Map, marker, MapOptions } from 'leaflet';
 import { MapPoint } from '../models/map-point.model';
 import { MapService } from '../services/map.service';
 import { MatCheckboxChange } from '@angular/material/checkbox';
@@ -15,6 +15,7 @@ import { Subscription } from 'rxjs';
 import { UserService } from '../services/user.service';
 import { LogementService } from '../services/logement.service';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-annonce-form',
@@ -25,23 +26,13 @@ export class AnnonceFormComponent implements OnInit, OnDestroy {
 
   public subscription!: Subscription;
   public user!: User;
+  form!: FormGroup;
   formData = new FormData();
   logementsType = LogementsType;
   villes = Villes;
   villeAutoComplete = Villes;
   equipementsList = Equipements;
   equipementsSecuriteList = EquipementsSecurite;
-  logement: string = "";
-  addresse: string = "";
-  ville: string = "";
-  description: string = "";
-  nbVoyageur!: number;
-  nbLits!: number;
-  nbSdb!: number;
-  prix!: number;
-  fumeur: boolean = false;
-  animaux: boolean = false;
-  access_handicap: boolean = false;
   equipements: string[] = new Array<string>();
   latAdresse!: number;
   longAdresse!: number;
@@ -53,14 +44,7 @@ export class AnnonceFormComponent implements OnInit, OnDestroy {
   lastLayer: any;
   displayMap: boolean = false;
   mauvaiseAdresse: boolean = false;
-  noAdresse: boolean = false;
   noSearch: boolean = false;
-  noLogement: boolean = false;
-  noLits: boolean = false;
-  noSdb: boolean = false;
-  noVoyageur: boolean = false;
-  noPrix: boolean = false;
-  noVille: boolean = false;
 
   constructor(
     private geoService: GeoService,
@@ -68,17 +52,31 @@ export class AnnonceFormComponent implements OnInit, OnDestroy {
     private zone: NgZone,
     private userService: UserService,
     private logementService: LogementService,
-    private router: Router
+    private router: Router,
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      logement: ['', Validators.required],
+      ville: ['', Validators.required],
+      adresse: ['', Validators.required],
+      nbVoyageur: ['', [Validators.required, Validators.min(1)]],
+      nbLits: ['', [Validators.required, Validators.min(1)]],
+      nbSdb: ['', [Validators.required, Validators.min(1)]],
+      description: '',
+      fumeur: '',
+      animaux: '',
+      access_handicap: '',
+      prix: ['', [Validators.required, Validators.min(1)]]
+    })
     this.subscription = this.userService.currentUser.subscribe( (user: User | null) => {
       this.user = new User(user?._id, user?.email, user?.name);
     })
   }
 
-  addresseFromGeoApi() {
-    this.geoService.getLocationFromGeoapify(this.addresse).subscribe((results: any) => {
+  adresseFromGeoApi() {
+    this.geoService.getLocationFromGeoapify(this.form.value.adresse).subscribe((results: any) => {
       this.searchResults = new Array<GeoResponse>();
       for (let feature of results.features) {
         const result = new GeoResponse(
@@ -90,13 +88,13 @@ export class AnnonceFormComponent implements OnInit, OnDestroy {
 
   enter(event: KeyboardEvent) {
     if (event.code === "Enter" || event.code === "NumpadEnter") {
-      this.addresseFromGeoApi();
+      this.adresseFromGeoApi();
     }
   }
 
   affineVille(){
-    this.villeAutoComplete = this.villes.filter(v => v.toLowerCase().indexOf(this.ville.toLowerCase()) !== -1)
-    if(this.ville.length === 0){
+    this.villeAutoComplete = this.villes.filter(v => v.toLowerCase().indexOf(this.form.value.ville.toLowerCase()) !== -1)
+    if(this.form.value.ville.length === 0){
       this.villeAutoComplete = this.villes;
     }
   }
@@ -180,11 +178,12 @@ export class AnnonceFormComponent implements OnInit, OnDestroy {
 
   submit(){
     if(this.valid()){
-      const createLogement = new Logement(
-        this.addresse, this.ville, this.description, this.logement, this.nbVoyageur,
-        this.nbLits, this.nbSdb, this.latAdresse, this.longAdresse, this.user.name,
-        this.prix, this.equipements, this.fumeur, this.animaux, this.access_handicap);
-      this.logementService.createLogement(createLogement).subscribe( (log: Logement) => {
+      const logement = new Logement(
+        this.form.value.adresse, this.form.value.ville, this.form.value.description, this.form.value.logement,
+        this.form.value.voyageurs, this.form.value.lits, this.form.value.sdbs, this.latAdresse, this.longAdresse,
+        this.user.name, this.form.value.prix, this.equipements, this.form.value.fumeur, this.form.value.animaux, 
+        this.form.value.access_handicap);
+      this.logementService.createLogement(logement).subscribe( (log: Logement) => {
         this.logementService.uploadPhotos(this.formData, log._id ).subscribe( (l: Logement) => {
           this.router.navigate(['/']);
         })
@@ -193,45 +192,8 @@ export class AnnonceFormComponent implements OnInit, OnDestroy {
   }
   
   valid(){
-    if(this.ville.length === 0){
-      this.noVille = true;
-    }else {
-      this.noVille = false;
-    }
     if(typeof this.latAdresse === "undefined"){
       this.noSearch = true;
-    }
-    if(this.addresse.length === 0){
-      this.noAdresse = true;
-    }else {
-      this.noAdresse = false;
-    }
-    if(this.logement.length === 0){
-      this.noLogement = true;
-    }else {
-      this.noLogement = false;
-    }
-    if(typeof this.nbLits === "undefined" || this.nbLits <= 0){
-      this.noLits = true;
-    }else {
-      this.noLits = false;
-    }
-    if(typeof this.nbSdb === "undefined" || this.nbSdb <= 0){
-      this.noSdb = true;
-    }else {
-      this.noSdb = false;
-    }
-    if(typeof this.nbVoyageur === "undefined" || this.nbVoyageur <= 0){
-      this.noVoyageur = true;
-    }else {
-      this.noVoyageur = false;
-    }
-    if(typeof this.prix === "undefined" || this.prix <= 0){
-      this.noPrix = true;
-    }else {
-      this.noPrix = false;
-    }
-    if(this.noAdresse || this.noLogement || this.noLits || this.noSdb || this.noVoyageur || this.noVille){
       return false;
     }
     return true;

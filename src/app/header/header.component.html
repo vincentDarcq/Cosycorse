@@ -21,7 +21,7 @@
         <div class="popup">
             <div>
                 <div class="link popup-item" (click)="displayList()" routerLink="/creation_annonce">Ajouter une annonce</div>
-                <div class="link popup-item" (click)="displayList()" [routerLink]="['/mes_annonces', user._id]">Voir mes annonces</div>
+                <div class="link popup-item" (click)="displayList()" routerLink="/mes_annonces">Voir mes annonces</div>
                 <div class="link popup-item" (click)="logOut()">Deconnexion</div>
             </div>
             <a class="fas fa-times" (click)="displayList()"></a>

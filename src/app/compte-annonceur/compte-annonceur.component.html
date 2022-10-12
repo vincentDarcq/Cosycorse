@@ -76,6 +76,20 @@
                         <input matInput type="number" name="sdbs" [(ngModel)]="l.logement.sdbs">
                     </div>
                 </div>
+                <div fxLayout="row" fxLayoutGap="10px">
+                    <mat-radio-group [(ngModel)]="l.logement.fumeur" fxLayoutGap="3%">
+                        <mat-radio-button [value]="true">fumeur</mat-radio-button>
+                        <mat-radio-button [value]="false">non fumeur</mat-radio-button>
+                    </mat-radio-group>
+                    <mat-radio-group [(ngModel)]="l.logement.animaux" fxLayoutGap="3%">
+                        <mat-radio-button [value]="true">animaux autorisés</mat-radio-button>
+                        <mat-radio-button [value]="false">animaux autorisés non autorisés</mat-radio-button>
+                    </mat-radio-group>
+                    <mat-radio-group [(ngModel)]="l.logement.access_handicap" fxLayoutGap="3%">
+                        <mat-radio-button [value]="true">accès handicapé</mat-radio-button>
+                        <mat-radio-button [value]="false">pas d'accès handicapé</mat-radio-button>
+                    </mat-radio-group>
+                </div>
             </div>
             <div fxLaout="column" class="item">
                 <div class="item_title">prix</div>

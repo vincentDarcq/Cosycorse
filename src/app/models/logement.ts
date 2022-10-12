@@ -22,7 +22,7 @@ export class Logement {
     galleryImages?: NgxGalleryImage[];
 
     constructor(
-        addresse: string,
+        adresse: string,
         ville: string,
         description: String,
         logement: String,
@@ -39,7 +39,7 @@ export class Logement {
         access_handicap: boolean,
         images?: Array<string>,
     ) {
-        this.adresse = addresse;
+        this.adresse = adresse;
         this.ville = ville;
         this.description = description;
         this.logement = logement;

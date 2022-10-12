@@ -4,6 +4,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { User } from '../models/user.model';
 import { switchMap, tap } from 'rxjs/operators';
 import { UserService } from './user.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,8 @@ export class AuthenticationService {
 
   constructor(
     private http: HttpClient,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) { }
 
   public signup(user: User){
@@ -46,6 +48,7 @@ export class AuthenticationService {
     });
     sessionStorage.removeItem('jwt');
     this.userService.logOut();
+    this.router.navigate(['/']);
   }
 
   public authentForResetPwd(token: string){
