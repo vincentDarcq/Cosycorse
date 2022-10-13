@@ -10,6 +10,7 @@ import { Equipements } from '../models/equipements';
 import { EquipementsSecurite } from '../models/equipementsSecurite';
 import Swal from 'sweetalert2';
 import { InfoService } from '../services/info.service';
+import { ViewportScroller } from '@angular/common';
 
 @Component({
   selector: 'app-compte-annonceur',
@@ -21,6 +22,7 @@ export class CompteAnnonceurComponent implements OnInit, OnDestroy {
   public subUser!: Subscription;
   public subLogements!: Subscription;
   public user!: User;
+  adresses: Array<string> = [];
   modifyLogement: Array<ModifyLogement> = new Array();
   serverImg: String = "/upload?img=";
   indexNewImages: number = 0;
@@ -31,7 +33,8 @@ export class CompteAnnonceurComponent implements OnInit, OnDestroy {
   constructor(
     private logementService: LogementService,
     private userService: UserService,
-    private infoService: InfoService
+    private infoService: InfoService,
+    private scroller: ViewportScroller
   ) {
   }
   
@@ -47,6 +50,7 @@ export class CompteAnnonceurComponent implements OnInit, OnDestroy {
           this.modifyLogement.push(
             new ModifyLogement(logement, indexImages, new Array())
           )
+          this.adresses.push(logement.adresse);
         })
       })
     })
@@ -120,6 +124,10 @@ export class CompteAnnonceurComponent implements OnInit, OnDestroy {
         })
       }
     })
+  }
+
+  navigaToAnnonce(adresse: string){
+    this.scroller.scrollToAnchor(adresse);
   }
   
   ngOnDestroy(): void {

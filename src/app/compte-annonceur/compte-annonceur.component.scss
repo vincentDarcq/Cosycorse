@@ -99,3 +99,16 @@ mat-form-field{
     width: 10%;
     margin: auto;
 }
+
+.adresses > mat-form-field {
+    background-color: rgb(255, 255, 255);
+}
+
+::ng-deep mat-form-field > .mat-form-field-wrapper{
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+::ng-deep mat-form-field > .mat-form-field-wrapper > .mat-form-field-underline{
+    display: none !important;
+}

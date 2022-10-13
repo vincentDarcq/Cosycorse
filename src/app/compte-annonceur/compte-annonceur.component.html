@@ -1,5 +1,15 @@
 <div class="component">
-    <div class="logements" *ngFor="let l of modifyLogement; let indexLogement = index">
+    <div class="adresses">
+        <mat-form-field appearance="fill">
+            <mat-label>aller à une annonce</mat-label>
+            <mat-select>
+                <mat-option *ngFor="let a of adresses" (click)="navigaToAnnonce(a)">
+                    {{a}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="logements" *ngFor="let l of modifyLogement; let indexLogement = index" id="{{ l.logement.adresse }}">
         <div class="logementType"><b>{{ l.logement.logement }}</b> | <b>{{ l.logement.ville }}</b></div>
         <div class="addresse">{{ l.logement.adresse }}</div>
         <div class="images">
@@ -27,8 +37,6 @@
         </ngx-dropzone>
         <div class="informations">
             <div fxLayout="column" class="item">
-                <!-- <div class="item_title">equipements</div>
-                <span class="equipements" *ngFor="let e of l.logement.equipements">{{ e }}</span> -->
                 <mat-form-field appearance="fill">
                     <mat-label>Modifier les équipements</mat-label>
                     <mat-select [(ngModel)]="modifyLogement[indexLogement].logement.equipements" multiple>
@@ -76,7 +84,7 @@
                         <input matInput type="number" name="sdbs" [(ngModel)]="l.logement.sdbs">
                     </div>
                 </div>
-                <div fxLayout="row" fxLayoutGap="10px">
+                <div fxLayout="row" fxLayoutGap="10px" class="details">
                     <mat-radio-group [(ngModel)]="l.logement.fumeur" fxLayoutGap="3%">
                         <mat-radio-button [value]="true">fumeur</mat-radio-button>
                         <mat-radio-button [value]="false">non fumeur</mat-radio-button>
