@@ -10,21 +10,23 @@ import { LogementsComponent } from './logements/logements.component';
 import { LoginComponent } from './login/login.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { MonCompteComponent } from './mon-compte/mon-compte.component';
-import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ResetPasswordComponent } from './components-oneShot/reset-password/reset-password.component';
 import { SignupComponent } from './signup/signup.component';
+import { ReponseLogementReservationComponent } from './components-oneShot/reponse-logement-reservation/reponse-logement-reservation.component';
 
 const routes: Routes = [
+  { path: '', component: MainPageComponent },
   { path: 'logements', component: LogementsComponent },
+  { path: 'logement/:id', component: LogementComponent},
   { path: 'activites', component: ActivitesComponent },
   { path: 'lieux', component: LieuxComponent },
   { path: 'connexion', component: LoginComponent },
   { path: 'creation_compte', component: SignupComponent},
   { path: 'creation_annonce', canActivate: [AuthGuard], component: AnnonceFormComponent},
-  { path: 'mes_annonces', canActivate: [AuthGuard], component: CompteAnnonceurComponent},
   { path: 'mon_compte', canActivate: [AuthGuard], component: MonCompteComponent},
+  { path: 'mes_annonces', canActivate: [AuthGuard], component: CompteAnnonceurComponent},
   { path: 'reset_password/:token', component: ResetPasswordComponent},
-  { path: 'logement/:id', component: LogementComponent},
-  { path: '', component: MainPageComponent },
+  { path: 'reponseLogementReservation/:id', component: ReponseLogementReservationComponent},
   { path: '**', component: MainPageComponent }
 ];
 

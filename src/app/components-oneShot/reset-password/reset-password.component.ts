@@ -1,19 +1,19 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControlOptions, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ResetPassword } from '../models/resetPassword';
-import { User } from '../models/user.model';
-import { AuthenticationService } from '../services/authentication.service';
-import { InfoService } from '../services/info.service';
-import { UserService } from '../services/user.service';
+import { ResetPassword } from '../../models/resetPassword';
+import { User } from '../../models/user.model';
+import { AuthenticationService } from '../../services/authentication.service';
+import { InfoService } from '../../services/info.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss']
 })
-export class ResetPasswordComponent implements OnInit {
+export class ResetPasswordComponent implements OnInit, OnDestroy {
 
   public subActivatedRoute?: Subscription;
   token!: string;
@@ -31,7 +31,7 @@ export class ResetPasswordComponent implements OnInit {
     private userService: UserService,
     private infoService: InfoService
   ) { }
-
+  
   ngOnInit(): void {
     this.subActivatedRoute = this.activatedRoute.params.subscribe((params: any) => {
       this.token = params['token'];
@@ -99,6 +99,10 @@ export class ResetPasswordComponent implements OnInit {
         this.infoService.popupInfo(err);
       }
     )
+  }
+
+  ngOnDestroy(): void {
+    if(this.subActivatedRoute){this.subActivatedRoute.unsubscribe();};
   }
 
 }

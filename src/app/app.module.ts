@@ -30,7 +30,8 @@ import { LogementComponent } from './logement/logement.component';
 import { PopupContacterLogementAnnonceComponent } from './popups/popup-contacter-logement-annonce/popup-contacter-logement-annonce.component';
 import { PopupReservationLogementComponent } from './popups/popup-reservation-logement/popup-reservation-logement.component';
 import { PopupResetPasswordComponent } from './popups/popup-reset-password/popup-reset-password.component';
-import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ResetPasswordComponent } from './components-oneShot/reset-password/reset-password.component';
+import { ReponseLogementReservationComponent } from './components-oneShot/reponse-logement-reservation/reponse-logement-reservation.component';
 import { MonCompteComponent } from './mon-compte/mon-compte.component';
 
 @NgModule({
@@ -50,7 +51,8 @@ import { MonCompteComponent } from './mon-compte/mon-compte.component';
     PopupReservationLogementComponent,
     PopupResetPasswordComponent,
     ResetPasswordComponent,
-    MonCompteComponent
+    MonCompteComponent,
+    ReponseLogementReservationComponent
   ],
   imports: [
     BrowserModule,

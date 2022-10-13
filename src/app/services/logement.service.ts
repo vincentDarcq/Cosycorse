@@ -22,7 +22,7 @@ export class LogementService {
     if(this.logementsRandom.value.length === 0){
       this.villes.forEach(ville => {
         this.getRecentsLogementForVille(ville);
-      })
+      });
     }
   }
 
@@ -39,7 +39,7 @@ export class LogementService {
       params: {
         logementId: logementId
       }
-    })
+    });
   }
 
   public deleteLogement(logementId: string) {
@@ -134,6 +134,30 @@ export class LogementService {
     return this.http.get<Array<LogementReservation>>(`/api/logementReservation/getReservationsByDemandeurEmail`, {
       params : {
         userEmail : userEmail
+      }
+    });
+  }
+
+  public getReservationByLogementReservationId(logementReservationId: string): Observable<LogementReservation>{
+    return this.http.get<LogementReservation>(`/api/logementReservation/getReservationByLogementReservationId`, {
+      params: {
+        logementReservationId: logementReservationId
+      }
+    });
+  }
+
+  public confirmLogementReservation(logementReservationId: string): Observable<string>{
+    return this.http.get<string>(`/api/logementReservation/accepteReservation`, {
+      params: {
+        logementReservationId: logementReservationId
+      }
+    });
+  }
+
+  public rejectLogementReservation(logementReservationId: string): Observable<string>{
+    return this.http.get<string>(`/api/logementReservation/rejectReservation`, {
+      params: {
+        logementReservationId: logementReservationId
       }
     });
   }
