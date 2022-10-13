@@ -80,6 +80,7 @@ export class LogementsComponent implements OnInit {
   
   addLogementsOnMap(logements: Array<Logement>){
     logements.forEach(l => {
+      const prix = l.prix + l.prix*10/100;
       const coordinates = this.mapService.newPoint(l.latitude, l.longitude);
       const point = this.mapService.createPoint(coordinates)
       const layer = marker(point)
@@ -90,7 +91,7 @@ export class LogementsComponent implements OnInit {
             this.openLogementInNewWindow(l._id);
           })
         })
-        .bindTooltip("<div style='background:white; width: 30px;'><b>" + l.prix.toString() + "€" + "</b></div>",
+        .bindTooltip("<div style='background:white; width: 30px;'><b>" + prix.toString() + "€" + "</b></div>",
           {
             direction: 'right',
             permanent: true,
