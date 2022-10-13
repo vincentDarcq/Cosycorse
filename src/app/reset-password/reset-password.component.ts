@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AbstractControlOptions, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -20,6 +20,9 @@ export class ResetPasswordComponent implements OnInit {
   user!: User;
   error?: string;
   form!: FormGroup;
+
+  @ViewChild('password') public pass!: ElementRef;
+  @ViewChild('confirmPassword') public confirmPass!: ElementRef;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -69,6 +72,22 @@ export class ResetPasswordComponent implements OnInit {
         matchingControl.setErrors(null);
       }
     };
+  }
+
+  displayPass(){
+    this.pass.nativeElement.type = "text";
+  }
+
+  displayConfirmPass(){
+    this.confirmPass.nativeElement.type = "text";
+  }
+
+  hidePass(){
+    this.pass.nativeElement.type = "password";
+  }
+
+  hideConfirmPass(){
+    this.confirmPass.nativeElement.type = "password";
   }
 
   submit(){
