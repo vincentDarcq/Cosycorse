@@ -59,9 +59,11 @@ export class LogementComponent implements OnInit, OnDestroy {
       this.subLogements = this.logementService.logementsRandom.subscribe((logements: Array<Logement>) => {
         if (logements.length > 0) {
           this.logement = this.logementService.getLogementById(this.id!);
+          console.log(this.logement)
         }
         if (typeof this.logement === "undefined") {
           this.logementService.fetchLogementById(this.id).subscribe((logement: Logement) => {
+            console.log(logement)
             this.logement = logement;
             this.completeLogement();
             this.getReservations();
