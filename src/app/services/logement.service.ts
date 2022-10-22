@@ -34,7 +34,7 @@ export class LogementService {
     return this.logementsRandom.value.find(l => l._id === logementId);
   }
 
-  public fetchLogementById(logementId: string) {
+  public fetchLogementById(logementId: string): Observable<Logement> {
     return this.http.get<Logement>(`/api/logements/getLogementById`, {
       params: {
         logementId: logementId
