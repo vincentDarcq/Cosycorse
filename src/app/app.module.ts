@@ -23,7 +23,7 @@ import { LogementsComponent } from './logements/logements.component';
 import { ActivitesComponent } from './activites/activites.component';
 import { LieuxComponent } from './lieux/lieux.component';
 import { MainPageComponent } from './main-page/main-page.component';
-import { CompteAnnonceurComponent } from './compte-annonceur/compte-annonceur.component';
+import { MesAnnoncesComponent } from './mes-annonces/mes-annonces.component';
 import { SignupComponent } from './signup/signup.component';
 import { AnnonceFormComponent } from './annonce-form/annonce-form.component';
 import { LogementComponent } from './logement/logement.component';
@@ -45,7 +45,7 @@ import { MonCompteComponent } from './mon-compte/mon-compte.component';
     LoginComponent,
     SignupComponent,
     AnnonceFormComponent,
-    CompteAnnonceurComponent,
+    MesAnnoncesComponent,
     LogementComponent,
     PopupContacterLogementAnnonceComponent,
     PopupReservationLogementComponent,

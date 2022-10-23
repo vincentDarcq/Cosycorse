@@ -13,11 +13,11 @@ import { InfoService } from '../services/info.service';
 import { ViewportScroller } from '@angular/common';
 
 @Component({
-  selector: 'app-compte-annonceur',
-  templateUrl: './compte-annonceur.component.html',
-  styleUrls: ['./compte-annonceur.component.scss']
+  selector: 'app-mes-annonces',
+  templateUrl: './mes-annonces.component.html',
+  styleUrls: ['./mes-annonces.component.scss']
 })
-export class CompteAnnonceurComponent implements OnInit, OnDestroy {
+export class MesAnnoncesComponent implements OnInit, OnDestroy {
 
   public subUser!: Subscription;
   public subLogements!: Subscription;

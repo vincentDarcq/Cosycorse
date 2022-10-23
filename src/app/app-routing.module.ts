@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ActivitesComponent } from './activites/activites.component';
 import { AnnonceFormComponent } from './annonce-form/annonce-form.component';
-import { CompteAnnonceurComponent } from './compte-annonceur/compte-annonceur.component';
+import { MesAnnoncesComponent } from './mes-annonces/mes-annonces.component';
 import { AuthGuard } from './guards/auth.guard';
 import { LieuxComponent } from './lieux/lieux.component';
 import { LogementComponent } from './logement/logement.component';
@@ -24,7 +24,7 @@ const routes: Routes = [
   { path: 'creation_compte', component: SignupComponent},
   { path: 'creation_annonce', canActivate: [AuthGuard], component: AnnonceFormComponent},
   { path: 'mon_compte', canActivate: [AuthGuard], component: MonCompteComponent},
-  { path: 'mes_annonces', canActivate: [AuthGuard], component: CompteAnnonceurComponent},
+  { path: 'mes_annonces', canActivate: [AuthGuard], component: MesAnnoncesComponent},
   { path: 'reset_password/:token', component: ResetPasswordComponent},
   { path: 'reponseLogementReservation/:id', component: ReponseLogementReservationComponent},
   { path: '**', component: MainPageComponent }
