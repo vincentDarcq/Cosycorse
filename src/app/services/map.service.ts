@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Marker, marker, icon, latLng, LatLng, Map, tileLayer } from 'leaflet';
+import { Marker, marker, icon, latLng, LatLng, Map, tileLayer, MapOptions } from 'leaflet';
 import { MapPoint } from '../models/map-point.model';
 
 @Injectable({
@@ -43,6 +43,19 @@ export class MapService {
       latitude: latitude,
       longitude: longitude,
       address: ""
+    };
+  }
+
+  public initializeCorseMap(): MapOptions{
+    return {
+      center: latLng(42.21174173825274, 9.05044250488282),
+      zoom: 8,
+      layers: [
+        tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 50,
+          attribution: 'Map data © OpenStreetMap contributors',
+        }),
+      ],
     };
   }
 }

@@ -1,0 +1,60 @@
+<div class="component">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="grid">
+            <div class="infos">
+                <div class="step">
+                    <div class="ville" fxLayout="column">
+                        <mat-form-field class="item field input_ville">
+                          <input matInput type="text" name="ville" required placeholder="Ville" (keyup)="affineVille()"
+                          formControlName="ville" [matAutocomplete]="villescomplete">
+                        </mat-form-field>
+                        <mat-autocomplete #villescomplete="matAutocomplete">
+                          <mat-option *ngFor="let ville of villeAutoComplete" [value]="ville">
+                            {{ ville }}
+                          </mat-option>
+                        </mat-autocomplete>
+                        <div class="control item" 
+                          *ngIf="form.get('ville')!.invalid && (form.get('ville')!.dirty || form.get('ville')!.touched)">
+                          Ville obligatoire
+                        </div>
+                    </div>
+                </div>
+                <div class="step" fxLayout="column">
+                    <div class="item" fxLayout="row">
+                        <mat-form-field>
+                            <input matInput type="number" name="latitude" placeholder="latitude" formControlName="latitude" #latitude>
+                        </mat-form-field>
+                        <div class="item">
+                          cliquez sur une position de la carte pour remplir ce champ
+                        </div>
+                    </div>
+                    <div class="item" fxLayout="row">
+                        <mat-form-field>
+                            <input matInput type="number" name="longitude" placeholder="longitude" formControlName="longitude" #longitude>
+                        </mat-form-field>
+                        <div class="item">
+                          cliquez sur une position de la carte pour remplir ce champ
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="item field" fxLayoutGap="20px">
+                        <textarea type="text" placeholder="Description" formControlName="description" name="description" id="description"
+                            rows="4"></textarea>
+                    </div>
+                </div>
+                <div class="step">
+                    <ngx-dropzone (change)="onDropZone($event)">
+                        <ngx-dropzone-label>Ajoutez/Deposez des photos</ngx-dropzone-label>
+                        <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+                          <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                        </ngx-dropzone-preview>
+                    </ngx-dropzone>
+                </div>
+            </div>
+            <div id="map" leaflet *ngIf="displayMap" (leafletMapReady)="onMapReady($event)" [leafletOptions]="mapOptions">
+            </div>
+        </div>
+        <button class="submit" [disabled]="form.invalid" type="submit">Créer le lieu</button>
+    </form>
+</div>

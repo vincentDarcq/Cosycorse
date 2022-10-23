@@ -57,16 +57,7 @@ export class LogementsComponent implements OnInit {
   }
 
   private initializeMap() {
-    this.mapOptions = {
-      center: latLng(42.21174173825274, 9.05044250488282),
-      zoom: 8,
-      layers: [
-        tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          maxZoom: 50,
-          attribution: 'Map data © OpenStreetMap contributors',
-        }),
-      ],
-    };
+    this.mapOptions = this.mapService.initializeCorseMap();
     this.displayMap = true;
   }
 
@@ -149,7 +140,7 @@ export class LogementsComponent implements OnInit {
     this.logementsFiltres = this.equipementsFiltres = [];
     this.checkInput!.forEach((element) => {
       element.checked = false;
-});
+    });
   }
 
   valueChange(equipement: string, event: MatCheckboxChange){

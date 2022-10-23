@@ -33,6 +33,7 @@ import { PopupResetPasswordComponent } from './popups/popup-reset-password/popup
 import { ResetPasswordComponent } from './components-oneShot/reset-password/reset-password.component';
 import { ReponseLogementReservationComponent } from './components-oneShot/reponse-logement-reservation/reponse-logement-reservation.component';
 import { MonCompteComponent } from './mon-compte/mon-compte.component';
+import { LieuxFormComponent } from './lieux-form/lieux-form.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { MonCompteComponent } from './mon-compte/mon-compte.component';
     PopupResetPasswordComponent,
     ResetPasswordComponent,
     MonCompteComponent,
-    ReponseLogementReservationComponent
+    ReponseLogementReservationComponent,
+    LieuxFormComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,48 @@
+.component {
+    width: 100%;
+    background-color: rgb(247, 253, 254);
+
+    .grid {
+        display: grid;
+        grid-template-columns: 70% 20%;
+
+        .infos {
+            .step {
+                background-color: rgb(243, 248, 234);
+                margin: 5px 0;
+    
+                .ville {
+                    border-radius: 5px;
+                    margin: 2% 5% 0 0;
+    
+                    .input_ville {
+                        width: 150px !important;
+                    }
+                }
+            }
+        }
+
+        #map {
+            border-radius: 20px;
+            width: 50vh;
+            height: 75vh;
+        }
+    }
+}
+
+.control {
+    color: red;
+}
+
+textarea{
+    width: 100vh;
+}
+
+.item {
+    font-size: 1rem;
+    margin: 0 5% 1% 5%;
+}
+
+.field {
+    width: 20%;
+}

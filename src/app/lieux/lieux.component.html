@@ -1,1 +1,9 @@
-<p>lieux works!</p>
+<div class="component">
+    <div class="grid">
+        <div class="lieux">
+            
+        </div>
+        <div id="map" leaflet *ngIf="displayMap" (leafletMapReady)="onMapReady($event)" [leafletOptions]="mapOptions">
+        </div>
+    </div>
+</div>

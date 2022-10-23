@@ -1,0 +1,14 @@
+.component {
+    background-color: rgb(247, 253, 254);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 70% 20%;
+}
+
+.lieux {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
