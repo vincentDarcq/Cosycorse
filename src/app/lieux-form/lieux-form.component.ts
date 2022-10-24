@@ -1,9 +1,12 @@
 import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Map, MapOptions } from 'leaflet';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Map, MapOptions, marker } from 'leaflet';
 import { LieuService } from '../services/lieu.service';
 import { MapService } from '../services/map.service';
 import { Villes } from '../models/villes';
+import { LieusType } from '../models/type-lieu';
+import { Lieu } from '../models/lieu';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lieux-form',
@@ -19,7 +22,9 @@ export class LieuxFormComponent implements OnInit {
   mapOptions!: MapOptions;
   map!: Map;
   villes = Villes;
+  lieu_types = LieusType;
   villeAutoComplete = Villes;
+  lastLayer: any;
 
   @ViewChild("latitude") private latitude!: ElementRef;
   @ViewChild("longitude") private longitude!: ElementRef;
@@ -28,11 +33,13 @@ export class LieuxFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private lieuService: LieuService,
     private zone: NgZone,
-    private mapService: MapService
+    private mapService: MapService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
+      nom: ['', Validators.required],
       ville: ['', Validators.required],
       type: ['', Validators.required],
       description: '',
@@ -49,6 +56,16 @@ export class LieuxFormComponent implements OnInit {
         const coord = e.latlng;
         this.latitude.nativeElement.value = coord.lat;
         this.longitude.nativeElement.value = coord.lng;
+        this.form.value.latitude = coord.lat;
+        this.form.value.longitude = coord.lng;
+        this.form.controls['latitude'].setValue(coord.lat);
+        this.form.controls['longitude'].setValue(coord.lng);
+        if(this.lastLayer && this.map.hasLayer(this.lastLayer)){
+          this.map.removeLayer(this.lastLayer);
+        }
+        const mapPoint = this.mapService.newPoint(coord.lat, coord.lng);
+        const point = this.mapService.createPoint(mapPoint)
+        this.lastLayer = marker(point).setIcon(this.mapService.getRedIcon()).addTo(this.map);
       })
     })
   }
@@ -82,7 +99,19 @@ export class LieuxFormComponent implements OnInit {
   }
 
   submit(){
-
+    const lieu = new Lieu();
+    lieu.description = this.form.value.description;
+    lieu.latitude = this.form.value.latitude;
+    lieu.longitude = this.form.value.longitude;
+    lieu.longitude = this.form.value.longitude;
+    lieu.nom = this.form.value.nom;
+    lieu.type = this.form.value.type;
+    lieu.ville = this.form.value.ville;
+    this.lieuService.createLieu(lieu).subscribe((lieu: Lieu) => {
+      this.lieuService.uploadPhotos(this.formData, lieu._id).subscribe((lieu: Lieu) => {
+        this.router.navigate(['/']);
+      })
+    })
   }
 
 }

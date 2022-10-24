@@ -1,5 +1,6 @@
 export class Lieu {
     _id!: string;
+    nom!: String;
     ville!: string;
     type!: string;
     description!: string;

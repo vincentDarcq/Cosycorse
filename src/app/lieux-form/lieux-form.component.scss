@@ -6,22 +6,6 @@
         display: grid;
         grid-template-columns: 70% 20%;
 
-        .infos {
-            .step {
-                background-color: rgb(243, 248, 234);
-                margin: 5px 0;
-    
-                .ville {
-                    border-radius: 5px;
-                    margin: 2% 5% 0 0;
-    
-                    .input_ville {
-                        width: 150px !important;
-                    }
-                }
-            }
-        }
-
         #map {
             border-radius: 20px;
             width: 50vh;
@@ -45,4 +29,42 @@ textarea{
 
 .field {
     width: 20%;
+}
+
+.submit {
+    width: 30%;
+    height: 1%;
+    padding: 1%;
+    margin: 2% 35%;
+    background-color: rgb(187, 247, 74);
+}
+
+.step {
+    background-color: rgb(243, 248, 234);
+    margin: 5px 0;                
+}
+
+// .ville {
+//     border-radius: 5px;
+//     margin: 2% 5% 0 5%;
+// }
+
+.input_ville {
+    width: 150px !important;
+}
+ngx-dropzone {
+    height: 100px;
+    background-color: rgb(243, 248, 234);
+}
+
+.radio_button {
+    margin-top: 2%;
+}
+
+mat-radio-button{
+    margin: 3%;
+}
+
+.message{
+    margin: 3% 0 0 2%;
 }

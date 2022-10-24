@@ -3,36 +3,58 @@
         <div class="grid">
             <div class="infos">
                 <div class="step">
-                    <div class="ville" fxLayout="column">
-                        <mat-form-field class="item field input_ville">
-                          <input matInput type="text" name="ville" required placeholder="Ville" (keyup)="affineVille()"
-                          formControlName="ville" [matAutocomplete]="villescomplete">
-                        </mat-form-field>
-                        <mat-autocomplete #villescomplete="matAutocomplete">
-                          <mat-option *ngFor="let ville of villeAutoComplete" [value]="ville">
-                            {{ ville }}
-                          </mat-option>
-                        </mat-autocomplete>
-                        <div class="control item" 
-                          *ngIf="form.get('ville')!.invalid && (form.get('ville')!.dirty || form.get('ville')!.touched)">
-                          Ville obligatoire
+                    <div fxLayout="row">
+                        <div class="item" fxLayout="column">
+                            <div class="nom">
+                                <mat-form-field class="item field input_ville">
+                                    <input matInput type="text" required name="nom" placeholder="nom" formControlName="nom">
+                                </mat-form-field>
+                                <div class="control item" 
+                                  *ngIf="form.get('nom')!.invalid && (form.get('nom')!.dirty || form.get('nom')!.touched)">
+                                  Nom obligatoire
+                                </div>
+                            </div>
+                            <div class="ville" fxLayout="column">
+                                <mat-form-field class="item field input_ville">
+                                  <input matInput type="text" name="ville" required placeholder="Ville" (keyup)="affineVille()"
+                                  formControlName="ville" [matAutocomplete]="villescomplete">
+                                </mat-form-field>
+                                <mat-autocomplete #villescomplete="matAutocomplete">
+                                  <mat-option *ngFor="let ville of villeAutoComplete" [value]="ville">
+                                    {{ ville }}
+                                  </mat-option>
+                                </mat-autocomplete>
+                                <div class="control item" 
+                                  *ngIf="form.get('ville')!.invalid && (form.get('ville')!.dirty || form.get('ville')!.touched)">
+                                  Ville obligatoire
+                                </div>
+                            </div>
+                        </div>
+                        <div class="radio_button">
+                            <mat-radio-group formControlName="type" name="type" *ngFor="let type of lieu_types">
+                                <mat-radio-button [value]="type">{{ type }}</mat-radio-button>
+                            </mat-radio-group>
+                            <div class="control item" 
+                                *ngIf="form.get('type')!.invalid && (form.get('type')!.dirty || form.get('type')!.touched)">
+                                Type obligatoire
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="step" fxLayout="column">
                     <div class="item" fxLayout="row">
                         <mat-form-field>
-                            <input matInput type="number" name="latitude" placeholder="latitude" formControlName="latitude" #latitude>
+                            <input matInput type="number" name="latitude" required placeholder="latitude" formControlName="latitude" #latitude>
                         </mat-form-field>
-                        <div class="item">
+                        <div class="message">
                           cliquez sur une position de la carte pour remplir ce champ
                         </div>
                     </div>
                     <div class="item" fxLayout="row">
                         <mat-form-field>
-                            <input matInput type="number" name="longitude" placeholder="longitude" formControlName="longitude" #longitude>
+                            <input matInput type="number" name="longitude" required placeholder="longitude" formControlName="longitude" #longitude>
                         </mat-form-field>
-                        <div class="item">
+                        <div class="message">
                           cliquez sur une position de la carte pour remplir ce champ
                         </div>
                     </div>
