@@ -12,3 +12,75 @@
     flex-direction: row;
     flex-wrap: wrap;
 }
+
+.margin {
+    margin: 0 1% -8% 1%;
+}
+
+#map {
+    border-radius: 20px;
+    width: 50vh;
+    height: 75vh;
+}
+
+.fas {
+    width: 0;
+    height: 0;
+    font-size: 36px;
+    cursor: pointer;
+    opacity: 1;
+    -webkit-text-fill-color: white;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: black;
+}
+
+.arrow-right {
+    position: relative;
+    left: 90%;
+    bottom: 35%;
+}
+
+.arrow-left {
+    position: relative;
+    left: 5%;
+    bottom: 35%;
+}
+
+.arrow-left:hover,
+.arrow-right:hover {
+    opacity: .4;
+}
+
+p {
+    position: relative;
+    width: fit-content;
+    left: 70px;
+    bottom: 210px;
+    font-size: 30px;
+    color: white;
+}
+
+img{
+    border-radius: 20px;
+    margin: 2%
+}
+
+.search{
+    padding: 1%;
+}
+
+.btn-primary, .btn-success{
+    height: 50%;
+    margin-top: 1%;
+}
+
+::ng-deep mat-form-field > .mat-form-field-wrapper > .mat-form-field-underline{
+    display: none !important;
+}
+
+mat-radio-group{
+    padding-top: 1.5%;
+}
+.input_text{
+    padding-left: 5%;
+}

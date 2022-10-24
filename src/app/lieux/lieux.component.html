@@ -1,7 +1,31 @@
 <div class="component">
+    <div class="search" fxLayout="row" fxLayoutGap="10px">
+        <mat-form-field class="input_text">
+            <input matInput type="text" name="villeSearch" placeholder="ville"
+             [(ngModel)]="villeSearch" [matAutocomplete]="villescomplete">
+        </mat-form-field>
+        <mat-autocomplete #villescomplete="matAutocomplete">
+            <mat-option *ngFor="let ville of villes" [value]="ville">
+              {{ ville }}
+            </mat-option>
+        </mat-autocomplete>
+        <mat-radio-group [(ngModel)]="typeSearch" name="typeSearch" *ngFor="let type of lieu_types">
+            <mat-radio-button [value]="type">{{ type }}</mat-radio-button>
+        </mat-radio-group>
+        <button class="btn btn-primary" (click)="actualiser()">Actualiser</button>
+        <button class="btn btn-success" (click)="effacerFiltres()">Effacer les filtres</button>
+    </div>
     <div class="grid">
         <div class="lieux">
-            
+            <div class="margin" *ngFor="let lieu of lieux; let indexLogement = index">
+                <img *ngIf="lieu && lieu.images" [src]="serverImg + lieu.images[lieu.indexImage]"
+                        alt="">
+                <p>{{ lieu.nom }}</p>
+                <i class='fas fa-angle-right arrow-right'
+                    (click)="selectArrow(lieux, indexLogement, lieu.indexImage, $event)"></i>
+                <i class='fas fa-angle-left arrow-left'
+                    (click)="selectLeftArrow(lieux, indexLogement, lieu.indexImage, $event)"></i>
+            </div>
         </div>
         <div id="map" leaflet *ngIf="displayMap" (leafletMapReady)="onMapReady($event)" [leafletOptions]="mapOptions">
         </div>

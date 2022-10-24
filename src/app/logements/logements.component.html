@@ -35,7 +35,7 @@
     </mat-checkbox>
     <div class="logements">
         <div class="propositions" *ngIf="logementsFiltres.length === 0">
-            <div class="logement button-effect" *ngFor="let logement of logementsRandom; let indexLogement = index"
+            <div class="margin button-effect" *ngFor="let logement of logementsRandom; let indexLogement = index"
                 (click)="openLogementInNewWindow(logement._id)">
                 <img *ngIf="logement && logement.images" [src]="serverImg + logement.images[logement.indexImage]"
                     alt="">
@@ -53,7 +53,7 @@
             </div>
         </div>
         <div class="propositions" *ngIf="logementsFiltres.length > 0">
-            <div class="logement button-effect" *ngFor="let logement of logementsFiltres; let indexLogement = index"
+            <div class="margin button-effect" *ngFor="let logement of logementsFiltres; let indexLogement = index"
             (click)="openLogementInNewWindow(logement._id)">
                 <img *ngIf="logement && logement.images" [src]="serverImg + logement.images[logement.indexImage]"
                     alt="">

@@ -31,4 +31,8 @@ export class LieuService {
       }
     });
   }
+
+  public fetchLieux(){
+    return this.http.get<Array<Lieu>>(`/api/lieu/getAll`);
+  }
 }

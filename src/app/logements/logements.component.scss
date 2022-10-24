@@ -13,13 +13,11 @@
     flex-wrap: wrap;
 }
 
-.logement {
+.margin {
     margin: 1%;
 }
 
 .button-effect {
-    // float: none;
-    // clear: none;
     border-style: none;
     border-width: 2px;
     border-color: rgba(7, 0, 0, 0.98);
@@ -28,13 +26,6 @@
     background-color: rgb(235, 249, 251);
     cursor: pointer;
     height:fit-content;
-    // -webkit-backface-visibility: visible;
-    // backface-visibility: visible;
-    // -webkit-perspective: 424px;
-    // perspective: 424px;
-    // -webkit-transform: perspective(216px);
-    // transform: perspective(216px);
-    // background-clip: padding-box;
 }
 
 img {

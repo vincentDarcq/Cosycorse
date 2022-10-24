@@ -1,5 +1,6 @@
 export class Lieu {
     _id!: string;
+    indexImage!: number;
     nom!: String;
     ville!: string;
     type!: string;

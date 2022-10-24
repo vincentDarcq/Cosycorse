@@ -3,5 +3,6 @@ export const LieusType = [
     'Golfe',
     'Calanques',
     'Réserve Naturelle',
-    'Village classé'
+    'Village classé',
+    'Grotte'
 ]
