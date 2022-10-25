@@ -4,5 +4,6 @@ export const LieusType = [
     'Calanques',
     'Réserve Naturelle',
     'Village classé',
-    'Grotte'
+    'Grotte',
+    'Maison'
 ]

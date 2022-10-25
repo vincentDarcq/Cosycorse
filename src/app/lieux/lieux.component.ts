@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Layer, Map, MapOptions, marker } from 'leaflet';
 import { Lieu } from '../models/lieu';
 import { Villes } from '../models/villes';
 import { LieuService } from '../services/lieu.service';
 import { MapService } from '../services/map.service';
 import { LieusType } from '../models/type-lieu';
+import { MatRadioButton } from '@angular/material/radio';
 
 @Component({
   selector: 'app-lieux',
@@ -18,24 +19,34 @@ export class LieuxComponent implements OnInit {
   mapOptions!: MapOptions;
   map!: Map;
   lieux!: Array<Lieu>;
+  lieuxFiltered!: Array<Lieu>;
   serverImg: String = "/upload?img=";
   layers: Array<Layer> = [];
   lieu_types = LieusType;
-  typeSearch: string = "";
-  villeSearch: string = "";
+  nomSearch!: string;
+  typeSearch!: string;
+  villeSearch!: string;
+
+  @ViewChildren('radioButton') private radioButtons?: QueryList<MatRadioButton>;
 
   constructor(
     private lieuService: LieuService,
     private mapService: MapService
   ) {
     this.lieux = new Array();
+    this.lieuxFiltered = new Array();
   }
 
   ngOnInit(): void {
     this.lieuService.fetchLieux().subscribe((lieux: Array<Lieu>) => {
       this.lieux = lieux;
       this.lieux.forEach(l => l.indexImage = 0);
-      this.initializeMap();
+      if(this.map){
+        this.layers.forEach(l => this.map.removeLayer(l));
+        this.addLieuxOnMap(lieux);
+      }else {
+        this.initializeMap();
+      }
     })
   }
 
@@ -72,7 +83,6 @@ export class LieuxComponent implements OnInit {
       const point = this.mapService.createPoint(coordinates)
       const layer = marker(point)
         .setIcon(this.mapService.getRedIcon())
-        .addTo(this.map)
         .bindTooltip("<div style='background:white; width: fit-content;'><b>" + l.nom + "</b></div>",
           {
             direction: 'right',
@@ -81,16 +91,28 @@ export class LieuxComponent implements OnInit {
             opacity: 0.75,
             className: 'leaflet-tooltip'
           });
+      this.map.addLayer(layer);
       this.layers.push(layer);
     })
   }
 
   actualiser(){
-
+    this.lieuService.findByFilters(this.nomSearch, this.villeSearch, this.typeSearch).subscribe((lieux: Array<Lieu>) => {
+      this.lieuxFiltered = lieux;
+      this.lieuxFiltered.forEach(l => l.indexImage = 0);
+      this.layers.forEach(l => this.map.removeLayer(l));
+      this.addLieuxOnMap(this.lieuxFiltered);
+    })
   }
 
   effacerFiltres(){
-    
+    this.villeSearch = this.nomSearch = "";
+    this.lieuxFiltered = [];
+    this.radioButtons!.forEach((element) => {
+      element.checked = false;
+    });
+    this.layers.forEach(l => this.map.removeLayer(l));
+    this.addLieuxOnMap(this.lieux);
   }
 
 }

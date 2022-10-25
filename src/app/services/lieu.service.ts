@@ -35,4 +35,14 @@ export class LieuService {
   public fetchLieux(){
     return this.http.get<Array<Lieu>>(`/api/lieu/getAll`);
   }
+
+  public findByFilters(nom: string, ville: string, type: string){
+    return this.http.get<Array<Lieu>>(`/api/lieu/getByFilters`, {
+      params: {
+        nom: nom,
+        ville: ville,
+        type: type
+      }
+    });
+  }
 }

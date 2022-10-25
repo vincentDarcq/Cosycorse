@@ -52,7 +52,12 @@ export class LogementsComponent implements OnInit {
   ngOnInit(): void {
     this.subscription = this.logementService.logementsRandom.subscribe((logements: Array<Logement>) => {
       this.logementsRandom = logements;
-      this.initializeMap();
+      if(this.map){
+        this.layers.forEach(l => this.map.removeLayer(l));
+        this.addLogementsOnMap(logements);
+      }else {
+        this.initializeMap();
+      }
     })
   }
 
@@ -76,7 +81,6 @@ export class LogementsComponent implements OnInit {
       const point = this.mapService.createPoint(coordinates)
       const layer = marker(point)
         .setIcon(this.mapService.getRedIcon())
-        .addTo(this.map)
         .on('click', () => {
           this.zone.run(() => {
             this.openLogementInNewWindow(l._id);
@@ -90,6 +94,7 @@ export class LogementsComponent implements OnInit {
             opacity: 0.75,
             className: 'leaflet-tooltip'
           });
+      this.map.addLayer(layer);
       this.layers.push(layer);
     })
   }
@@ -127,6 +132,7 @@ export class LogementsComponent implements OnInit {
         if(logements.length > 0){
           this.logementsFiltres = logements;
           this.logementsFiltres.forEach(l => l.indexImage = 0);
+          this.layers.forEach(l => this.map.removeLayer(l));
           this.addLogementsOnMap(this.logementsFiltres);
         }else {
           this.infoService.popupInfo("Il n'y a pas de logements correspondant à vos critères vos critères");
@@ -141,6 +147,8 @@ export class LogementsComponent implements OnInit {
     this.checkInput!.forEach((element) => {
       element.checked = false;
     });
+    this.layers.forEach(l => this.map.removeLayer(l));
+    this.addLogementsOnMap(this.logementsRandom)
   }
 
   valueChange(equipement: string, event: MatCheckboxChange){
