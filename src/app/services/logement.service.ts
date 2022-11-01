@@ -75,10 +75,10 @@ export class LogementService {
     });
   }
 
-  public getLogementsByAnnonceur(annonceur: string) {
+  public getLogementsByAnnonceur(email: string) {
     return this.http.get<Array<Logement>>(`/api/logements/getByAnnonceur`, {
       params: {
-        annonceur: annonceur
+        emailAnnonceur: email
       }
     });
   }

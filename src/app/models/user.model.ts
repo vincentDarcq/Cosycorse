@@ -1,31 +1,21 @@
 export class User {
     _id: string;
     email: string;
-    name: string;
+    nom: string;
+    prenom: string;
     password: string;
+    stripeAccountId: string;
 
     constructor(
         id?: string,
         email?: string,
-        name?: string,
-        password?: string
+        prenom?: string,
+        nom?: string
     ) {
-        this._id = id!;
-        this.email = email!;
-        this.name = name!;
-        this.password = password!;
-    }
-
-    public setEmail(email: string) {
+        this._id = id;
         this.email = email;
-    }
-
-    public setName(name: string) {
-        this.name = name;
-    }
-
-    public setPasword(password: string) {
-        this.password = password;
+        this.prenom = prenom;
+        this.nom = nom;
     }
 
 }

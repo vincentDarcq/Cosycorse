@@ -1,8 +1,9 @@
 <div class="component">
-    <form class="formulaire" (ngSubmit)="createAccount()" #signupForm="ngForm">
-        <input type="text" id="nom" name="nom" placeholder="nom" required [(ngModel)]="nom">
-        <input type="text" id="email" name="email" placeholder="email" required [(ngModel)]="email">
-        <input type="password" id="password" name="password"placeholder="mot de passe" required [(ngModel)]="password">
-        <button type="submit" [disabled]="!signupForm.form.valid">Créer mon compte</button>
+    <form class="formulaire" (ngSubmit)="createAccount()" [formGroup]="form">
+        <input type="text" name="nom" placeholder="nom" required formControlName="nom">
+        <input type="text" name="prenom" placeholder="prenom" required formControlName="prenom">
+        <input type="text" name="email" placeholder="email" required formControlName="email">
+        <input type="password" name="password" placeholder="mot de passe" required formControlName="password">
+        <button type="submit" [disabled]="!form.valid">Créer mon compte</button>
     </form>
 </div>

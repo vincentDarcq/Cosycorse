@@ -1,4 +1,14 @@
 <div class="component">
+    <div class="stripe">
+        <div *ngIf="!user.stripeAccountId; else stripeAccountOk;">
+            <h3>La réception de paiements lorsqu'on vous proposez un logement se fait au travers d'un compte Stripe</h3>
+            <h5>Vous n'avez pas configuré votre compte</h5>
+            <p (click)="setUpPaiementStripe()">Configurer votre compte stripe</p>
+        </div>
+        <ng-template #stripeAccountOk>
+            <h3>Votre compte Stripe est correctement enregistré</h3>
+        </ng-template>
+    </div>
     <h3>Mes réservations</h3>
     <div fxLayout="row" fxLayoutGap="2%"class="reservation">
         <div class="button-effect" *ngFor="let mcr of monCompteReservations; let indexMCR = index">

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -15,8 +16,7 @@ import { UserService } from '../services/user.service';
 })
 export class LoginComponent implements OnInit {
 
-  public nom: string = "";
-  public password: string = "";
+  form: FormGroup;
   loginSub!: Subscription;
   error!: string;
 
@@ -26,15 +26,20 @@ export class LoginComponent implements OnInit {
     private infoService: InfoService,
     private router: Router,
     private dialog: MatDialog,
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required]
+    })
   }
 
   login(){
     let user = new User();
-    user.setName(this.nom);
-    user.setPasword(this.password);
+    user.email = this.form.value.email;
+    user.password = this.form.value.password;
     this.loginSub = this.authenticationService.login(user).subscribe( () => {
       if(sessionStorage.getItem("redirectUrl")){
         this.router.navigate([sessionStorage.getItem("redirectUrl")]);

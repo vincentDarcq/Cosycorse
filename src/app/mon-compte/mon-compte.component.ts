@@ -5,6 +5,7 @@ import { LogementReservation } from '../models/logementReservation';
 import { MonCompteReservation } from '../models/monCompteReservation';
 import { User } from '../models/user.model';
 import { LogementService } from '../services/logement.service';
+import { StripeService } from '../services/stripe.service';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -22,15 +23,19 @@ export class MonCompteComponent implements OnInit, OnDestroy {
 
   constructor(
     private userService: UserService,
-    private logementService: LogementService
+    private logementService: LogementService,
+    private stripeService: StripeService
   ) { }
   
   ngOnInit(): void {
     if(sessionStorage.getItem("redirectUrl")){
       sessionStorage.removeItem("redirectUrl")
     }
-    this.subUser = this.userService.currentUser.subscribe( (user: User | null) => {
-      this.user = new User(user?._id, user?.email, user?.name);
+    this.subUser = this.userService.currentUser.subscribe( (user: any) => {
+      this.user = new User(user._id, user.email, user.firstName, user.lastName);
+      if(user?.stripeAccountId){
+        this.user.stripeAccountId = user?.stripeAccountId;
+      }
       this.subReservations = this.logementService.getReservationsByUserEmail(this.user.email).subscribe((logementReservations: Array<LogementReservation>) => {
         logementReservations.forEach(lr => {
           this.logementService.fetchLogementById(lr.logementId!).subscribe( (logement: Logement) => {
@@ -55,6 +60,12 @@ export class MonCompteComponent implements OnInit, OnDestroy {
   }
 
   annulerReservation(){}
+
+  setUpPaiementStripe(){
+    this.stripeService.setUpPaiement().subscribe((url: string) => {
+      window.open(url);
+    });
+  }
   
   ngOnDestroy(): void {
     if(this.subUser){this.subUser.unsubscribe();}

@@ -42,9 +42,9 @@ export class MesAnnoncesComponent implements OnInit, OnDestroy {
     if(sessionStorage.getItem("redirectUrl")){
       sessionStorage.removeItem("redirectUrl")
     }
-    this.subUser = this.userService.currentUser.subscribe( (user: User | null) => {
-      this.user = new User(user?._id, user?.email, user?.name);
-      this.subLogements = this.logementService.getLogementsByAnnonceur(this.user.name).subscribe( (logements: Array<Logement>) => {
+    this.subUser = this.userService.currentUser.subscribe( (user: any) => {
+      this.user = new User(user._id, user.email, user.firstName, user.lastName);
+      this.subLogements = this.logementService.getLogementsByAnnonceur(this.user.email).subscribe( (logements: Array<Logement>) => {
         logements.forEach( (logement: Logement) => {
           const indexImages = typeof logement.images === "undefined" ? 0 : logement.images.length;
           this.modifyLogement.push(

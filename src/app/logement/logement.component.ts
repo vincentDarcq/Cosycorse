@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxGalleryOptions } from '@kolkov/ngx-gallery';
 import { Subscription } from 'rxjs';
 import { galleryImage } from '../models/galleryImage';
@@ -15,6 +15,9 @@ import { MailContactLogement } from '../models/mailContactLogement';
 import { LogementReservation } from '../models/logementReservation';
 import { PopupReservationLogementComponent } from '../popups/popup-reservation-logement/popup-reservation-logement.component';
 import { InfoService } from '../services/info.service';
+import { PaiementStripeComponent } from '../popups/paiement-stripe/paiement-stripe.component';
+import { UserService } from '../services/user.service';
+import { User } from '../models/user.model';
 
 @Component({
   selector: 'app-logement',
@@ -26,6 +29,7 @@ export class LogementComponent implements OnInit, OnDestroy {
   public logement?: Logement;
   public subActivatedRoute?: Subscription;
   public subLogements?: Subscription;
+  public subUser?: Subscription;
   id: string = "";
   serverImg: String = "/upload?img=";
   galleryOptions: NgxGalleryOptions[] = galleryOptions;
@@ -40,13 +44,16 @@ export class LogementComponent implements OnInit, OnDestroy {
   datesUnavailable = new Array();
   mail: MailContactLogement = new MailContactLogement();
   prixTotal?: number;
+  public user!: User;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private logementService: LogementService,
     private mailsService: MailsService,
     private dialog: MatDialog,
-    private infoService: InfoService
+    private infoService: InfoService,
+    private userService: UserService,
+    private router: Router
   ) {
   }
 
@@ -54,16 +61,17 @@ export class LogementComponent implements OnInit, OnDestroy {
     if(sessionStorage.getItem("redirectUrl")){
       sessionStorage.removeItem("redirectUrl")
     }
+    this.subUser = this.userService.currentUser.subscribe( (user: any) => {
+      this.user = new User(user._id, user.email, user.firstName, user.lastName);
+    })
     this.subActivatedRoute = this.activatedRoute.params.subscribe((params: any) => {
       this.id = params['id'];
       this.subLogements = this.logementService.logementsRandom.subscribe((logements: Array<Logement>) => {
         if (logements.length > 0) {
           this.logement = this.logementService.getLogementById(this.id!);
-          console.log(this.logement)
         }
         if (typeof this.logement === "undefined") {
           this.logementService.fetchLogementById(this.id).subscribe((logement: Logement) => {
-            console.log(logement)
             this.logement = logement;
             this.completeLogement();
             this.getReservations();
@@ -209,6 +217,19 @@ export class LogementComponent implements OnInit, OnDestroy {
         })
       }
     });
+  }
+
+  paiementStripe(){
+    if(typeof this.user.email === 'undefined'){
+      const path = `logement/${this.logement._id}`;
+      sessionStorage.setItem('redirectUrl', path);
+      this.router.navigate(['/connexion']);
+    }else {
+      const dialogRef = this.dialog.open(PaiementStripeComponent, {
+        width: '450px',
+        height: '200px'
+      });
+    }
   }
 
   getNbNuits(dateFin: Date, dateDebut: Date): number {

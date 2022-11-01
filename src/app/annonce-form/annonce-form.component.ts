@@ -71,7 +71,7 @@ export class AnnonceFormComponent implements OnInit, OnDestroy {
       prix: ['', [Validators.required, Validators.min(1)]]
     })
     this.subscription = this.userService.currentUser.subscribe( (user: User | null) => {
-      this.user = new User(user?._id, user?.email, user?.name);
+      this.user = new User(user?._id, user?.email, user?.nom);
     })
   }
 
@@ -181,7 +181,7 @@ export class AnnonceFormComponent implements OnInit, OnDestroy {
       const logement = new Logement(
         this.form.value.adresse, this.form.value.ville, this.form.value.description, this.form.value.logement,
         this.form.value.nbVoyageur, this.form.value.nbLits, this.form.value.nbSdb, this.latAdresse, this.longAdresse,
-        this.user.name, this.form.value.prix, this.equipements, this.form.value.fumeur, this.form.value.animaux, 
+        this.user.nom, this.form.value.prix, this.equipements, this.form.value.fumeur, this.form.value.animaux, 
         this.form.value.access_handicap);
       this.logementService.createLogement(logement).subscribe( (log: Logement) => {
         this.logementService.uploadPhotos(this.formData, log._id ).subscribe( (l: Logement) => {

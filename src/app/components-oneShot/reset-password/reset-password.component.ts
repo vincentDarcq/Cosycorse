@@ -36,8 +36,8 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     this.subActivatedRoute = this.activatedRoute.params.subscribe((params: any) => {
       this.token = params['token'];
       this.authentService.authentForResetPwd(this.token).subscribe( 
-        (user: User) => {
-          this.user = user;
+        (user: any) => {
+          this.user = new User(user._id, user.email, user.firstName, user.lastName);
         },
         err => {
           this.error = err.error;
