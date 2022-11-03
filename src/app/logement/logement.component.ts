@@ -15,11 +15,8 @@ import { MailContactLogement } from '../models/mailContactLogement';
 import { LogementReservation } from '../models/logementReservation';
 import { PopupReservationLogementComponent } from '../popups/popup-reservation-logement/popup-reservation-logement.component';
 import { InfoService } from '../services/info.service';
-import { PaiementStripeComponent } from '../popups/paiement-stripe/paiement-stripe.component';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
-import { PaymentMethod, PaymentMethodResult } from '@stripe/stripe-js';
-import { StripeService } from '../services/stripe.service';
 
 @Component({
   selector: 'app-logement',
@@ -55,8 +52,7 @@ export class LogementComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private infoService: InfoService,
     private userService: UserService,
-    private router: Router,
-    private stripeService: StripeService
+    private router: Router
   ) {
   }
 
@@ -71,14 +67,14 @@ export class LogementComponent implements OnInit, OnDestroy {
       this.id = params['id'];
       this.subLogements = this.logementService.logementsRandom.subscribe((logements: Array<Logement>) => {
         if (logements.length > 0) {
-          this.logement = this.logementService.getLogementById(this.id!);
+          this.logement = this.logementService.getLogementById(this.id);
         }
         if (typeof this.logement === "undefined") {
           this.logementService.fetchLogementById(this.id).subscribe((logement: Logement) => {
             this.logement = logement;
             this.completeLogement();
             this.getReservations();
-          })
+          });
         } else {
           this.completeLogement();
           this.getReservations();
@@ -88,12 +84,13 @@ export class LogementComponent implements OnInit, OnDestroy {
   }
 
   getReservations(){
-    this.logementService.getReservationsByLogementId(this.logement!._id).subscribe( (reservations: Array<LogementReservation>) => {
+    this.logementService.getReservationsByLogementId(this.logement._id).subscribe( (reservations: Array<LogementReservation>) => {
       reservations.forEach( res => {
-        const dd = res.dateDebut?.split("/");
-        const df = res.dateFin?.split("/");
-        const dateFin = df![1] + "-" + df![0] + "-" + df![2];
-        const dateDebut = dd![1] + "-" + dd![0] + "-" + dd![2];
+        const dd = res.dateDebut.split("/");
+        const df = res.dateFin.split("/");
+        const dateFin = df[1] + "-" + df[0] + "-" + df[2];
+        const dateDebut = dd[1] + "-" + dd[0] + "-" + dd[2];
+        console.log(dateDebut, dateFin)
         const nuits = this.getNbNuits(new Date(dateFin), new Date(dateDebut));
         for(let i = 0; i < nuits; i++){
           this.datesUnavailable.push(new Date(new Date(dateDebut).getTime() + i*(1000 * 60 * 60 * 24)))
@@ -125,7 +122,7 @@ export class LogementComponent implements OnInit, OnDestroy {
     const year = d!.getFullYear();
     let available = true;
     for(let i = 0; i < this.datesUnavailable.length; i++){
-      if (day === this.datesUnavailable[i].getDate() && month === this.datesUnavailable[i].getMonth()+1 && year === this.datesUnavailable[i].getFullYear()) {
+      if (day === this.datesUnavailable[i].getDate() && month === this.datesUnavailable[i].getMonth() && year === this.datesUnavailable[i].getFullYear()) {
         available = false;
         break;
       }
@@ -204,8 +201,8 @@ export class LogementComponent implements OnInit, OnDestroy {
       logementReservation.emailAnnonceur = this.logement.emailAnnonceur;
       const dayDebut = this.dateDebut?.getDate().toString().length === 1 ? "0"+this.dateDebut?.getDate() : this.dateDebut?.getDate();
       const dayFin = this.dateFin?.getDate().toString().length === 1 ? "0"+this.dateFin?.getDate() : this.dateFin?.getDate();
-      const monthDebut = this.dateDebut?.getMonth().toString().length === 1 ? "0"+this.dateDebut?.getMonth() : this.dateDebut?.getMonth();
-      const monthFin = this.dateFin?.getMonth().toString().length === 1 ? "0"+this.dateFin?.getMonth() : this.dateFin?.getMonth();
+      const monthDebut = this.dateDebut?.getMonth().toString().length === 1 ? "0"+this.dateDebut?.getMonth()+1 : this.dateDebut?.getMonth()+1;
+      const monthFin = this.dateFin?.getMonth().toString().length === 1 ? "0"+this.dateFin?.getMonth()+1 : this.dateFin?.getMonth()+1;
       logementReservation.dateDebut = dayDebut + "/" + monthDebut + "/" + this.dateDebut?.getFullYear();
       logementReservation.dateFin = dayFin + "/" + monthFin + "/" + this.dateFin?.getFullYear();
       logementReservation.logementId = this.logement?._id;

@@ -1,9 +1,9 @@
 <div class="component">
     <div class="stripe">
+        <h3>La réception de paiements lorsque vous proposez un logement se fait au travers d'un compte Stripe</h3>
         <div *ngIf="!user.stripeAccountId; else stripeAccountOk;">
-            <h3>La réception de paiements lorsqu'on vous proposez un logement se fait au travers d'un compte Stripe</h3>
             <h5>Vous n'avez pas configuré votre compte</h5>
-            <p (click)="setUpPaiementStripe()">Configurer votre compte stripe</p>
+            <p (click)="setUpPaiementStripe()" class="configure_compte_stripe">Configurer votre compte stripe</p>
         </div>
         <ng-template #stripeAccountOk>
             <h3>Votre compte Stripe est correctement enregistré</h3>
@@ -23,7 +23,7 @@
                     (click)="selectLeftArrow(monCompteReservations, indexMCR, mcr.logement.indexImage)"></i>
                 <div fxLayout="row">
                     <button [routerLink]="['/logement', mcr.logementReservation.logementId]" class="btn btn-primary">Voir l'annonce</button>
-                    <button (click)="annulerReservation()" class="btn btn-danger">Annuler</button>
+                    <button (click)="annulerReservation(mcr, indexMCR)" class="btn btn-danger">Annuler</button>
                 </div>
             </div>
         </div>

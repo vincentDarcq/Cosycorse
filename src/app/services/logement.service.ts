@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Logement } from '../models/logement';
 import { LogementReservation } from '../models/logementReservation';
+import { MonCompteReservation } from '../models/monCompteReservation';
 import { Villes } from '../models/villes';
 
 @Injectable({
@@ -159,6 +160,13 @@ export class LogementService {
       params: {
         logementReservationId: logementReservationId
       }
+    });
+  }
+
+  public cancelLogementReservation(monCompteReservation: MonCompteReservation, message: string){
+    return this.http.post<string>(`/api/logementReservation/cancelReservation`, {
+      monCompteReservation: monCompteReservation,
+      message: message
     });
   }
 

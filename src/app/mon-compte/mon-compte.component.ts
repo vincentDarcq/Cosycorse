@@ -1,9 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { Logement } from '../models/logement';
 import { LogementReservation } from '../models/logementReservation';
 import { MonCompteReservation } from '../models/monCompteReservation';
 import { User } from '../models/user.model';
+import { AnnulerReservationComponent } from '../popups/annuler-reservation/annuler-reservation.component';
+import { InfoService } from '../services/info.service';
 import { LogementService } from '../services/logement.service';
 import { StripeService } from '../services/stripe.service';
 import { UserService } from '../services/user.service';
@@ -24,7 +27,9 @@ export class MonCompteComponent implements OnInit, OnDestroy {
   constructor(
     private userService: UserService,
     private logementService: LogementService,
-    private stripeService: StripeService
+    private stripeService: StripeService,
+    private dialog: MatDialog,
+    private infoService: InfoService
   ) { }
   
   ngOnInit(): void {
@@ -59,7 +64,25 @@ export class MonCompteComponent implements OnInit, OnDestroy {
     }
   }
 
-  annulerReservation(){}
+  annulerReservation(monCompteReservation: MonCompteReservation, index: number){
+    const dialogRef = this.dialog.open(AnnulerReservationComponent, {
+      width: '450px',
+      data: monCompteReservation,
+    });
+    dialogRef.afterClosed().subscribe( message => {
+      console.log(message)
+      if(typeof message !== 'undefined'){
+        this.logementService.cancelLogementReservation(monCompteReservation, message).subscribe( 
+          mess => {
+            this.monCompteReservations.splice(index, 1);
+            this.infoService.popupInfo(mess);
+          }),
+          err => {
+            this.infoService.popupInfo(err);
+          }
+      }
+    })
+  }
 
   setUpPaiementStripe(){
     this.stripeService.setUpPaiement().subscribe((url: string) => {

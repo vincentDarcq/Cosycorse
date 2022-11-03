@@ -2,6 +2,12 @@
     background-color: rgb(247, 253, 254);
 }
 
+.configure_compte_stripe{
+    cursor: pointer;
+    text-decoration: underline;
+    color: rgb(65, 155, 240);
+}
+
 .button-effect {
     border-style: none;
     border-width: 2px;
@@ -11,7 +17,7 @@
     background-color: rgb(235, 249, 251);
     cursor: pointer;
     height:fit-content;
-    width: 20%;
+    width: 22%;
 }
 
 .reservation{
@@ -47,14 +53,14 @@ img {
 
 .arrow-right {
     position: relative;
-    left: 35%;
-    bottom: 80px;
+    right: 10%;
+    bottom: 0;
 }
 
 .arrow-left {
     position: relative;
-    left: -45%;
-    bottom: 80px;
+    left: -95%;
+    bottom: 0;
 }
 
 .arrow-left:hover,
