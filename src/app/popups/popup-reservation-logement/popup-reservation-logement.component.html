@@ -1,7 +1,7 @@
 <form [formGroup]="form" (ngSubmit)="submit()">
   <div mat-dialog-content fxLayout="column">
-    <p>Réservation du {{ logementReservation.dateDebut }} au {{ logementReservation.dateFin }}</p>
-    <p>Prix : {{ logementReservation.prix }}€</p>
+    <p>Réservation du {{ datas.logementReservation.dateDebut }} au {{ datas.logementReservation.dateFin }}</p>
+    <p>Prix : {{ datas.logementReservation.prix }}€</p>
     <mat-form-field appearance="fill">
       <mat-label>Votre email *</mat-label>
       <input matInput formControlName="emailDemandeur">
@@ -10,6 +10,12 @@
         adresse invalide.
       </div>
     </mat-form-field>
+    <div id="card-element" #cardInfo>
+      <!-- Elements will create input elements here -->
+    </div>
+    <div id="error-message">
+      <!-- Display error message to your customers here -->
+    </div>
     <mat-form-field appearance="fill">
       <mat-label>Message (facultatif):</mat-label>
       <textarea matInput formControlName="message" rows="4"></textarea>

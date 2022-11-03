@@ -23,6 +23,17 @@ export class StripeService {
     });
   }
 
+  public createPaiementIntent(customerId: string, logementId: string, nuits: number, paymentMethodId: string): Observable<any>{
+    return this.http.get<any>(`/api/stripe/paiments/create-payment-intent`, {
+      params: {
+        customerId: customerId,
+        logementId: logementId,
+        nuits: nuits,
+        paymentMethodId: paymentMethodId
+      }
+    });
+  }
+
   public getConfig(): Observable<any> {
     return this.http.get<any>(`/api/stripe/config`);
   }

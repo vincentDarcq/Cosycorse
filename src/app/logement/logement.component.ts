@@ -18,6 +18,8 @@ import { InfoService } from '../services/info.service';
 import { PaiementStripeComponent } from '../popups/paiement-stripe/paiement-stripe.component';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
+import { PaymentMethod, PaymentMethodResult } from '@stripe/stripe-js';
+import { StripeService } from '../services/stripe.service';
 
 @Component({
   selector: 'app-logement',
@@ -44,7 +46,7 @@ export class LogementComponent implements OnInit, OnDestroy {
   datesUnavailable = new Array();
   mail: MailContactLogement = new MailContactLogement();
   prixTotal?: number;
-  public user!: User;
+  public user: User;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -53,7 +55,8 @@ export class LogementComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private infoService: InfoService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private stripeService: StripeService
   ) {
   }
 
@@ -166,7 +169,7 @@ export class LogementComponent implements OnInit, OnDestroy {
       if(result){
         this.mail.message = result.message;
         this.mail.from = result.from;
-        this.mail.to = this.logement!.annonceur;
+        this.mail.to = this.logement!.emailAnnonceur;
         this.mail.subject = this.logement!.ville + " " + this.logement!.adresse;
         this.mailsService.contactHost(this.mail).subscribe(
           res => {
@@ -186,48 +189,41 @@ export class LogementComponent implements OnInit, OnDestroy {
   }
 
   schedule() {
-    if(this.dateFin === null || this.dateDebut === null){
-      this.infoService.popupInfo("Les dates séléctionnées sont invalides");
-      return;
-    }
-    let logementReservation : LogementReservation = new LogementReservation();
-    const nuits = this.getNbNuits(this.dateFin!, this.dateDebut!);
-    logementReservation.prix = this.prixTotal = nuits * (this.logement!.prix + (this.logement!.prix * 10/100));
-    logementReservation.annonceur = this.logement?.annonceur;
-    const dayDebut = this.dateDebut?.getDate().toString().length === 1 ? "0"+this.dateDebut?.getDate() : this.dateDebut?.getDate();
-    const dayFin = this.dateFin?.getDate().toString().length === 1 ? "0"+this.dateFin?.getDate() : this.dateFin?.getDate();
-    const monthDebut = this.dateDebut?.getMonth().toString().length === 1 ? "0"+this.dateDebut?.getMonth() : this.dateDebut?.getMonth();
-    const monthFin = this.dateFin?.getMonth().toString().length === 1 ? "0"+this.dateFin?.getMonth() : this.dateFin?.getMonth();
-    logementReservation.dateDebut = dayDebut + "/" + monthDebut + "/" + this.dateDebut?.getFullYear();
-    logementReservation.dateFin = dayFin + "/" + monthFin + "/" + this.dateFin?.getFullYear();
-    logementReservation.logementId = this.logement?._id;
-    const dialogRef = this.dialog.open(PopupReservationLogementComponent, {
-      width: '450px',
-      data: logementReservation,
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if(result){
-        logementReservation.emailDemandeur = result.emailDemandeur;
-        logementReservation.message = result.message;
-        this.logementService.reserverLocation(logementReservation).subscribe( (res: string) => {
-          this.infoService.popupInfo(res);
-        },
-        err => {
-          this.infoService.popupInfo(err.statusText);
-        })
-      }
-    });
-  }
-
-  paiementStripe(){
     if(typeof this.user.email === 'undefined'){
       const path = `logement/${this.logement._id}`;
       sessionStorage.setItem('redirectUrl', path);
       this.router.navigate(['/connexion']);
+    }else if(this.dateFin === null || this.dateDebut === null){
+      this.infoService.popupInfo("Les dates séléctionnées sont invalides");
+      return;
     }else {
-      const dialogRef = this.dialog.open(PaiementStripeComponent, {
+      let logementReservation : LogementReservation = new LogementReservation();
+      const nuits = this.getNbNuits(this.dateFin, this.dateDebut);
+      logementReservation.nuits = nuits;
+      logementReservation.prix = this.prixTotal = nuits * (this.logement.prix + (this.logement.prix * 10/100));
+      logementReservation.emailAnnonceur = this.logement.emailAnnonceur;
+      const dayDebut = this.dateDebut?.getDate().toString().length === 1 ? "0"+this.dateDebut?.getDate() : this.dateDebut?.getDate();
+      const dayFin = this.dateFin?.getDate().toString().length === 1 ? "0"+this.dateFin?.getDate() : this.dateFin?.getDate();
+      const monthDebut = this.dateDebut?.getMonth().toString().length === 1 ? "0"+this.dateDebut?.getMonth() : this.dateDebut?.getMonth();
+      const monthFin = this.dateFin?.getMonth().toString().length === 1 ? "0"+this.dateFin?.getMonth() : this.dateFin?.getMonth();
+      logementReservation.dateDebut = dayDebut + "/" + monthDebut + "/" + this.dateDebut?.getFullYear();
+      logementReservation.dateFin = dayFin + "/" + monthFin + "/" + this.dateFin?.getFullYear();
+      logementReservation.logementId = this.logement?._id;
+      const dialogRef = this.dialog.open(PopupReservationLogementComponent, {
         width: '450px',
-        height: '200px'
+        data: {logementReservation: logementReservation, logement: this.logement},
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if(result){
+          logementReservation.emailDemandeur = result.form.emailDemandeur;
+          logementReservation.message = result.form.message;
+          this.logementService.reserverLocation(logementReservation).subscribe( (res: string) => {
+            this.infoService.popupInfo(res);
+          },
+          err => {
+            this.infoService.popupInfo(err.statusText);
+          })
+        }
       });
     }
   }

@@ -2,7 +2,10 @@
   <div id="card-element" #cardInfo>
       <!-- Elements will create input elements here -->
   </div>
-  <button class="btn btn-primary" type="submit">Submit</button>
+  <div class="buttons" fxLayout="row">
+    <button type="button" class="btn btn-danger" (click)="cancel()">Annuler</button>
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </div>
   <div id="error-message">
     <!-- Display error message to your customers here -->
   </div>

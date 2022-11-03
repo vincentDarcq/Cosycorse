@@ -11,7 +11,7 @@ export class Logement {
     sdbs!: Number;
     latitude!: number;
     longitude!: number;
-    annonceur!: string;
+    emailAnnonceur!: string;
     prix!: number;
     equipements!: Array<string>;
     images?: Array<string>;
@@ -31,7 +31,7 @@ export class Logement {
         sdbs: Number,
         latitude: number,
         longitude: number,
-        annonceur: string,
+        emailAnnonceur: string,
         prix: number,
         equipements: Array<string>,
         fumeur: boolean,
@@ -48,7 +48,7 @@ export class Logement {
         this.sdbs = sdbs;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.annonceur = annonceur;
+        this.emailAnnonceur = emailAnnonceur;
         this.prix = prix;
         this.equipements = equipements;
         this.fumeur = fumeur;
