@@ -9,7 +9,8 @@ export class LogementReservation {
     message: string;
     emailAnnonceur: string;
     logementId: string;
-    paymentMethodId: string;
+    pm: string;
+    pi: string;
     nuits: number;
     constructor(){}
 }

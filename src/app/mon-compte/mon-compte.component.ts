@@ -38,8 +38,8 @@ export class MonCompteComponent implements OnInit, OnDestroy {
     }
     this.subUser = this.userService.currentUser.subscribe( (user: any) => {
       this.user = new User(user._id, user.email, user.firstName, user.lastName);
-      if(user?.stripeAccountId){
-        this.user.stripeAccountId = user?.stripeAccountId;
+      if(user?.stripeUserId){
+        this.user.stripeUserId = user?.stripeUserId;
       }
       this.subReservations = this.logementService.getReservationsByUserEmail(this.user.email).subscribe((logementReservations: Array<LogementReservation>) => {
         logementReservations.forEach(lr => {
@@ -84,9 +84,15 @@ export class MonCompteComponent implements OnInit, OnDestroy {
     })
   }
 
+  linkToStripe(){
+    this.stripeService.getStripeLink(this.user.stripeUserId).subscribe((result: any) => {
+      window.open(result.url);
+    })
+  }
+
   setUpPaiementStripe(){
-    this.stripeService.setUpPaiement().subscribe((url: string) => {
-      window.open(url);
+    this.stripeService.setUpPaiement(this.user._id).subscribe((url: any) => {
+      window.open(url.location);
     });
   }
   

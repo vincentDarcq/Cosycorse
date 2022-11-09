@@ -11,14 +11,26 @@ export class StripeService {
     private http: HttpClient
   ) { }
 
-  public setUpPaiement(): Observable<string>{
-    return this.http.get<string>(`/api/stripe/paiments/setup`);
+  public setUpPaiement(idUser: string): Observable<string>{
+    return this.http.get<string>(`/api/stripe/setup`, {
+      params: {
+        userId: idUser
+      }
+    });
   }
 
   public finalizeSetUpPaiement(code: string): Observable<any>{
-    return this.http.get<any>(`/api/stripe/paiments/response/setup`, {
+    return this.http.get<any>(`/api/stripe/response/setup`, {
       params: {
         code: code
+      }
+    });
+  }
+
+  public getStripeLink(stripeUserId: string){
+    return this.http.get<any>(`/api/stripe/link`, {
+      params: {
+        stripeUserId: stripeUserId
       }
     });
   }

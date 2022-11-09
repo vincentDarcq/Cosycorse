@@ -86,6 +86,13 @@ export class MetaAndTitleService implements OnDestroy {
           content: metaData['/activites'].metas.description
         }
         break;
+        case 'mon_compte':
+          this.title.setTitle(metaData['/mon_compte'].title);
+          newTagDescription = {
+            name: 'description',
+            content: metaData['/mon_compte'].metas.description
+          }
+          break;
     }
     oldTagDescription
       ? this.meta.updateTag(newTagDescription)

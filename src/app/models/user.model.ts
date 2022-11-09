@@ -4,7 +4,7 @@ export class User {
     nom: string;
     prenom: string;
     password: string;
-    stripeAccountId: string;
+    stripeUserId: string;
 
     constructor(
         id?: string,

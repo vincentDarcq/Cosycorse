@@ -76,13 +76,14 @@ export class PopupReservationLogementComponent implements OnInit, AfterViewInit,
         name: `${this.user.prenom} ${this.user.nom}`,
       },
     });
-    this.datas.logementReservation.paymentMethodId = payment.paymentMethod.id;
-    const { clientSecret } = await this.stripeService.createPaiementIntent(
+    this.datas.logementReservation.pm = payment.paymentMethod.id;
+    const { clientSecret, paymentIntentId } = await this.stripeService.createPaiementIntent(
       this.user._id,
       this.datas.logement._id, 
       this.datas.logementReservation.nuits, 
       payment.paymentMethod.id
-    ).toPromise()
+    ).toPromise();
+    this.datas.logementReservation.pi = paymentIntentId;
     this.stripe.confirmCardPayment(clientSecret);
     this.dialogRef.close({
       logementReservation: this.datas.logementReservation,

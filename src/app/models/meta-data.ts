@@ -18,37 +18,37 @@ export default {
     }
   },
   '/logements': {
-    title: 'Cosycorse : logements',
+    title: 'Logements',
     metas: {
       description: 'Liste des annonces de location Cosycorse'
     }
   },
   '/logement': {
-    title: 'Cosycorse : logement',
+    title: 'Logement',
     metas: {
       description: 'Description d\'une annonce de location sur Cosycorse'
     }
   },
   '/mes_annonces': {
-    title: 'Cosycorse : mes annonces',
+    title: 'Mes annonces',
     metas: {
       description: 'Liste de vos annonces sur Cosycorse'
     }
   },
   '/mon_compte': {
-    title: 'Cosycorse : mon compte',
+    title: 'Mon compte',
     metas: {
       description: 'Détails de votre compte Cosycorse'
     }
   },
   '/connexion': {
-    title: 'Cosycorse : connexion',
+    title: 'Connexion',
     metas: {
       description: 'Connectez vous à votre compte Cosycorse'
     }
   },
   '/activites': {
-    title: 'Cosycorse : activités',
+    title: 'Activités',
     metas: {
       description: 'Liste des activités disponibles en Corse'
     }

@@ -1,12 +1,13 @@
 <div class="component">
     <div class="stripe">
         <h3>La réception de paiements lorsque vous proposez un logement se fait au travers d'un compte Stripe</h3>
-        <div *ngIf="!user.stripeAccountId; else stripeAccountOk;">
-            <h5>Vous n'avez pas configuré votre compte</h5>
+        <div *ngIf="!user.stripeUserId; else stripeAccountOk;">
+            <h6>Vous n'avez pas configuré votre compte</h6>
             <p (click)="setUpPaiementStripe()" class="configure_compte_stripe">Configurer votre compte stripe</p>
         </div>
         <ng-template #stripeAccountOk>
-            <h3>Votre compte Stripe est correctement enregistré</h3>
+            <h6>Votre compte Stripe est correctement enregistré</h6>
+            <p (click)="linkToStripe()" class="configure_compte_stripe">Consulter votre compte stripe</p>
         </ng-template>
     </div>
     <h3>Mes réservations</h3>
