@@ -40,6 +40,14 @@ export class UserService implements OnDestroy {
     return this.http.post<User>('/api/user/resetPass', resetPassword);
   }
 
+  public getUserByMail(email: string){
+    return this.http.get<User>('/api/user/getUserByMail', {
+      params: {
+        email: email
+      }
+    })
+  }
+
   ngOnDestroy(): void {
     if (this.subscription) { this.subscription.unsubscribe(); }
   }

@@ -10,13 +10,13 @@
     <div class="p-1 m-3 link" routerLink="/lieux">
         <i class="fas fa-map-marker fa-2x"></i><button>Lieux d'intérêt</button>
     </div>
-    <div class="ms-auto p-1 m-3 link" *ngIf="!user.nom" routerLink="/connexion">
+    <div class="ms-auto p-1 m-3 link" *ngIf="!isAuthenticated" routerLink="/connexion">
         <i class="fas fa-user fa-2x"></i><button>Connexion</button>
     </div>
-    <div class="ms-auto p-1 m-3" *ngIf="user.nom">
+    <div class="ms-auto p-1 m-3" *ngIf="isAuthenticated">
         <i class="fas fa-user fa-2x"></i>{{ user.prenom }}
     </div>
-    <i class="p-3 m-3 fas fa-dot-circle" *ngIf="user.nom" (click)="displayList()"></i>
+    <i class="p-3 m-3 fas fa-dot-circle" *ngIf="isAuthenticated" (click)="displayList()"></i>
     <div *ngIf="list" class="select-bars">
         <div fxLayout="row">
             <div>

@@ -14,6 +14,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public subscription!: Subscription;
   public user!: User
   public list: boolean = false;
+  isAuthenticated: boolean = false;
 
   constructor(
     private authService: AuthenticationService,
@@ -21,6 +22,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) { }
   
   ngOnInit(): void {
+    this.authService.jwtToken.subscribe((jwt : {isAuthenticated: boolean, token: string}) => {
+      this.isAuthenticated = jwt.isAuthenticated;
+    })
     this.subscription = this.userService.currentUser.subscribe( (user: any) => {
       this.user = new User(user._id, user.email, user.firstName, user.lastName);
     })

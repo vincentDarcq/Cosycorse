@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { LogementReservation } from 'src/app/models/logementReservation';
+import { MonCompteReservation } from 'src/app/models/monCompteReservation';
 
 @Component({
   selector: 'app-annuler-reservation',
@@ -9,22 +10,26 @@ import { LogementReservation } from 'src/app/models/logementReservation';
 })
 export class AnnulerReservationComponent implements OnInit {
 
-  message: string = "";
+  form: FormGroup;
 
   constructor(
     public dialogRef: MatDialogRef<AnnulerReservationComponent>,
-    @Inject(MAT_DIALOG_DATA) public mail: LogementReservation
+    @Inject(MAT_DIALOG_DATA) public mcr: MonCompteReservation,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
+    this.form = this.fb.group({
+      message: ['', Validators.required]
+    })
+  }
+
+  submit(){
+    this.dialogRef.close(this.form.value.message);
   }
 
   cancel(){
     this.dialogRef.close();
-  }
-
-  submit(){
-    this.dialogRef.close(this.message);
   }
 
 }

@@ -1,14 +1,18 @@
+import { Logement } from "./logement";
 import { LogementReservation } from "./logementReservation";
-import { Logement } from "./logement"
+import { User } from "./user.model";
 
 export class MonCompteReservation{
-    logementReservation!: LogementReservation;
-    logement!: Logement;
+    logementReservation: LogementReservation;
+    logement: Logement;
+    user: User;
     constructor(
+        logement: Logement,
         logementReservation: LogementReservation,
-        logement: Logement
+        user: User
     ){
         this.logement = logement;
+        this.user = user;
         this.logementReservation = logementReservation;
     }
 }

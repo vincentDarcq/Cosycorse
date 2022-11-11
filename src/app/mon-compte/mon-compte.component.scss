@@ -2,8 +2,14 @@
     background-color: rgb(247, 253, 254);
 }
 
-.stripe{
+.voyage, .reservation {
+    width: fit-content;
+    margin: auto;
+}
+
+.reservations, .voyages, .stripe {
     text-align: center;
+    padding: 2%;
 }
 
 .configure_compte_stripe{
@@ -21,7 +27,7 @@
     background-color: rgb(235, 249, 251);
     cursor: pointer;
     height:fit-content;
-    width: 22%;
+    width: 400px;
 }
 
 .reservation{
@@ -40,7 +46,7 @@ button{
 img {
     padding: 3px;
     border-radius: 20px;
-    width: 40vh;
+    width: 95%;
     height: 25vh;
 }
 
@@ -63,11 +69,20 @@ img {
 
 .arrow-left {
     position: relative;
-    left: -95%;
+    left: -90%;
     bottom: 0;
 }
 
 .arrow-left:hover,
 .arrow-right:hover {
     opacity: .4;
+}
+
+.buttons {
+    width: fit-content;
+    margin: auto;
+}
+
+.btn {
+    width: 140px;
 }

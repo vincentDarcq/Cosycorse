@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Logement } from '../models/logement';
 import { LogementReservation } from '../models/logementReservation';
 import { MonCompteReservation } from '../models/monCompteReservation';
+import { MonCompteVoyage } from '../models/monCompteVoyage';
 import { Villes } from '../models/villes';
 
 @Injectable({
@@ -131,8 +132,16 @@ export class LogementService {
     });
   }
 
-  public getReservationsByUserEmail(userEmail: string): Observable<Array<LogementReservation>>{
+  public getReservationsByDemandeurEmail(userEmail: string): Observable<Array<LogementReservation>>{
     return this.http.get<Array<LogementReservation>>(`/api/logementReservation/getReservationsByDemandeurEmail`, {
+      params : {
+        userEmail : userEmail
+      }
+    });
+  }
+
+  public getReservationsByAnnonceurEmail(userEmail: string): Observable<Array<LogementReservation>>{
+    return this.http.get<Array<LogementReservation>>(`/api/logementReservation/getReservationsByAnnonceurEmail`, {
       params : {
         userEmail : userEmail
       }
@@ -163,10 +172,22 @@ export class LogementService {
     });
   }
 
-  public cancelLogementReservation(monCompteReservation: MonCompteReservation, message: string){
-    return this.http.post<string>(`/api/logementReservation/cancelReservation`, {
+  public cancelLogementReservationVoyageur(monCompteReservation: MonCompteVoyage, message: string){
+    return this.http.post<string>(`/api/logementReservation/cancelReservationVoyageur`, {
       monCompteReservation: monCompteReservation,
       message: message
+    });
+  }
+
+  public cancelLogementReservationHote(monCompteReservation: MonCompteReservation, message: string){
+    return this.http.post<string>(`/api/logementReservation/cancelReservationHote`, {
+      monCompteReservation: monCompteReservation,
+      message: message
+    },
+    {
+      params: {
+        fromHost: "fromHost"
+      }
     });
   }
 

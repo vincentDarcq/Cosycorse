@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from '../models/user.model';
 import { AuthenticationService } from '../services/authentication.service';
@@ -13,10 +14,12 @@ export class SignupComponent implements OnInit {
 
   form: FormGroup;
   signupSub!: Subscription;
+  erreur: string;
 
   constructor(
     private authenticationService: AuthenticationService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -35,9 +38,14 @@ export class SignupComponent implements OnInit {
     user.prenom = this.form.value.prenom;
     user.email = this.form.value.email;
     user.password = this.form.value.password;
-    this.signupSub = this.authenticationService.signup(user).subscribe( (user: User) => {
-      console.log("signup successfully as ", user)
-    })
+    this.signupSub = this.authenticationService.signup(user).subscribe( 
+      () => {
+        this.router.navigate(['/']);
+      },
+      err => {
+        this.erreur = err.error;
+      }
+    )
   }
 
 }

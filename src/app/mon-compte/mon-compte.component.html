@@ -1,30 +1,53 @@
 <div class="component">
     <div class="stripe">
         <h3>La réception de paiements lorsque vous proposez un logement se fait au travers d'un compte Stripe</h3>
-        <div *ngIf="!user.stripeUserId; else stripeAccountOk;">
+        <div *ngIf="user && !user.stripeUserId">
             <h6>Vous n'avez pas configuré votre compte</h6>
             <p (click)="setUpPaiementStripe()" class="configure_compte_stripe">Configurer votre compte stripe</p>
         </div>
-        <ng-template #stripeAccountOk>
+        <div *ngIf="user && user.stripeUserId">
             <h6>Votre compte Stripe est correctement enregistré</h6>
             <p (click)="linkToStripe()" class="configure_compte_stripe">Consulter votre compte stripe</p>
-        </ng-template>
+        </div>
     </div>
-    <h3>Mes réservations</h3>
-    <div fxLayout="row" fxLayoutGap="2%"class="reservation">
-        <div class="button-effect" *ngFor="let mcr of monCompteReservations; let indexMCR = index">
-            <div class="details">
-                <p>{{ mcr.logementReservation.dateDebut }} - {{ mcr.logementReservation.dateFin }}</p>
-                <p>{{ mcr.logementReservation.prix }}€</p>
-                <img *ngIf="mcr.logement && mcr.logement.images" [src]="serverImg + mcr.logement.images[mcr.logement.indexImage]"
-                    alt="">
-                <i class='fas fa-angle-right arrow-right'
-                    (click)="selectArrow(monCompteReservations, indexMCR, mcr.logement.indexImage)"></i>
-                <i class='fas fa-angle-left arrow-left'
-                    (click)="selectLeftArrow(monCompteReservations, indexMCR, mcr.logement.indexImage)"></i>
-                <div fxLayout="row">
-                    <button [routerLink]="['/logement', mcr.logementReservation.logementId]" class="btn btn-primary">Voir l'annonce</button>
-                    <button (click)="annulerReservation(mcr, indexMCR)" class="btn btn-danger">Annuler</button>
+    <div class="voyages" *ngIf="mesVoyages.length > 0">
+        <h3>Mes voyages</h3>
+        <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutGap="2%" class="voyage">
+            <div class="button-effect" *ngFor="let mv of mesVoyages; let indexMCV = index">
+                <div class="details">
+                    <p>{{ mv.logementReservation.dateDebut }} - {{ mv.logementReservation.dateFin }}</p>
+                    <p>{{ mv.logementReservation.prix }}€</p>
+                    <img *ngIf="mv.logement && mv.logement.images" [src]="serverImg + mv.logement.images[mv.logement.indexImage]"
+                        alt="">
+                    <i class='fas fa-angle-right arrow-right'
+                        (click)="selectArrow(mesVoyages, indexMCV, mv.logement.indexImage)"></i>
+                    <i class='fas fa-angle-left arrow-left'
+                        (click)="selectLeftArrow(mesVoyages, indexMCV, mv.logement.indexImage)"></i>
+                    <div fxLayout="row" class="buttons">
+                        <button [routerLink]="['/logement', mv.logementReservation.logementId]" class="btn btn-primary">Voir l'annonce</button>
+                        <button (click)="annulerVoyage(mv, indexMCV)" class="btn btn-danger">Annuler</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="reservations" *ngIf="mesReservations.length > 0">        
+        <h3>Mes reservations</h3>
+        <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutGap="2%" class="reservation">
+            <div class="button-effect" *ngFor="let mr of mesReservations; let indexMCR = index">
+                <div class="details">
+                    <p><b>client : </b>{{ mr.user.prenom }} {{ mr.user.nom }}</p>
+                    <p><b>adresse : </b>{{ mr.logement.adresse }}</p>
+                    <p><b>dates : </b>{{ mr.logementReservation.dateDebut }} - {{ mr.logementReservation.dateFin }}</p>
+                    <p><b>prix : </b>{{ mr.logementReservation.prix *(100/110) }}€</p>
+                    <div fxLayout="row" class="buttons" *ngIf="mr.logementReservation.status === 'attente'">
+                        <button (click)="acceptReservation(mr.logementReservation._id, mr.user)" class="btn btn-success">Accepter</button>
+                        <button (click)="rejectReservation(mr.logementReservation._id, mr.user)" class="btn btn-danger">Refuser</button>
+                    </div>
+                    <div fxLayout="row" class="buttons" *ngIf="mr.logementReservation.status === 'acceptée'">
+                        <button [routerLink]="['/logement', mr.logementReservation.logementId]" class="btn btn-primary">Voir l'annonce</button>
+                        <button (click)="annulerReservation(mr, indexMCR)" class="btn btn-danger">Annuler</button>
+                    </div>
                 </div>
             </div>
         </div>

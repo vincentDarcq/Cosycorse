@@ -12,5 +12,6 @@ export class LogementReservation {
     pm: string;
     pi: string;
     nuits: number;
+    status: string;
     constructor(){}
 }

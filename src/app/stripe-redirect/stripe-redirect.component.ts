@@ -17,7 +17,8 @@ export class StripeRedirectComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private stripeService: StripeService
+    private stripeService: StripeService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -26,7 +27,7 @@ export class StripeRedirectComponent implements OnInit {
       this.stripeService.finalizeSetUpPaiement(this.code).subscribe(
         res => {
         if (res && res.status === 'ok') {
-          this.response = res;
+          this.router.navigate(['/mon_compte'])
         }},
         err => this.erreur = err);
     })

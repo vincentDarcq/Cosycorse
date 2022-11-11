@@ -25,7 +25,16 @@ export class AuthenticationService {
   ) { }
 
   public signup(user: User){
-    return this.http.post<User>(`/api/auth/signup`, user);
+    return this.http.post<string>(`/api/auth/signup`, user).pipe(
+      tap((token: string) => {
+        this.jwtToken.next({
+          isAuthenticated: true,
+          token: token,
+        });
+        sessionStorage.setItem('jwt', token);
+        this.userService.getCurrentUser();
+      })
+    );;
   }
 
   public login(user: User){
@@ -38,7 +47,7 @@ export class AuthenticationService {
         sessionStorage.setItem('jwt', token);
         this.userService.getCurrentUser();
       })
-    );;
+    );
   }
 
   public logOut(){

@@ -16,6 +16,7 @@ import { UserService } from '../services/user.service';
 import { LogementService } from '../services/logement.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-annonce-form',
@@ -71,7 +72,15 @@ export class AnnonceFormComponent implements OnInit, OnDestroy {
       prix: ['', [Validators.required, Validators.min(1)]]
     })
     this.subscription = this.userService.currentUser.subscribe( (user: User | null) => {
-      this.user = new User(user?._id, user?.email, user?.nom);
+      this.user = new User(user._id, user.email, user.nom);
+      if(!user.stripeUserId){
+        Swal.fire({
+          title: "Votre compte Stripe n'est pas configuré, vous ne pouvez pas créer d'annonce. \n Vous pouvez le faire en allant sur votre compte",
+          confirmButtonText: 'Ok'
+        }).then(() => {
+          this.router.navigate(['/mon_compte'])
+        })
+      }
     })
   }
 

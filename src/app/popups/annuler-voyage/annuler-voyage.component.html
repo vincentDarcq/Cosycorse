@@ -1,0 +1,12 @@
+<form (ngSubmit)="submit()">
+  <div mat-dialog-content fxLayout="column">
+    <mat-form-field appearance="fill">
+      <mat-label>Message</mat-label>
+      <textarea matInput [(ngModel)]="message" rows="4"></textarea>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="cancel()" type="button">Ne pas annuler</button>
+    <button mat-button type="submit" cdkFocusInitial>Confirmer l'annulation</button>
+  </div>
+</form>

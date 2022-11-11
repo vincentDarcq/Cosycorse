@@ -35,6 +35,7 @@ import { ReponseLogementReservationComponent } from './components-oneShot/repons
 import { MonCompteComponent } from './mon-compte/mon-compte.component';
 import { LieuxFormComponent } from './lieux-form/lieux-form.component';
 import { StripeRedirectComponent } from './stripe-redirect/stripe-redirect.component';
+import { AnnulerVoyageComponent } from './popups/annuler-voyage/annuler-voyage.component';
 import { AnnulerReservationComponent } from './popups/annuler-reservation/annuler-reservation.component';
 
 @NgModule({
@@ -58,6 +59,7 @@ import { AnnulerReservationComponent } from './popups/annuler-reservation/annule
     ReponseLogementReservationComponent,
     LieuxFormComponent,
     StripeRedirectComponent,
+    AnnulerVoyageComponent,
     AnnulerReservationComponent
   ],
   imports: [
