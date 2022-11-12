@@ -5,6 +5,6 @@
         <input type="text" name="email" placeholder="email" required formControlName="email">
         <input type="password" name="password" placeholder="mot de passe" required formControlName="password">
         <button type="submit" [disabled]="!form.valid">Créer mon compte</button>
-        <p *ngIf="erreur">{{ erreur | json }}</p>
+        <!-- <p *ngIf="erreur">{{ erreur | json }}</p> -->
     </form>
 </div>

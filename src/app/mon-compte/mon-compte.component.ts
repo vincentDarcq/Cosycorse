@@ -13,6 +13,7 @@ import { LogementService } from '../services/logement.service';
 import { StripeService } from '../services/stripe.service';
 import { UserService } from '../services/user.service';
 import Swal from 'sweetalert2';
+import { RouterExtService } from '../services/router-ext.service';
 
 @Component({
   selector: 'app-mon-compte',
@@ -34,10 +35,15 @@ export class MonCompteComponent implements OnInit, OnDestroy {
     private logementService: LogementService,
     private stripeService: StripeService,
     private dialog: MatDialog,
-    private infoService: InfoService
+    private infoService: InfoService,
+    private routerExt: RouterExtService
   ) { }
   
   async ngOnInit() {
+    const previousUrl = this.routerExt.getPreviousUrl();
+    if(previousUrl.startsWith('/stripe/redirect')){
+      this.infoService.popupInfo("Votre compte Stripe a bien été configuré");
+    }
     if(sessionStorage.getItem("redirectUrl")){
       sessionStorage.removeItem("redirectUrl")
     }
