@@ -120,12 +120,8 @@ export class LogementService {
     });
   }
 
-  public reserverLocation(logementReservation: LogementReservation, token: string): Observable<string>{
-    return this.http.post<string>(`/api/logementReservation/create`, logementReservation, {
-      params: {
-        token: token
-      }
-    });
+  public reserverLocation(logementReservation: LogementReservation): Observable<string>{
+    return this.http.post<string>(`/api/logementReservation/create`, logementReservation);
   }
 
   public getReservationsByLogementId(logementId: string): Observable<Array<LogementReservation>>{

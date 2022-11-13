@@ -220,11 +220,14 @@ export class LogementComponent implements OnInit, OnDestroy {
           logementReservation.emailDemandeur = result.form.emailDemandeur;
           logementReservation.message = result.form.message;
           this.authentService.getTokenForReservation().subscribe( (token: string) => {
-            this.logementService.reserverLocation(logementReservation, token).subscribe( 
+            sessionStorage.setItem('token', token);
+            this.logementService.reserverLocation(logementReservation).subscribe( 
               (res: string) => {
+                sessionStorage.removeItem('token');
                 this.infoService.popupInfo(res);
               },
               err => {
+                sessionStorage.removeItem('token');
                 this.infoService.popupInfo(err.statusText);
               })
           })
