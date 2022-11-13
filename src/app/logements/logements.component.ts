@@ -1,8 +1,8 @@
-import { Component, NgZone, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Logement } from '../models/logement';
 import { LogementService } from '../services/logement.service';
-import { Map, MapOptions, latLng, tileLayer, marker, Layer } from 'leaflet';
+import { Map, MapOptions, latLng, tileLayer, marker, Layer, LatLngBounds } from 'leaflet';
 import { MapService } from '../services/map.service';
 import { Router } from '@angular/router';
 import { Villes } from '../models/villes';
@@ -10,27 +10,30 @@ import { Equipements } from '../models/equipements';
 import { EquipementsSecurite } from '../models/equipementsSecurite';
 import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 import { InfoService } from '../services/info.service';
+import { mapSquare } from '../models/mapSquare';
 
 @Component({
   selector: 'app-logements',
   templateUrl: './logements.component.html',
   styleUrls: ['./logements.component.scss']
 })
-export class LogementsComponent implements OnInit {
+export class LogementsComponent implements OnInit, OnDestroy {
 
   villeSearch: string = "";
-  nbVoyageurs?: number;
-  nbLits?: number;
-  nbSdbs?: number;
-  prix_max?: number;
+  nbVoyageurs: number;
+  nbLits: number;
+  nbSdbs: number;
+  prix_max: number;
   equipementsFiltres: string[] = new Array<string>();
   logementsRandom: Array<Logement> = [];
   logementsFiltres: Array<Logement> = [];
   serverImg: String = "/upload?img=";
-  public subscription!: Subscription;
+  public subLogements: Subscription;
+  public subBounds: Subscription;
+  public bounds: mapSquare;
   displayMap: boolean = false;
-  map!: Map;
-  mapOptions!: MapOptions;
+  map: Map;
+  mapOptions: MapOptions;
   layers: Array<Layer> = [];
   pagination: any = false;
   villes = Villes;
@@ -48,9 +51,10 @@ export class LogementsComponent implements OnInit {
   ) {
     this.logementService.getRecentsLogement();
   }
+ 
 
   ngOnInit(): void {
-    this.subscription = this.logementService.logementsRandom.subscribe((logements: Array<Logement>) => {
+    this.subLogements = this.logementService.logementsRandom.subscribe((logements: Array<Logement>) => {
       this.logementsRandom = logements;
       if(this.map){
         this.layers.forEach(l => this.map.removeLayer(l));
@@ -58,6 +62,12 @@ export class LogementsComponent implements OnInit {
       }else {
         this.initializeMap();
       }
+    });
+    this.subBounds = this.logementService.bounds.subscribe( (bounds: LatLngBounds) => {
+      this.bounds = new mapSquare(
+        bounds.getSouthWest().lat, bounds.getNorthWest().lat,
+        bounds.getSouthWest().lng, bounds.getSouthEast().lng);
+      this.actualiser();
     })
   }
 
@@ -67,7 +77,10 @@ export class LogementsComponent implements OnInit {
   }
 
   public async onMapReady(map: Map) {
-    this.map = map;
+    this.map = map.on('moveend', () => {
+      this.logementService.setBounds(map.getBounds());
+    });
+    this.logementService.setBounds(map.getBounds());
     while (this.logementsRandom.length === 0) {
       await new Promise(f => setTimeout(f, 200));
     }
@@ -127,7 +140,8 @@ export class LogementsComponent implements OnInit {
       this.nbLits!, 
       this.nbSdbs!, 
       this.prix_max!,
-      this.equipementsFiltres
+      this.equipementsFiltres,
+      this.bounds
     ).subscribe( (logements: Array<Logement>) => {
         if(logements.length > 0){
           this.logementsFiltres = logements;
@@ -158,6 +172,10 @@ export class LogementsComponent implements OnInit {
       const index = this.equipementsFiltres.findIndex(e => e === equipement);
       this.equipementsFiltres.splice(index, 1);
     }
+  }
+
+  ngOnDestroy(): void {
+    if(this.subLogements){this.subLogements.unsubscribe();}
   }
 
 }

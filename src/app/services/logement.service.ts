@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Injectable, NgZone } from '@angular/core';
+import { LatLngBounds } from 'leaflet';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Logement } from '../models/logement';
 import { LogementReservation } from '../models/logementReservation';
+import { mapSquare } from '../models/mapSquare';
 import { MonCompteReservation } from '../models/monCompteReservation';
 import { MonCompteVoyage } from '../models/monCompteVoyage';
 import { Villes } from '../models/villes';
@@ -13,11 +15,20 @@ import { Villes } from '../models/villes';
 export class LogementService {
 
   villes = Villes;
-
   public logementsRandom!: BehaviorSubject<Array<Logement>>;
+  public bounds = new Subject<LatLngBounds>();
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private zone: NgZone
+  ) {
     this.logementsRandom = new BehaviorSubject(Array<Logement>());
+  }
+
+  public setBounds(bounds: LatLngBounds) {
+    this.zone.run(() => {
+      this.bounds.next(bounds);
+    });
   }
   
   public getRecentsLogement(){
@@ -106,7 +117,8 @@ export class LogementService {
     lits: number, 
     sdbs: number, 
     prix: number,
-    equipements: Array<string>
+    equipements: Array<string>,
+    mapSquare: mapSquare
   ): Observable<Array<Logement>> {
     return this.http.get<Array<Logement>>(`/api/logements/getByFiltres`, {
       params: {
@@ -115,7 +127,11 @@ export class LogementService {
         lits: lits,
         sdbs: sdbs,
         prix: prix,
-        equipements: equipements
+        equipements: equipements,
+        latMin: mapSquare.latMin,
+        latMax: mapSquare.latMax,
+        longMin: mapSquare.longMin,
+        longMax: mapSquare.longMax
       }
     });
   }
