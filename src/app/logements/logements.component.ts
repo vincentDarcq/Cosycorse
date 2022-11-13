@@ -148,8 +148,6 @@ export class LogementsComponent implements OnInit, OnDestroy {
           this.logementsFiltres.forEach(l => l.indexImage = 0);
           this.layers.forEach(l => this.map.removeLayer(l));
           this.addLogementsOnMap(this.logementsFiltres);
-        }else {
-          this.infoService.popupInfo("Il n'y a pas de logements correspondant à vos critères vos critères");
         }
       })
   }
