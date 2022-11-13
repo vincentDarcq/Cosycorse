@@ -97,6 +97,10 @@
                         <mat-radio-button [value]="true">accès handicapé</mat-radio-button>
                         <mat-radio-button [value]="false">pas d'accès handicapé</mat-radio-button>
                     </mat-radio-group>
+                    <mat-radio-group [(ngModel)]="l.logement.exposer" fxLayoutGap="3%">
+                        <mat-radio-button [value]="true">exposer l'annonce</mat-radio-button>
+                        <mat-radio-button [value]="false">cacher l'annonce</mat-radio-button>
+                    </mat-radio-group>
                 </div>
             </div>
             <div fxLaout="column" class="item">

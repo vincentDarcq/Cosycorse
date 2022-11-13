@@ -17,6 +17,7 @@ import { PopupReservationLogementComponent } from '../popups/popup-reservation-l
 import { InfoService } from '../services/info.service';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-logement',
@@ -46,6 +47,7 @@ export class LogementComponent implements OnInit, OnDestroy {
   public user: User;
 
   constructor(
+    private authentService: AuthenticationService,
     private activatedRoute: ActivatedRoute,
     private logementService: LogementService,
     private mailsService: MailsService,
@@ -114,7 +116,7 @@ export class LogementComponent implements OnInit, OnDestroy {
   }
 
   filterDates = (d: Date | null): boolean => {
-    if(new Date(Date.now()).getTime() > d!.getTime()){
+    if(new Date(Date.now()).getTime() > d!.getTime() || !this.logement.exposer){
       return false;
     }
     const day = d!.getDate();
@@ -193,6 +195,9 @@ export class LogementComponent implements OnInit, OnDestroy {
     }else if(this.dateFin === null || this.dateDebut === null){
       this.infoService.popupInfo("Les dates séléctionnées sont invalides");
       return;
+    }else if(!this.logement.exposer){
+      this.infoService.popupInfo("Vous ne pouvez pas faire de réservation pour ce logement");
+      return;
     }else {
       let logementReservation : LogementReservation = new LogementReservation();
       const nuits = this.getNbNuits(this.dateFin, this.dateDebut);
@@ -214,11 +219,14 @@ export class LogementComponent implements OnInit, OnDestroy {
         if(result){
           logementReservation.emailDemandeur = result.form.emailDemandeur;
           logementReservation.message = result.form.message;
-          this.logementService.reserverLocation(logementReservation).subscribe( (res: string) => {
-            this.infoService.popupInfo(res);
-          },
-          err => {
-            this.infoService.popupInfo(err.statusText);
+          this.authentService.getTokenForReservation().subscribe( (token: string) => {
+            this.logementService.reserverLocation(logementReservation, token).subscribe( 
+              (res: string) => {
+                this.infoService.popupInfo(res);
+              },
+              err => {
+                this.infoService.popupInfo(err.statusText);
+              })
           })
         }
       });

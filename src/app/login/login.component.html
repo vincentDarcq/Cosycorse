@@ -1,10 +1,10 @@
 <div class="component">
     <form class="formulaire" (ngSubmit)="login()" [formGroup]="form">
+        <p *ngIf="error" class="error"> {{ error }}</p>
         <input type="text" name="email" placeholder="email" required formControlName="email">
         <input type="password" name="password" placeholder="mot de passe" required formControlName="password">
         <a routerLink="/creation_compte">Pas de compte ? créez un compte</a>
         <p class="reset_mdp" (click)="openPopupResetMdp()">Mot de passe oublié ?</p>
         <button type="submit" [disabled]="!form.valid">Connexion</button>
-        <p *ngIf="error"> {{ error }}</p>
     </form>
 </div>

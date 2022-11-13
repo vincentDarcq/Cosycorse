@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { User } from '../models/user.model';
 import { switchMap, tap } from 'rxjs/operators';
 import { UserService } from './user.service';
@@ -60,12 +60,16 @@ export class AuthenticationService {
     this.router.navigate(['/']);
   }
 
-  public authentForResetPwd(token: string){
+  public authentForResetPwd(token: string): Observable<User>{
     return this.http.get<User>("/api/auth/authent-withToken", {
       params: {
         token: token
       }
-    })
+    });
+  }
+
+  public getTokenForReservation(): Observable<string>{
+    return this.http.get<string>("/api/auth/generated-token");
   }
 
 }

@@ -20,6 +20,7 @@ export class Logement {
     access_handicap?: boolean;
     indexImage: number = 0;
     galleryImages?: NgxGalleryImage[];
+    exposer: boolean;
 
     constructor(
         adresse: string,
@@ -37,6 +38,7 @@ export class Logement {
         fumeur: boolean,
         animaux: boolean,
         access_handicap: boolean,
+        exposer?: boolean,
         images?: Array<string>,
     ) {
         this.adresse = adresse;
@@ -54,6 +56,7 @@ export class Logement {
         this.fumeur = fumeur;
         this.animaux = animaux;
         this.access_handicap = access_handicap;
+        this.exposer = exposer;
         this.images = images;
     }
 

@@ -120,8 +120,12 @@ export class LogementService {
     });
   }
 
-  public reserverLocation(logementReservation: LogementReservation): Observable<string>{
-    return this.http.post<string>(`/api/logementReservation/create`, logementReservation);
+  public reserverLocation(logementReservation: LogementReservation, token: string): Observable<string>{
+    return this.http.post<string>(`/api/logementReservation/create`, logementReservation, {
+      params: {
+        token: token
+      }
+    });
   }
 
   public getReservationsByLogementId(logementId: string): Observable<Array<LogementReservation>>{
@@ -172,14 +176,14 @@ export class LogementService {
     });
   }
 
-  public cancelLogementReservationVoyageur(monCompteReservation: MonCompteVoyage, message: string){
+  public cancelLogementReservationVoyageur(monCompteReservation: MonCompteVoyage, message: string): Observable<string>{
     return this.http.post<string>(`/api/logementReservation/cancelReservationVoyageur`, {
       monCompteReservation: monCompteReservation,
       message: message
     });
   }
 
-  public cancelLogementReservationHote(monCompteReservation: MonCompteReservation, message: string){
+  public cancelLogementReservationHote(monCompteReservation: MonCompteReservation, message: string): Observable<string>{
     return this.http.post<string>(`/api/logementReservation/cancelReservationHote`, {
       monCompteReservation: monCompteReservation,
       message: message
@@ -189,6 +193,22 @@ export class LogementService {
         fromHost: "fromHost"
       }
     });
+  }
+
+  public cacherLogementAnnonce(logementId: string): Observable<string>{
+    return this.http.get<string>(`/api/logements/cacherAnnonce`, {
+      params: {
+        logementId: logementId
+      }
+    })
+  }
+
+  public exposerLogementAnnonce(logementId: string): Observable<string>{
+    return this.http.get<string>(`/api/logements/exposerAnnonce`, {
+      params: {
+        logementId: logementId
+      }
+    })
   }
 
 }

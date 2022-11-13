@@ -48,6 +48,16 @@ export class UserService implements OnDestroy {
     })
   }
 
+  public deleteAccount(id: string, email: string, stripeUserId: string){
+    return this.http.delete<User>('/api/user/delete', {
+      params: {
+        userId: id,
+        stripeUserId: stripeUserId,
+        userEmail: email
+      }
+    })
+  }
+
   ngOnDestroy(): void {
     if (this.subscription) { this.subscription.unsubscribe(); }
   }

@@ -10,12 +10,14 @@ export class User {
         id?: string,
         email?: string,
         prenom?: string,
-        nom?: string
+        nom?: string,
+        stripeUserId?: string
     ) {
         this._id = id;
         this.email = email;
         this.prenom = prenom;
         this.nom = nom;
+        this.stripeUserId = stripeUserId;
     }
 
 }

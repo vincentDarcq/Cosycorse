@@ -39,10 +39,6 @@
     text-align: center;
 }
 
-button{
-    margin: 2%;
-}
-
 img {
     padding: 3px;
     border-radius: 20px;
@@ -78,11 +74,19 @@ img {
     opacity: .4;
 }
 
-.buttons {
+.buttons, .suppression {
     width: fit-content;
     margin: auto;
+    text-align: center;
 }
 
 .btn {
-    width: 140px;
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 80% 20%;
 }

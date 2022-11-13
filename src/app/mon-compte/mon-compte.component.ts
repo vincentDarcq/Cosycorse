@@ -14,6 +14,8 @@ import { StripeService } from '../services/stripe.service';
 import { UserService } from '../services/user.service';
 import Swal from 'sweetalert2';
 import { RouterExtService } from '../services/router-ext.service';
+import { Router } from '@angular/router';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-mon-compte',
@@ -36,7 +38,9 @@ export class MonCompteComponent implements OnInit, OnDestroy {
     private stripeService: StripeService,
     private dialog: MatDialog,
     private infoService: InfoService,
-    private routerExt: RouterExtService
+    private routerExt: RouterExtService,
+    private router: Router,
+    private authService: AuthenticationService
   ) { }
   
   async ngOnInit() {
@@ -51,10 +55,8 @@ export class MonCompteComponent implements OnInit, OnDestroy {
       await new Promise(f => setTimeout(f, 100));
     }
     this.subUser = this.userService.currentUser.subscribe( (user: any) => {
-      this.user = new User(user._id, user.email, user.firstName, user.lastName);
-      if(user.stripeUserId){
-        this.user.stripeUserId = user.stripeUserId;
-      }
+      this.user = new User(user._id, user.email, user.firstName, user.lastName, user.stripeUserId);
+      console.log(this.user)
       this.subMonCompte = this.logementService.getReservationsByDemandeurEmail(this.user.email).subscribe((logementReservations: Array<LogementReservation>) => {
         logementReservations.forEach(lr => {
           this.logementService.fetchLogementById(lr.logementId).subscribe( (logement: Logement) => {
@@ -173,6 +175,56 @@ export class MonCompteComponent implements OnInit, OnDestroy {
     this.stripeService.setUpPaiement(this.user._id).subscribe((url: any) => {
       window.open(url.location);
     });
+  }
+
+  cacherAnnonce(index: number, id: string){
+    const message = `Voulez ne voulez pas faire remonter votre annonce dans les résultats de recherche ? \n
+    En cliquant sur cacher, les voyageurs ne pourront plus réserver votre logement même en allant sur la page 
+    de votre logement. \n note: Pour supprimer votre annonce, rendez-vous dans la rubrique "mes annonces"`
+    this.infoService.confirmPopup(message, 'Cacher', 'Annuler')
+      .then((result) => {
+        console.log(result.value)
+        if (result.value) {        
+          this.logementService.cacherLogementAnnonce(id).subscribe(
+            () => {
+              this.mesReservations[index].logement.exposer = false;
+              this.infoService.popupInfo("Votre annonce ne remontera plus dans les résultats de recherche");
+            }
+          )
+        }
+      })
+  }
+
+  exposerAnnonce(index: number, id: string){
+    const message = `Vous souhaitez ré-exposer votre annonce ?`
+    this.infoService.confirmPopup(message, 'Exposer', 'Annuler')
+      .then((result) => {
+        if (result.value) {        
+          this.logementService.cacherLogementAnnonce(id).subscribe(
+            () => {
+              this.mesReservations[index].logement.exposer = true;
+              this.infoService.popupInfo("Votre annonce remontera à nouveau dans les résultats de recherche");
+            }
+          )
+        }
+      })
+  }
+
+  deleteAccount(){
+    this.infoService.confirmPopup('Etes vous sûr de vouloir supprimer votre compte ?', 'Oui', 'Non')
+      .then((result) => {
+        if (result.value) {        
+          this.userService.deleteAccount(this.user._id, this.user.email, this.user.stripeUserId).subscribe( 
+            () => {
+              this.authService.logOut();
+              this.router.navigate(['/']);
+            },
+            err => {
+              this.infoService.popupInfo(`${err.error}`)
+            }
+          )
+        }
+      })
   }
   
   ngOnDestroy(): void {
