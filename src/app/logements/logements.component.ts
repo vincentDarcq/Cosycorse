@@ -2,7 +2,7 @@ import { Component, NgZone, OnDestroy, OnInit, QueryList, ViewChildren } from '@
 import { Subscription } from 'rxjs';
 import { Logement } from '../models/logement';
 import { LogementService } from '../services/logement.service';
-import { Map, MapOptions, latLng, tileLayer, marker, Layer, LatLngBounds } from 'leaflet';
+import { Map, MapOptions, marker, Layer, LatLngBounds } from 'leaflet';
 import { MapService } from '../services/map.service';
 import { Router } from '@angular/router';
 import { Villes } from '../models/villes';
@@ -11,11 +11,13 @@ import { EquipementsSecurite } from '../models/equipementsSecurite';
 import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 import { InfoService } from '../services/info.service';
 import { mapSquare } from '../models/mapSquare';
+import { SlideInOutAnimation } from '../animations/animations';
 
 @Component({
   selector: 'app-logements',
   templateUrl: './logements.component.html',
-  styleUrls: ['./logements.component.scss']
+  styleUrls: ['./logements.component.scss'],
+  animations: [SlideInOutAnimation]
 })
 export class LogementsComponent implements OnInit, OnDestroy {
 
@@ -39,6 +41,7 @@ export class LogementsComponent implements OnInit, OnDestroy {
   villes = Villes;
   equipementsList = Equipements;
   equipementsSecuriteList = EquipementsSecurite;
+  animationState = 'false';
 
   @ViewChildren('checkbox') private checkInput?: QueryList<MatCheckbox>;
 
@@ -170,6 +173,10 @@ export class LogementsComponent implements OnInit, OnDestroy {
       const index = this.equipementsFiltres.findIndex(e => e === equipement);
       this.equipementsFiltres.splice(index, 1);
     }
+  }
+
+  expandFilters(){
+    this.animationState = this.animationState === 'false' ? 'true' : 'false';
   }
 
   ngOnDestroy(): void {

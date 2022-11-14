@@ -22,17 +22,20 @@
         <mat-form-field class="input_number">
             <input matInput type="number" name="prix" placeholder="prix max" [(ngModel)]="prix_max">
         </mat-form-field>
-        <button class="btn btn-primary" (click)="actualiser()">Actualiser</button>
-        <button class="btn btn-success" (click)="effacerFiltres()">Effacer les filtres</button>
+        <button class="btn btn-light" (click)="actualiser()">Actualiser</button>
+        <button (click)="expandFilters()" class="btn btn-light">Equipements</button>
+        <button class="btn btn-light" (click)="effacerFiltres()">Effacer les filtres</button>
     </div>
-    <mat-checkbox #checkbox *ngFor="let e of equipementsList" value="{{e.element}}" 
-        (change)="valueChange(e.element, $event)">
-        <span>{{e.element}}</span>
-    </mat-checkbox>
-    <mat-checkbox #checkbox *ngFor="let e of equipementsSecuriteList" value="{{e.element}}"
-        (change)="valueChange(e.element, $event)">
-        <span>{{e.element}}</span>
-    </mat-checkbox>
+    <div [@slideInOut]="animationState">
+        <mat-checkbox #checkbox *ngFor="let e of equipementsList" value="{{e.element}}"
+            (change)="valueChange(e.element, $event)">
+            <span>{{e.element}}</span>
+        </mat-checkbox>
+        <mat-checkbox #checkbox *ngFor="let e of equipementsSecuriteList" value="{{e.element}}"
+            (change)="valueChange(e.element, $event)">
+            <span>{{e.element}}</span>
+        </mat-checkbox>
+    </div>
     <div class="logements">
         <div class="propositions" *ngIf="logementsFiltres.length === 0">
             <div class="margin button-effect" *ngFor="let logement of logementsRandom; let indexLogement = index"

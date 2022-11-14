@@ -4,19 +4,22 @@
 
 .logements {
     display: grid;
-    grid-template-columns: 70% 20%;
+    grid-template-columns: 80% 20%;
 }
-
+.propositions::-webkit-scrollbar{
+    display: none;
+}
 .propositions {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     height: 80vh;
     overflow-y: scroll;
+    scrollbar-width: none;
 }
 
 .margin {
-    margin: 1%;
+    margin: 3%;
 }
 
 .button-effect {
@@ -40,8 +43,9 @@ img {
 
 #map {
     border-radius: 20px;
-    width: 50vh;
+    width: 35vh;
     height: 75vh;
+    margin-right: 2%;
 }
 
 .details {
@@ -85,11 +89,11 @@ mat-form-field{
     display: none !important;
 }
 
-.btn-primary, .btn-success{
+.btn {
     height: 50%;
     margin-top: 2%;
 }
 
-mat-checkbox{
-    margin: 1%;
+::ng-deep mat-checkbox > label.mat-checkbox-layout{
+    margin: 10px;
 }
