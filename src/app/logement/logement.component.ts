@@ -36,8 +36,8 @@ export class LogementComponent implements OnInit, OnDestroy {
   equipementsList = Equipements;
   equipementsSecuriteList = EquipementsSecurite;
   equipements: Array<any> = [];
-  dateDebut: Date | undefined;
-  dateFin: Date | undefined;
+  dateDebut: Date;
+  dateFin: Date;
   todayDate: Date = new Date(Date.now());
   calendarMaxDate: Date = new Date(8640000000000000);
   maxDate: Date = this.calendarMaxDate;

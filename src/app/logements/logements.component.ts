@@ -42,6 +42,8 @@ export class LogementsComponent implements OnInit, OnDestroy {
   equipementsList = Equipements;
   equipementsSecuriteList = EquipementsSecurite;
   animationState = 'false';
+  dateDebut: Date;
+  dateFin: Date;
 
   @ViewChildren('checkbox') private checkInput?: QueryList<MatCheckbox>;
 
@@ -70,7 +72,9 @@ export class LogementsComponent implements OnInit, OnDestroy {
       this.bounds = new mapSquare(
         bounds.getSouthWest().lat, bounds.getNorthWest().lat,
         bounds.getSouthWest().lng, bounds.getSouthEast().lng);
-      this.actualiser();
+      if(this.bounds.latMin !== 41.1455697310095 && this.bounds.latMax !== 43.26120612479979){
+        this.actualiser();
+      }
     })
   }
 
@@ -137,14 +141,18 @@ export class LogementsComponent implements OnInit, OnDestroy {
   }
 
   actualiser(){
+    const dd = this.formatDate(this.dateDebut);
+    const df = this.formatDate(this.dateFin);
     this.logementService.getLogementByFiltres(
       this.villeSearch, 
-      this.nbVoyageurs!, 
-      this.nbLits!, 
-      this.nbSdbs!, 
-      this.prix_max!,
+      this.nbVoyageurs, 
+      this.nbLits, 
+      this.nbSdbs, 
+      this.prix_max,
       this.equipementsFiltres,
-      this.bounds
+      this.bounds,
+      dd,
+      df
     ).subscribe( (logements: Array<Logement>) => {
         if(logements.length > 0){
           this.logementsFiltres = logements;
@@ -155,15 +163,34 @@ export class LogementsComponent implements OnInit, OnDestroy {
       })
   }
 
+  formatDate(date: Date): string{
+    let fd = "";
+    if(date){
+      const month = (date.getMonth()+1).toString();
+      const day = date.getDate()/10 >= 1 ? date.getDate().toString() : "0" + date.getDate().toString();
+      const year = date.getFullYear().toString();
+      fd = month+"/"+day+"/"+year;
+    }
+    return fd;
+  }
+
   effacerFiltres(){
     this.villeSearch = "";
-    this.nbLits = this.nbVoyageurs = this.nbSdbs = this.prix_max = undefined;
+    this.nbLits = this.nbVoyageurs = this.nbSdbs = this.prix_max = this.dateDebut = this.dateFin = undefined;
     this.logementsFiltres = this.equipementsFiltres = [];
     this.checkInput!.forEach((element) => {
       element.checked = false;
     });
     this.layers.forEach(l => this.map.removeLayer(l));
-    this.addLogementsOnMap(this.logementsRandom)
+    this.addLogementsOnMap(this.logementsRandom);
+    console.log(this.logementsRandom.length)
+  }
+
+  filterDates = (d: Date): boolean => {
+    if(new Date(Date.now()).getTime() > d.getTime()){
+      return false;
+    }
+    return true;
   }
 
   valueChange(equipement: string, event: MatCheckboxChange){

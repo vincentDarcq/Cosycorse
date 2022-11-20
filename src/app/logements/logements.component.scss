@@ -1,15 +1,28 @@
 .component {
-    background-color: rgb(247, 253, 254);
+    background-color: white;
+}
+
+.search {
+    margin-left: 2%;
+}
+
+.input-date {
+    width: 300px;
+}
+
+.input-size {
+    width: 100px;
 }
 
 .logements {
-    display: grid;
-    grid-template-columns: 80% 20%;
+    display: flex; 
+    flex-flow: row wrap;
 }
 .propositions::-webkit-scrollbar{
     display: none;
 }
 .propositions {
+    flex: 1 1 70%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -18,37 +31,38 @@
     scrollbar-width: none;
 }
 
+#map {
+    flex: 1 1 25%;
+    border-radius: 20px;
+    width: 100%;
+    height: 75vh;
+    margin-right: 2%;
+}
+
 .margin {
-    margin: 3%;
+    margin: 2%;
 }
 
 .button-effect {
-    border-style: none;
-    border-width: 2px;
-    border-color: rgba(7, 0, 0, 0.98);
-    border-radius: 20px;
-    box-shadow: inset -2px -2px 5px 0 #000;
-    background-color: rgb(235, 249, 251);
+    // border-style: none;
+    border: 1px solid rgba(149, 149, 149, 0.98);
+    // border-radius: 20px;
+    // box-shadow: inset -2px -2px 5px 0 #000;
+    //background-color: rgb(235, 249, 251);
     cursor: pointer;
     height:fit-content;
 }
 
 img {
-    padding: 3px;
-    border-radius: 20px;
+    //padding: 3px;
+    //border-radius: 20px;
     width: 40vh;
     height: 25vh;
 
 }
 
-#map {
-    border-radius: 20px;
-    width: 35vh;
-    height: 75vh;
-    margin-right: 2%;
-}
-
 .details {
+    text-align: center;
     padding: 5%;
 }
 

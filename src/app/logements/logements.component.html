@@ -1,6 +1,15 @@
 <div class="component">
-    <div class="search" fxLayout="row" fxLayoutGap="10px">
-        <mat-form-field class="input_text">
+    <div class="search" fxLayout="row" fxLayoutGap="8px">
+        <mat-form-field class="input-date" appearance="outline">
+            <mat-label>Dates</mat-label>
+            <mat-date-range-input [rangePicker]="picker" [dateFilter]="filterDates">
+              <input matStartDate placeholder="Arrivée" [(ngModel)]="dateDebut">
+              <input matEndDate placeholder="Départ" [(ngModel)]="dateFin">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          </mat-form-field>
+        <mat-form-field class="input-size">
             <input matInput type="text" name="villeSearch" placeholder="ville"
              [(ngModel)]="villeSearch" [matAutocomplete]="villescomplete">
         </mat-form-field>
@@ -8,19 +17,19 @@
             <mat-option *ngFor="let ville of villes" [value]="ville">
               {{ ville }}
             </mat-option>
-          </mat-autocomplete>
-        <mat-form-field class="input_number">
+        </mat-autocomplete>
+        <mat-form-field class="input-size">
             <input matInput type="number" name="nbVoyageurs" placeholder="voyageurs"
                 [(ngModel)]="nbVoyageurs">
         </mat-form-field>
-        <mat-form-field class="input_number">
+        <mat-form-field class="input-size">
             <input matInput type="number" name="nbVoyageurs" placeholder="lits" [(ngModel)]="nbLits">
         </mat-form-field>
-        <mat-form-field class="input_number">
+        <mat-form-field class="input-size">
             <input matInput type="number" name="nbSdbs" placeholder="Salles de bain" [(ngModel)]="nbSdbs">
         </mat-form-field>
-        <mat-form-field class="input_number">
-            <input matInput type="number" name="prix" placeholder="prix max" [(ngModel)]="prix_max">
+        <mat-form-field class="input-size">
+            <input matInput type="number" name="prix" placeholder="prix max/nuit" [(ngModel)]="prix_max">
         </mat-form-field>
         <button class="btn btn-light" (click)="actualiser()">Actualiser</button>
         <button (click)="expandFilters()" class="btn btn-light">Equipements</button>

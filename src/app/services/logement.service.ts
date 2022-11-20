@@ -118,7 +118,9 @@ export class LogementService {
     sdbs: number, 
     prix: number,
     equipements: Array<string>,
-    mapSquare: mapSquare
+    mapSquare: mapSquare,
+    dateDebut: string,
+    dateFin: string
   ): Observable<Array<Logement>> {
     return this.http.get<Array<Logement>>(`/api/logements/getByFiltres`, {
       params: {
@@ -131,7 +133,9 @@ export class LogementService {
         latMin: mapSquare.latMin,
         latMax: mapSquare.latMax,
         longMin: mapSquare.longMin,
-        longMax: mapSquare.longMax
+        longMax: mapSquare.longMax,
+        dateDebut: dateDebut,
+        dateFin: dateFin
       }
     });
   }
