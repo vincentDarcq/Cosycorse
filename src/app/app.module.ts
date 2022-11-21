@@ -38,6 +38,7 @@ import { StripeRedirectComponent } from './components-oneShot/stripe-redirect/st
 import { AnnulerVoyageComponent } from './popups/annuler-voyage/annuler-voyage.component';
 import { AnnulerReservationComponent } from './popups/annuler-reservation/annuler-reservation.component';
 import { RouterExtService } from './services/router-ext.service';
+import { EditLieuComponent } from './edit-lieu/edit-lieu.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { RouterExtService } from './services/router-ext.service';
     LieuxFormComponent,
     StripeRedirectComponent,
     AnnulerVoyageComponent,
-    AnnulerReservationComponent
+    AnnulerReservationComponent,
+    EditLieuComponent
   ],
   imports: [
     BrowserModule,

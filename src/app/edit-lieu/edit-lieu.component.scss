@@ -1,0 +1,51 @@
+.images{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 2%;
+}
+
+.img_box{
+    margin: 1%;
+}
+
+img, span{
+    margin: auto;
+}
+
+.modify_img {
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+}
+.modify_img input[type=file] {
+    left: 0;
+    top: 0;
+    opacity: 0;
+    position: absolute;
+    font-size: 90px;
+}
+
+mat-form-field {
+    margin: 5px auto;
+    width: 200px;
+    border-radius: 5px;
+}
+
+mat-radio-group {
+    margin: auto;
+}
+
+.btn-upload {
+    background-color: #fff;
+    border: 1px solid #000;
+    color: #000;
+    border-radius: 10px;
+    font-size: 1rem;
+}
+
+button{
+    margin: 5px auto;
+    width: 200px;
+}

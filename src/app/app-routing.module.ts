@@ -15,11 +15,13 @@ import { SignupComponent } from './signup/signup.component';
 import { ReponseLogementReservationComponent } from './components-oneShot/reponse-logement-reservation/reponse-logement-reservation.component';
 import { LieuxFormComponent } from './lieux-form/lieux-form.component';
 import { StripeRedirectComponent } from './components-oneShot/stripe-redirect/stripe-redirect.component';
+import { EditLieuComponent } from './edit-lieu/edit-lieu.component';
 
 const routes: Routes = [
   { path: '', component: MainPageComponent },
   { path: 'logements', component: LogementsComponent },
   { path: 'logement/:id', component: LogementComponent},
+  { path: 'edit-lieu/:id', component: EditLieuComponent},
   { path: 'activites', component: ActivitesComponent },
   { path: 'lieux', component: LieuxComponent },
   { path: 'connexion', component: LoginComponent },

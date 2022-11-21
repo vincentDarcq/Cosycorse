@@ -59,19 +59,25 @@ export class MesAnnoncesComponent implements OnInit, OnDestroy {
   onImageChange(event: any, indexLogement: number, indexImage: number){
     if (event.target.files[0]) {
       this.modifyLogement[indexLogement].formData.append('image'+indexImage, event.target.files[0]);
-      this.modifyLogement[indexLogement].imagesLoaded[indexImage] = event.target.files[0].name;
+      this.logementService.uploadPhotos(this.modifyLogement[indexLogement].formData, 
+                                        this.modifyLogement[indexLogement].logement._id)
+                          .subscribe(
+        (logement: Logement) => {
+          this.modifyLogement[indexLogement].logement = logement;
+        },
+        err => {
+          this.infoService.popupInfo(`Erreur au changement de l'image : ${err.error}`);
+        }
+      )
     }
   }
 
   deleteImage(indexLogement: number, indexImage: number){
     this.logementService.deleteImage(this.modifyLogement[indexLogement].logement._id, indexImage.toString()).subscribe( (l: Logement) => {
+      const indexImages = typeof l.images === "undefined" ? 0 : l.images.length;
+      this.modifyLogement[indexLogement].indexNewImages = indexImages;
       this.modifyLogement[indexLogement].logement = l;
     })
-  }
-
-  annulerModifierImage(indexLogement: number, indexImage: number){
-    this.modifyLogement[indexLogement].formData.delete('image'+indexImage);
-    this.modifyLogement[indexLogement].imagesLoaded[indexImage] = null;
   }
 
   onDropZone(event: any, indexLogement: number){
@@ -80,7 +86,7 @@ export class MesAnnoncesComponent implements OnInit, OnDestroy {
   }
   
   onRemove(event: any, indexLogement: number){
-    this.modifyLogement[indexLogement].files.push(...event.addedFiles);
+    this.modifyLogement[indexLogement].files.splice(this.modifyLogement[indexLogement].files.indexOf(event), 1);
     this.fillFormData(indexLogement);
   }
   
@@ -104,7 +110,6 @@ export class MesAnnoncesComponent implements OnInit, OnDestroy {
     }
     if(addImage){
       this.logementService.uploadPhotos(this.modifyLogement[indexLogement].formData, this.modifyLogement[indexLogement].logement._id).subscribe( (l: Logement) => {
-        this.modifyLogement[indexLogement].imagesLoaded = new Array();
         this.modifyLogement[indexLogement].files = new Array();
         this.modifyLogement[indexLogement].logement = l;
       })

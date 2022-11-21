@@ -1,0 +1,41 @@
+<div class="component" *ngIf="lieu">
+    <div class="images">
+        <div *ngFor="let im of lieu.images; let i = index" fxLayout="column" class="img_box">
+            <img [ngStyle]="{'height':'100px', 'width':'120px'}" 
+                 [src]="serverImg+im" alt="image 1">
+            <span>image {{ i+1 }}</span>
+            <div class="modify_img">
+                <button class="btn-upload">Remplacer l'image</button>
+                <input type="file" name="upfile" (change)="onImageChange($event, i+1)" />
+            </div>
+            <button class="btn-upload" (click)="deleteImage(i)">Supprimer l'image</button>
+        </div>
+    </div>
+    <ngx-dropzone (change)="onDropZone($event)">
+        <ngx-dropzone-label>Ajoutez/Deposez des photos</ngx-dropzone-label>
+        <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+            <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+        </ngx-dropzone-preview>
+    </ngx-dropzone>
+    <div class="m-5" fxLayout="column">
+        <mat-radio-group [(ngModel)]="lieu.type" name="type" fxLayoutGap="3%">
+            <mat-radio-button *ngFor="let type of lieu_types" [value]="type">{{ type }}</mat-radio-button>
+        </mat-radio-group>
+        <mat-form-field>
+            <input matInput type="text" name="nom" placeholder="Nom"
+            [(ngModel)]="lieu.nom">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput type="text" name="ville" placeholder="Ville" (keyup)="affineVille()"
+            [(ngModel)]="lieu.ville" [matAutocomplete]="villescomplete">
+        </mat-form-field>
+        <mat-autocomplete #villescomplete="matAutocomplete">
+            <mat-option *ngFor="let ville of villeAutoComplete" [value]="ville">
+                {{ ville }}
+            </mat-option>
+        </mat-autocomplete>
+        <textarea type="text" placeholder="Description" [(ngModel)]="lieu.description" name="description" id="description"
+          rows="10"></textarea>
+        <button class="btn btn-light" (click)="modifier()">Modifier</button>
+    </div>
+</div>

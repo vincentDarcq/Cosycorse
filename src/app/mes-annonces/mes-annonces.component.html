@@ -23,10 +23,6 @@
                     <input type="file" name="upfile" (change)="onImageChange($event, indexLogement, i+1)" />
                 </div>
                 <button class="btn-upload" (click)="deleteImage(indexLogement, i)">Supprimer l'image</button>
-                <div class="imgLoaded" fxLayout="row">
-                    <span *ngIf="l.imagesLoaded[i+1]">{{ l.imagesLoaded[i+1] }}</span>
-                    <span class="annulerChangeImg" *ngIf="l.imagesLoaded[i+1]" (click)="annulerModifierImage(indexLogement, i+1)">-</span>
-                </div>
             </div>
         </div>
         <ngx-dropzone (change)="onDropZone($event, indexLogement)">
