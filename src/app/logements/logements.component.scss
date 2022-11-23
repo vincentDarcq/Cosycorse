@@ -43,22 +43,15 @@
     margin: 2%;
 }
 
-.button-effect {
-    // border-style: none;
+.box {
     border: 1px solid rgba(149, 149, 149, 0.98);
-    // border-radius: 20px;
-    // box-shadow: inset -2px -2px 5px 0 #000;
-    //background-color: rgb(235, 249, 251);
     cursor: pointer;
     height:fit-content;
 }
 
 img {
-    //padding: 3px;
-    //border-radius: 20px;
     width: 40vh;
     height: 25vh;
-
 }
 
 .details {
@@ -99,9 +92,9 @@ mat-form-field{
     width: 10%;
 }
 
-::ng-deep mat-form-field > .mat-form-field-wrapper > .mat-form-field-underline{
-    display: none !important;
-}
+// ::ng-deep mat-form-field > .mat-form-field-wrapper > .mat-form-field-underline{
+//     display: none !important;
+// }
 
 .btn {
     height: 50%;

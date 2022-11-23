@@ -67,18 +67,14 @@ img{
     margin: 2%
 }
 
-.search{
-    padding: 1%;
-}
-
-.btn-primary, .btn-success{
+.btn-light{
     height: 50%;
     margin-top: 1%;
 }
 
-::ng-deep mat-form-field > .mat-form-field-wrapper > .mat-form-field-underline{
-    display: none !important;
-}
+// ::ng-deep mat-form-field > .mat-form-field-wrapper > .mat-form-field-underline{
+//     display: none !important;
+// }
 
 mat-radio-group{
     padding-top: 1.5%;

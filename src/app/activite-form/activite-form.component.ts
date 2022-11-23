@@ -1,52 +1,61 @@
 import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Map, MapOptions, marker } from 'leaflet';
-import { LieuService } from '../services/lieu.service';
-import { MapService } from '../services/map.service';
-import { Villes } from '../models/villes';
-import { LieuxType } from '../models/type-lieu';
-import { Lieu } from '../models/lieu';
 import { Router } from '@angular/router';
+import { Map, MapOptions, marker } from 'leaflet';
+import { Activite } from '../models/activite';
+import { ActivitesType } from '../models/type-activite';
+import { Villes } from '../models/villes';
+import { ActiviteService } from '../services/activite.service';
+import { MapService } from '../services/map.service';
 
 @Component({
-  selector: 'app-lieux-form',
-  templateUrl: './lieux-form.component.html',
-  styleUrls: ['./lieux-form.component.scss']
+  selector: 'app-activite-form',
+  templateUrl: './activite-form.component.html',
+  styleUrls: ['./activite-form.component.scss']
 })
-export class LieuxFormComponent implements OnInit {
+export class ActiviteFormComponent implements OnInit {
 
-  form!: FormGroup;
-  formData = new FormData();
-  files: File[] = [];
+  form: FormGroup;
   displayMap: boolean = false;
-  mapOptions!: MapOptions;
   map!: Map;
+  lastLayer: any;
+  files: File[] = [];
+  formData = new FormData();
+  mapOptions!: MapOptions;
   villes = Villes;
   villeAutoComplete = Villes;
-  lieu_types = LieuxType;
-  lastLayer: any;
+  activites_types = ActivitesType;
 
   @ViewChild("latitude") private latitude!: ElementRef;
   @ViewChild("longitude") private longitude!: ElementRef;
 
   constructor(
     private formBuilder: FormBuilder,
-    private lieuService: LieuService,
     private zone: NgZone,
     private mapService: MapService,
+    private activiteService: ActiviteService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      nom: ['', Validators.required],
-      ville: ['', Validators.required],
+      titre: ['', Validators.required],
+      proposeur: ['', Validators.required],
       type: ['', Validators.required],
+      duree: ['', Validators.required],
+      ville: ['', Validators.required],
       description: '',
       latitude: ['', Validators.required],
       longitude: ['', Validators.required]
     });
     this.initializeMap();
+  }
+
+  affineVille(){
+    this.villeAutoComplete = this.villes.filter(v => v.toLowerCase().indexOf(this.form.value.ville.toLowerCase()) !== -1)
+    if(this.form.value.ville.length === 0){
+      this.villeAutoComplete = this.villes;
+    }
   }
 
   onMapReady(map: Map){
@@ -75,13 +84,6 @@ export class LieuxFormComponent implements OnInit {
     this.displayMap = true;
   }
 
-  affineVille(){
-    this.villeAutoComplete = this.villes.filter(v => v.toLowerCase().indexOf(this.form.value.ville.toLowerCase()) !== -1)
-    if(this.form.value.ville.length === 0){
-      this.villeAutoComplete = this.villes;
-    }
-  }
-
   onDropZone(event: any){
     this.files.push(...event.addedFiles);
     this.fillFormData();
@@ -99,18 +101,29 @@ export class LieuxFormComponent implements OnInit {
   }
 
   submit(){
-    const lieu = new Lieu();
-    lieu.description = this.form.value.description;
-    lieu.latitude = this.form.value.latitude;
-    lieu.longitude = this.form.value.longitude;
-    lieu.longitude = this.form.value.longitude;
-    lieu.nom = this.form.value.nom;
-    lieu.type = this.form.value.type;
-    lieu.ville = this.form.value.ville;
-    this.lieuService.createLieu(lieu).subscribe((lieu: Lieu) => {
-      this.lieuService.uploadPhotos(this.formData, lieu._id).subscribe((lieu: Lieu) => {
+    let activite = new Activite();
+    activite.description = this.form.value.description;
+    activite.duree = this.form.value.duree;
+    activite.latitude = this.form.value.latitude;
+    activite.longitude = this.form.value.longitude;
+    activite.proposeur = this.form.value.proposeur;
+    activite.titre = this.form.value.titre;
+    activite.type = this.form.value.type;
+    activite.ville = this.form.value.ville;
+    this.activiteService.createActivite(activite).subscribe((activite:Activite) => {
+      let addImage = false;
+      for(let i = 1; i < 14; i++){
+        if(this.formData.has('image'+i)){
+          addImage = true;
+        }
+      }
+      if(addImage){
+        this.activiteService.uploadPhotos(this.formData, activite._id).subscribe( (a: Activite) => {
+          this.router.navigate(['/']);
+        })
+      }else {
         this.router.navigate(['/']);
-      })
+      }
     })
   }
 

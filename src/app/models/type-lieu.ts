@@ -1,4 +1,4 @@
-export const LieusType = [
+export const LieuxType = [
     'Plage',
     'Golfe',
     'Calanques',

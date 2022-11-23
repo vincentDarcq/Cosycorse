@@ -1,1 +1,54 @@
-<p>activites works!</p>
+<div class="component">
+    <div class="p_1pourcent" fxLayout="row" fxLayoutGap="10px">
+        <mat-form-field class="width_10pourcent pl_1pourcent">
+            <input matInput type="text" name="nomSearch" placeholder="titre"
+             [(ngModel)]="titreSearch">
+        </mat-form-field>
+        <mat-form-field class="width_10pourcent pl_1pourcent">
+            <input matInput type="text" name="villeSearch" placeholder="ville"
+             [(ngModel)]="villeSearch" [matAutocomplete]="villescomplete">
+        </mat-form-field>
+        <mat-autocomplete #villescomplete="matAutocomplete">
+            <mat-option *ngFor="let ville of villes" [value]="ville">
+              {{ ville }}
+            </mat-option>
+        </mat-autocomplete>
+        <mat-radio-group [(ngModel)]="typeSearch" name="typeSearch" *ngFor="let type of activite_types">
+            <mat-radio-button #radioButton [value]="type">{{ type }}</mat-radio-button>
+        </mat-radio-group>
+        <button class="btn btn-light" (click)="actualiser()">Actualiser</button>
+        <button class="btn btn-light" (click)="effacerFiltres()">Effacer les filtres</button>
+    </div>
+    <div class="wrapper">
+        <div class="activites" *ngIf="activitesFiltered.length === 0">
+            <div class="m_2pourcent box" *ngFor="let a of activites; let i = index">
+                <img *ngIf="a && a.images" [src]="serverImg + a.images[a.indexImage]"
+                    alt="">
+                <i class='fas fa-angle-right arrow-right'
+                    (click)="selectArrow(i, a.indexImage, $event)"></i>
+                <i class='fas fa-angle-left arrow-left'
+                    (click)="selectLeftArrow(i, a.indexImage, $event)"></i>
+                <div class="details" fxLayout="column">
+                    <span><b>{{ a.ville }}</b></span>
+                    <span>{{ a.titre }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="activites" *ngIf="activitesFiltered.length > 0">
+            <div class="m_2pourcent box" *ngFor="let a of activitesFiltered; let i = index">
+                <img *ngIf="a && a.images" [src]="serverImg + a.images[a.indexImage]"
+                    alt="">
+                <i class='fas fa-angle-right arrow-right'
+                    (click)="selectArrow(i, a.indexImage, $event)"></i>
+                <i class='fas fa-angle-left arrow-left'
+                    (click)="selectLeftArrow(i, a.indexImage, $event)"></i>
+                <div class="details" fxLayout="column">
+                    <span><b>{{ a.ville }}</b></span>
+                    <span>{{ a.titre }}</span>
+                </div>
+            </div>
+        </div>
+        <div id="map" leaflet *ngIf="displayMap" (leafletMapReady)="onMapReady($event)" [leafletOptions]="mapOptions">
+        </div>
+    </div>
+</div>

@@ -200,7 +200,7 @@ export class MonCompteComponent implements OnInit, OnDestroy {
     this.infoService.confirmPopup(message, 'Exposer', 'Annuler')
       .then((result) => {
         if (result.value) {        
-          this.logementService.cacherLogementAnnonce(id).subscribe(
+          this.logementService.exposerLogementAnnonce(id).subscribe(
             () => {
               this.mesReservations[index].logement.exposer = true;
               this.infoService.popupInfo("Votre annonce remontera à nouveau dans les résultats de recherche");

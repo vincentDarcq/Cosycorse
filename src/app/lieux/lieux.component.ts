@@ -4,7 +4,7 @@ import { Lieu } from '../models/lieu';
 import { Villes } from '../models/villes';
 import { LieuService } from '../services/lieu.service';
 import { MapService } from '../services/map.service';
-import { LieusType } from '../models/type-lieu';
+import { LieuxType } from '../models/type-lieu';
 import { MatRadioButton } from '@angular/material/radio';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
@@ -27,7 +27,7 @@ export class LieuxComponent implements OnInit, OnDestroy {
   lieuxFiltered!: Array<Lieu>;
   serverImg: String = "/upload?img=";
   layers: Array<Layer> = [];
-  lieu_types = LieusType;
+  lieu_types = LieuxType;
   nomSearch!: string;
   typeSearch!: string;
   villeSearch!: string;
@@ -129,7 +129,7 @@ export class LieuxComponent implements OnInit, OnDestroy {
   effacerFiltres(){
     this.villeSearch = this.nomSearch = "";
     this.lieuxFiltered = [];
-    this.radioButtons!.forEach((element) => {
+    this.radioButtons.forEach((element) => {
       element.checked = false;
     });
     this.layers.forEach(l => this.map.removeLayer(l));

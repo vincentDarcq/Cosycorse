@@ -16,6 +16,7 @@ import { ReponseLogementReservationComponent } from './components-oneShot/repons
 import { LieuxFormComponent } from './lieux-form/lieux-form.component';
 import { StripeRedirectComponent } from './components-oneShot/stripe-redirect/stripe-redirect.component';
 import { EditLieuComponent } from './edit-lieu/edit-lieu.component';
+import { ActiviteFormComponent } from './activite-form/activite-form.component';
 
 const routes: Routes = [
   { path: '', component: MainPageComponent },
@@ -30,6 +31,7 @@ const routes: Routes = [
   { path: 'mon_compte', canActivate: [AuthGuard], component: MonCompteComponent},
   { path: 'mes_annonces', canActivate: [AuthGuard], component: MesAnnoncesComponent},
   { path: 'creation_lieu', canActivate: [AuthGuard], component: LieuxFormComponent},
+  { path: 'creation_activite', canActivate: [AuthGuard], component: ActiviteFormComponent},
   { path: 'reset_password/:token', component: ResetPasswordComponent},
   { path: 'reponseLogementReservation/:id', component: ReponseLogementReservationComponent},
   { path: 'stripe/redirect', component: StripeRedirectComponent},

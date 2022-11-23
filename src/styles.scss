@@ -1,6 +1,89 @@
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
-
 @import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
 @import "~@fortawesome/fontawesome-free/scss/solid.scss";
 @import "~@fortawesome/fontawesome-free/scss/regular.scss";
 @import "~@fortawesome/fontawesome-free/scss/brands.scss";
+
+.red {
+    color: red;
+}
+
+.green_clear {
+    background-color: rgb(243, 248, 234);
+}
+
+ngx-dropzone {
+    height: 100px;
+    background-color: rgb(243, 248, 234);
+}
+
+mat-radio-button{
+    margin: 3%;
+}
+
+.m_1pourcent{
+    margin: 1%;
+}
+
+.m_2pourcent{
+    margin: 2%;
+}
+
+.p_1pourcent{
+    padding: 1%;
+}
+
+.pl_1pourcent{
+    padding-left: 1%;
+}
+
+.mt_1pourcent{
+    margin-top: 1%;
+}
+
+.mt_2pourcent{
+    margin-top: 2%;
+}
+
+.mt_3pourcent{
+    margin-top: 3%;
+}
+
+.mt_4pourcent{
+    margin-top: 4%;
+}
+
+.mt_5pourcent{
+    margin-top: 5%;
+}
+
+.mr_1pourcent{
+    margin-right: 1%;
+}
+
+.ml_2pourcent{
+    margin-left: 2%;
+}
+
+.width_10pourcent{
+    width: 10%;
+}
+
+.width_150p {
+    width: 150px;
+}
+.width_300p {
+    width: 300px;
+}
+
+.width_100vh{
+    width: 100vh;
+}
+
+.leaflet{
+    &#map {
+        border-radius: 20px;
+        width: 50vh;
+        height: 65vh;
+    }
+}

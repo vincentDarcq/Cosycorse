@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Lieu } from '../models/lieu';
-import { LieusType } from '../models/type-lieu';
+import { LieuxType } from '../models/type-lieu';
 import { Villes } from '../models/villes';
 import { InfoService } from '../services/info.service';
 import { LieuService } from '../services/lieu.service';
@@ -21,7 +21,7 @@ export class EditLieuComponent implements OnInit, OnDestroy{
   files: File[] = [];
   formData = new FormData();
   indexNewImages: number;
-  lieu_types = LieusType;
+  lieu_types = LieuxType;
   villes = Villes;
   villeAutoComplete = Villes;
 

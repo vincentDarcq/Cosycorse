@@ -6,7 +6,7 @@
                     <div fxLayout="row">
                         <div class="item" fxLayout="column">
                             <div class="nom">
-                                <mat-form-field class="item field input_ville">
+                                <mat-form-field class="item field">
                                     <input matInput type="text" required name="nom" placeholder="nom" formControlName="nom">
                                 </mat-form-field>
                                 <div class="control item" 
@@ -15,7 +15,7 @@
                                 </div>
                             </div>
                             <div class="ville" fxLayout="column">
-                                <mat-form-field class="item field input_ville">
+                                <mat-form-field class="item field">
                                   <input matInput type="text" name="ville" required placeholder="Ville" (keyup)="affineVille()"
                                   formControlName="ville" [matAutocomplete]="villescomplete">
                                 </mat-form-field>

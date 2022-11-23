@@ -39,6 +39,7 @@ import { AnnulerVoyageComponent } from './popups/annuler-voyage/annuler-voyage.c
 import { AnnulerReservationComponent } from './popups/annuler-reservation/annuler-reservation.component';
 import { RouterExtService } from './services/router-ext.service';
 import { EditLieuComponent } from './edit-lieu/edit-lieu.component';
+import { ActiviteFormComponent } from './activite-form/activite-form.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { EditLieuComponent } from './edit-lieu/edit-lieu.component';
     StripeRedirectComponent,
     AnnulerVoyageComponent,
     AnnulerReservationComponent,
-    EditLieuComponent
+    EditLieuComponent,
+    ActiviteFormComponent
   ],
   imports: [
     BrowserModule,

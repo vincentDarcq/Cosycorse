@@ -19,7 +19,7 @@
     </div>
     <div class="voyages" *ngIf="mesVoyages.length > 0">
         <h3>Mes voyages</h3>
-        <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutGap="2%" class="voyage">
+        <div fxLayout="row wrap" fxLayout.sm="column" fxLayout.xs="column" fxLayoutGap="2%" class="voyage">
             <div class="button-effect" *ngFor="let mv of mesVoyages; let indexMCV = index">
                 <div class="details">
                     <p>{{ mv.logementReservation.dateDebut }} - {{ mv.logementReservation.dateFin }}</p>
@@ -41,7 +41,7 @@
     </div>
     <div class="reservations" *ngIf="mesReservations.length > 0">        
         <h3>Les reservations de mes voyageurs</h3>
-        <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutGap="2%" class="reservation">
+        <div fxLayout="row wrap" fxLayout.sm="column" fxLayout.xs="column" fxLayoutGap="2%" class="reservation">
             <div class="button-effect" *ngFor="let mr of mesReservations; let indexMCR = index">
                 <div class="details">
                     <p><b>voyageur : </b>{{ mr.user.prenom }} {{ mr.user.nom }}</p>

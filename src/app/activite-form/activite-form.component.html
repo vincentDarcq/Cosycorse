@@ -1,0 +1,138 @@
+<div class="component">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="grid">
+            <div class="infos">
+                <div class="green_clear mt-2">
+                    <div fxLayout="column">
+                        <div class="item" fxLayout="row" fxLayoutGap="2%">
+                            <div class="titre">
+                                <mat-form-field class="width_300p">
+                                    <input matInput 
+                                        type="text" 
+                                        required 
+                                        name="titre" 
+                                        placeholder="Titre" 
+                                        formControlName="titre">
+                                </mat-form-field>
+                                <div class="red" 
+                                  *ngIf="form.get('titre')!.invalid && (form.get('titre')!.dirty || form.get('titre')!.touched)">
+                                  Titre obligatoire
+                                </div>
+                            </div>
+                            <div class="proposeur">
+                                <mat-form-field class="width_150p">
+                                    <input matInput 
+                                        type="text" 
+                                        required 
+                                        name="proposeur" 
+                                        placeholder="Proposeur" 
+                                        formControlName="proposeur">
+                                </mat-form-field>
+                                <div class="red" 
+                                  *ngIf="form.get('proposeur')!.invalid && (form.get('proposeur')!.dirty || form.get('proposeur')!.touched)">
+                                  Proposeur obligatoire
+                                </div>
+                            </div>
+                            <div class="ville">
+                                <mat-form-field class="width_150p">
+                                  <input matInput 
+                                        type="text" 
+                                        name="ville" 
+                                        required 
+                                        placeholder="Ville" 
+                                        (keyup)="affineVille()"
+                                        formControlName="ville" 
+                                        [matAutocomplete]="villescomplete">
+                                </mat-form-field>
+                                <mat-autocomplete #villescomplete="matAutocomplete">
+                                  <mat-option *ngFor="let ville of villeAutoComplete" [value]="ville">
+                                    {{ ville }}
+                                  </mat-option>
+                                </mat-autocomplete>
+                                <div class="red" 
+                                  *ngIf="form.get('ville')!.invalid && (form.get('ville')!.dirty || form.get('ville')!.touched)">
+                                  Ville obligatoire
+                                </div>
+                            </div>
+                            <div class="duree">
+                                <mat-form-field class="width_150p">
+                                    <input matInput 
+                                        type="text" 
+                                        required 
+                                        name="duree" 
+                                        placeholder="Durée" 
+                                        formControlName="duree">
+                                </mat-form-field>
+                                <div class="red" 
+                                  *ngIf="form.get('duree')!.invalid && (form.get('duree')!.dirty || form.get('duree')!.touched)">
+                                  Durée obligatoire
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt_1pourcent">
+                            <mat-radio-group formControlName="type" name="type" *ngFor="let type of activites_types">
+                                <mat-radio-button [value]="type">{{ type }}</mat-radio-button>
+                            </mat-radio-group>
+                            <div class="red" 
+                                *ngIf="form.get('type')!.invalid && (form.get('type')!.dirty || form.get('type')!.touched)">
+                                Type obligatoire
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="green_clear mt-2" fxLayout="column">
+                    <div class="item" fxLayout="row">
+                        <mat-form-field>
+                            <input matInput 
+                                type="number" 
+                                name="latitude" 
+                                required 
+                                placeholder="latitude" 
+                                formControlName="latitude" 
+                                #latitude>
+                        </mat-form-field>
+                        <div class="mt_3pourcent ml_2pourcent">
+                          cliquez sur une position de la carte pour remplir ce champ
+                        </div>
+                    </div>
+                    <div class="item" fxLayout="row">
+                        <mat-form-field>
+                            <input matInput 
+                                type="number" 
+                                name="longitude" 
+                                required 
+                                placeholder="longitude" 
+                                formControlName="longitude" 
+                                #longitude>
+                        </mat-form-field>
+                        <div class="mt_3pourcent ml_2pourcent">
+                          cliquez sur une position de la carte pour remplir ce champ
+                        </div>
+                    </div>
+                </div>
+                <div class="green_clear mt-2">
+                    <div class="item" fxLayoutGap="20px">
+                        <textarea type="text" 
+                                placeholder="Description" 
+                                formControlName="description" 
+                                name="description" 
+                                id="description"
+                                class="m_1pourcent width_100vh"
+                            rows="4"></textarea>
+                    </div>
+                </div>
+                <div class="green_clear mt-2">
+                    <ngx-dropzone (change)="onDropZone($event)">
+                        <ngx-dropzone-label>Ajoutez/Deposez des photos</ngx-dropzone-label>
+                        <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+                          <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                        </ngx-dropzone-preview>
+                    </ngx-dropzone>
+                </div>
+            </div>
+            <div id="map" leaflet *ngIf="displayMap" (leafletMapReady)="onMapReady($event)" [leafletOptions]="mapOptions">
+            </div>
+        </div>
+        <button class="btn btn-success submit" [disabled]="form.invalid" type="submit">Créer l'activité</button>
+    </form>
+</div>
