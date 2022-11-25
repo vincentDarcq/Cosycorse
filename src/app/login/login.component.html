@@ -1,8 +1,12 @@
 <div class="component">
     <form class="formulaire" (ngSubmit)="login()" [formGroup]="form">
         <p *ngIf="error" class="error"> {{ error }}</p>
-        <input type="text" name="email" placeholder="email" required formControlName="email">
-        <input type="password" name="password" placeholder="mot de passe" required formControlName="password">
+        <mat-form-field>
+            <input matInput type="text" name="email" placeholder="email" required formControlName="email">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput type="password" name="password" placeholder="mot de passe" required formControlName="password">
+        </mat-form-field>
         <a routerLink="/creation_compte">Pas de compte ? créez un compte</a>
         <p class="reset_mdp" (click)="openPopupResetMdp()">Mot de passe oublié ?</p>
         <button type="submit" [disabled]="!form.valid">Connexion</button>

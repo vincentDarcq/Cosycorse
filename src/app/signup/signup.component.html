@@ -1,9 +1,17 @@
 <div class="component">
     <form class="formulaire" (ngSubmit)="createAccount()" [formGroup]="form">
-        <input type="text" name="nom" placeholder="nom" required formControlName="nom">
-        <input type="text" name="prenom" placeholder="prenom" required formControlName="prenom">
-        <input type="text" name="email" placeholder="email" required formControlName="email">
-        <input type="password" name="password" placeholder="mot de passe" required formControlName="password">
+        <mat-form-field>
+            <input matInput type="text" name="nom" placeholder="nom" required formControlName="nom">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput type="text" name="prenom" placeholder="prenom" required formControlName="prenom">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput type="text" name="email" placeholder="email" required formControlName="email">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput type="password" name="password" placeholder="mot de passe" required formControlName="password">
+        </mat-form-field>
         <button type="submit" [disabled]="!form.valid">Créer mon compte</button>
         <!-- <p *ngIf="erreur">{{ erreur | json }}</p> -->
     </form>
