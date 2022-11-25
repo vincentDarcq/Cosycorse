@@ -1,11 +1,16 @@
 import { Component, NgZone, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { MatRadioButton } from '@angular/material/radio';
-import { Layer, Map, MapOptions, marker } from 'leaflet';
+import { Router } from '@angular/router';
+import { LatLngBounds, Layer, Map, MapOptions, marker } from 'leaflet';
+import { Subscription } from 'rxjs';
 import { Activite } from '../models/activite';
+import { mapSquare } from '../models/mapSquare';
 import { ActivitesType } from '../models/type-activite';
+import { User } from '../models/user.model';
 import { Villes } from '../models/villes';
 import { ActiviteService } from '../services/activite.service';
 import { MapService } from '../services/map.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-activites',
@@ -15,6 +20,7 @@ import { MapService } from '../services/map.service';
 export class ActivitesComponent implements OnInit {
 
   displayMap: boolean = false;
+  filtre: boolean = false;
   mapOptions: MapOptions;
   map: Map;
   activites: Array<Activite>;
@@ -26,19 +32,28 @@ export class ActivitesComponent implements OnInit {
   villes = Villes;
   typeSearch: string;
   activite_types = ActivitesType;
+  public subscription: Subscription;
+  public user: User;
+  public subBounds: Subscription;
+  public bounds: mapSquare;
 
   @ViewChildren('radioButton') private radioButtons?: QueryList<MatRadioButton>;
 
   constructor(
     private activiteService: ActiviteService,
     private mapService: MapService,
-    private zone: NgZone
+    private zone: NgZone,
+    private router: Router,
+    private userService: UserService
   ) { 
     this.activites = new Array();
     this.activitesFiltered = new Array();
   }
 
   ngOnInit(): void {
+    this.subscription = this.userService.currentUser.subscribe( (user: any) => {
+      this.user = new User(user._id, user.email, user.firstName, user.lastName);
+    });
     this.activiteService.fetchActivites().subscribe((activites: Array<Activite>) => {
       this.activites = activites;
       this.activites.forEach(a => a.indexImage = 0);
@@ -47,6 +62,14 @@ export class ActivitesComponent implements OnInit {
         this.addActivitesOnMap(activites);
       }else {
         this.initializeMap();
+      }
+    });
+    this.subBounds = this.activiteService.bounds.subscribe( (bounds: LatLngBounds) => {
+      this.bounds = new mapSquare(
+        bounds.getSouthWest().lat, bounds.getNorthWest().lat,
+        bounds.getSouthWest().lng, bounds.getSouthEast().lng);
+      if(this.bounds.latMin !== 41.1455697310095 && this.bounds.latMax !== 43.26120612479979){
+        this.actualiser();
       }
     });
   }
@@ -73,6 +96,13 @@ export class ActivitesComponent implements OnInit {
       const point = this.mapService.createPoint(coordinates)
       const layer = marker(point)
         .setIcon(this.mapService.getRedIcon())
+        .on('click', () => {
+          this.zone.run(() => {
+            if(this.user.email === "vincent.darcq@hotmail.fr"){
+              this.router.navigate(['/edit-activite', a._id]);
+            }
+          })
+        })
       this.map.addLayer(layer);
       this.layers.push(layer);
     })
@@ -93,11 +123,17 @@ export class ActivitesComponent implements OnInit {
   }
 
   actualiser(){
-    this.activiteService.findByFilters(this.titreSearch, this.villeSearch, this.typeSearch).subscribe((activites: Array<Activite>) => {
+    this.activiteService.findByFilters(
+      this.titreSearch, 
+      this.villeSearch, 
+      this.typeSearch,
+      this.bounds
+    ).subscribe((activites: Array<Activite>) => {
       this.activitesFiltered = activites;
       this.activitesFiltered.forEach(a => a.indexImage = 0);
       this.layers.forEach(l => this.map.removeLayer(l));
       this.addActivitesOnMap(this.activitesFiltered);
+      this.filtre = true;
     })
   }
 
@@ -109,6 +145,7 @@ export class ActivitesComponent implements OnInit {
     });
     this.layers.forEach(l => this.map.removeLayer(l));
     this.addActivitesOnMap(this.activites);
+    this.filtre = false;
   }
 
 }

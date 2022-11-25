@@ -9,7 +9,6 @@ import { Villes } from '../models/villes';
 import { Equipements } from '../models/equipements';
 import { EquipementsSecurite } from '../models/equipementsSecurite';
 import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
-import { InfoService } from '../services/info.service';
 import { mapSquare } from '../models/mapSquare';
 import { SlideInOutAnimation } from '../animations/animations';
 
@@ -51,8 +50,7 @@ export class LogementsComponent implements OnInit, OnDestroy {
     private logementService: LogementService,
     private mapService: MapService,
     private router: Router,
-    private zone: NgZone,
-    private infoService: InfoService
+    private zone: NgZone
   ) {
     this.logementService.getRecentsLogement();
   }
@@ -75,7 +73,7 @@ export class LogementsComponent implements OnInit, OnDestroy {
       if(this.bounds.latMin !== 41.1455697310095 && this.bounds.latMax !== 43.26120612479979){
         this.actualiser();
       }
-    })
+    });
   }
 
   private initializeMap() {
@@ -208,6 +206,7 @@ export class LogementsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if(this.subLogements){this.subLogements.unsubscribe();}
+    if(this.subBounds){this.subBounds.unsubscribe();}
   }
 
 }

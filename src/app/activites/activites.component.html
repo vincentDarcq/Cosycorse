@@ -20,7 +20,7 @@
         <button class="btn btn-light" (click)="effacerFiltres()">Effacer les filtres</button>
     </div>
     <div class="wrapper">
-        <div class="activites" *ngIf="activitesFiltered.length === 0">
+        <div class="activites" *ngIf="!filtre">
             <div class="m_2pourcent box" *ngFor="let a of activites; let i = index">
                 <img *ngIf="a && a.images" [src]="serverImg + a.images[a.indexImage]"
                     alt="">
@@ -31,10 +31,11 @@
                 <div class="details" fxLayout="column">
                     <span><b>{{ a.ville }}</b></span>
                     <span>{{ a.titre }}</span>
+                    <span>{{ a.duree }}</span>
                 </div>
             </div>
         </div>
-        <div class="activites" *ngIf="activitesFiltered.length > 0">
+        <div class="activites" *ngIf="filtre">
             <div class="m_2pourcent box" *ngFor="let a of activitesFiltered; let i = index">
                 <img *ngIf="a && a.images" [src]="serverImg + a.images[a.indexImage]"
                     alt="">
@@ -45,6 +46,7 @@
                 <div class="details" fxLayout="column">
                     <span><b>{{ a.ville }}</b></span>
                     <span>{{ a.titre }}</span>
+                    <span>{{ a.duree }}</span>
                 </div>
             </div>
         </div>

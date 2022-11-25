@@ -1,6 +1,6 @@
-<div class="component" *ngIf="lieu">
+<div class="component" *ngIf="activite">
     <div class="images">
-        <div *ngFor="let im of lieu.images; let i = index" fxLayout="column" class="img_box">
+        <div *ngFor="let im of activite.images; let i = index" fxLayout="column" class="img_box">
             <img [ngStyle]="{'height':'100px', 'width':'120px'}" 
                  [src]="serverImg+im" alt="image 1">
             <span>image {{ i+1 }}</span>
@@ -18,17 +18,17 @@
         </ngx-dropzone-preview>
     </ngx-dropzone>
     <div class="m-5" fxLayout="column">
-        <mat-radio-group [(ngModel)]="lieu.type" name="type" fxLayoutGap="3%">
-            <mat-radio-button *ngFor="let type of lieu_types" [value]="type">{{ type }}</mat-radio-button>
+        <mat-radio-group [(ngModel)]="activite.type" name="type" fxLayoutGap="3%">
+            <mat-radio-button *ngFor="let type of activite_types" [value]="type">{{ type }}</mat-radio-button>
         </mat-radio-group>
         <div fxLayout="row">
             <mat-form-field>
-                <input matInput type="text" name="nom" placeholder="Nom"
-                [(ngModel)]="lieu.nom">
+                <input matInput type="text" name="titre" placeholder="Nom"
+                [(ngModel)]="activite.titre">
             </mat-form-field>
             <mat-form-field>
                 <input matInput type="text" name="ville" placeholder="Ville" (keyup)="affineVille()"
-                [(ngModel)]="lieu.ville" [matAutocomplete]="villescomplete">
+                [(ngModel)]="activite.ville" [matAutocomplete]="villescomplete">
             </mat-form-field>
             <mat-autocomplete #villescomplete="matAutocomplete">
                 <mat-option *ngFor="let ville of villeAutoComplete" [value]="ville">
@@ -36,7 +36,7 @@
                 </mat-option>
             </mat-autocomplete>
         </div>
-        <textarea type="text" placeholder="Description" [(ngModel)]="lieu.description" name="description" id="description"
+        <textarea type="text" placeholder="Description" [(ngModel)]="activite.description" name="description" id="description"
           rows="10"></textarea>
         <button class="btn btn-light" (click)="modifier()">Modifier</button>
     </div>

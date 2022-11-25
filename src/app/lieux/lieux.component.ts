@@ -1,5 +1,5 @@
 import { Component, NgZone, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { Layer, Map, MapOptions, marker } from 'leaflet';
+import { LatLngBounds, Layer, Map, MapOptions, marker } from 'leaflet';
 import { Lieu } from '../models/lieu';
 import { Villes } from '../models/villes';
 import { LieuService } from '../services/lieu.service';
@@ -7,10 +7,10 @@ import { MapService } from '../services/map.service';
 import { LieuxType } from '../models/type-lieu';
 import { MatRadioButton } from '@angular/material/radio';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '../services/authentication.service';
 import { UserService } from '../services/user.service';
 import { Subscription } from 'rxjs';
 import { User } from '../models/user.model';
+import { mapSquare } from '../models/mapSquare';
 
 @Component({
   selector: 'app-lieux',
@@ -21,6 +21,7 @@ export class LieuxComponent implements OnInit, OnDestroy {
 
   villes = Villes;
   displayMap: boolean = false;
+  filtre: boolean = false;
   mapOptions!: MapOptions;
   map!: Map;
   lieux!: Array<Lieu>;
@@ -32,7 +33,9 @@ export class LieuxComponent implements OnInit, OnDestroy {
   typeSearch!: string;
   villeSearch!: string;
   public subscription!: Subscription;
-  public user!: User
+  public user!: User;
+  public subBounds: Subscription;
+  public bounds: mapSquare;
 
   @ViewChildren('radioButton') private radioButtons?: QueryList<MatRadioButton>;
 
@@ -41,7 +44,6 @@ export class LieuxComponent implements OnInit, OnDestroy {
     private mapService: MapService,
     private zone: NgZone,
     private router: Router,
-    private authService: AuthenticationService,
     private userService: UserService
   ) {
     this.lieux = new Array();
@@ -60,6 +62,14 @@ export class LieuxComponent implements OnInit, OnDestroy {
         this.addLieuxOnMap(lieux);
       }else {
         this.initializeMap();
+      }
+    });
+    this.subBounds = this.lieuService.bounds.subscribe( (bounds: LatLngBounds) => {
+      this.bounds = new mapSquare(
+        bounds.getSouthWest().lat, bounds.getNorthWest().lat,
+        bounds.getSouthWest().lng, bounds.getSouthEast().lng);
+      if(this.bounds.latMin !== 41.1455697310095 && this.bounds.latMax !== 43.26120612479979){
+        this.actualiser();
       }
     });
   }
@@ -84,7 +94,10 @@ export class LieuxComponent implements OnInit, OnDestroy {
   }
 
   public async onMapReady(map: Map) {
-    this.map = map;
+    this.map = map.on('moveend', () => {
+      this.lieuService.setBounds(map.getBounds());
+    });
+    this.lieuService.setBounds(map.getBounds());
     while (this.lieux.length === 0) {
       await new Promise(f => setTimeout(f, 200));
     }
@@ -118,11 +131,17 @@ export class LieuxComponent implements OnInit, OnDestroy {
   }
 
   actualiser(){
-    this.lieuService.findByFilters(this.nomSearch, this.villeSearch, this.typeSearch).subscribe((lieux: Array<Lieu>) => {
+    this.lieuService.findByFilters(
+      this.nomSearch, 
+      this.villeSearch, 
+      this.typeSearch,
+      this.bounds
+    ).subscribe((lieux: Array<Lieu>) => {
       this.lieuxFiltered = lieux;
       this.lieuxFiltered.forEach(l => l.indexImage = 0);
       this.layers.forEach(l => this.map.removeLayer(l));
       this.addLieuxOnMap(this.lieuxFiltered);
+      this.filtre = true;
     })
   }
 
@@ -134,10 +153,12 @@ export class LieuxComponent implements OnInit, OnDestroy {
     });
     this.layers.forEach(l => this.map.removeLayer(l));
     this.addLieuxOnMap(this.lieux);
+    this.filtre = false;
   }
 
   ngOnDestroy(): void {
     if(this.subscription){this.subscription.unsubscribe();}
+    if(this.subBounds){this.subBounds.unsubscribe();}
   }
 
 }

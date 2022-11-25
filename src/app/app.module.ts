@@ -40,6 +40,7 @@ import { AnnulerReservationComponent } from './popups/annuler-reservation/annule
 import { RouterExtService } from './services/router-ext.service';
 import { EditLieuComponent } from './edit-lieu/edit-lieu.component';
 import { ActiviteFormComponent } from './activite-form/activite-form.component';
+import { EditActiviteComponent } from './edit-activite/edit-activite.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { ActiviteFormComponent } from './activite-form/activite-form.component';
     AnnulerVoyageComponent,
     AnnulerReservationComponent,
     EditLieuComponent,
-    ActiviteFormComponent
+    ActiviteFormComponent,
+    EditActiviteComponent
   ],
   imports: [
     BrowserModule,

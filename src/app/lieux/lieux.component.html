@@ -20,7 +20,7 @@
         <button class="btn btn-light" (click)="effacerFiltres()">Effacer les filtres</button>
     </div>
     <div class="grid">
-        <div class="lieux" *ngIf="lieuxFiltered.length === 0">
+        <div class="lieux" *ngIf="!filtre">
             <div class="margin" *ngFor="let lieu of lieux; let indexLogement = index">
                 <img *ngIf="lieu && lieu.images" [src]="serverImg + lieu.images[lieu.indexImage]"
                         alt="">
@@ -31,7 +31,7 @@
                     (click)="selectLeftArrow(lieux, indexLogement, lieu.indexImage, $event)"></i>
             </div>
         </div>
-        <div class="lieux" *ngIf="lieuxFiltered.length > 0">
+        <div class="lieux" *ngIf="filtre">
             <div class="margin" *ngFor="let lieu of lieuxFiltered; let indexLogement = index">
                 <img *ngIf="lieu && lieu.images" [src]="serverImg + lieu.images[lieu.indexImage]"
                         alt="">

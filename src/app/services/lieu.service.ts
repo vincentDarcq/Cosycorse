@@ -1,20 +1,30 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable, NgZone } from '@angular/core';
+import { LatLngBounds } from 'leaflet';
+import { Observable, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Lieu } from '../models/lieu';
+import { mapSquare } from '../models/mapSquare';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LieuService {
 
+  public bounds = new Subject<LatLngBounds>();
   public lieux: Array<Lieu>;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private zone: NgZone
   ) { }
 
+  public setBounds(bounds: LatLngBounds) {
+    this.zone.run(() => {
+      this.bounds.next(bounds);
+    });
+  }
+  
   public createLieu(lieu: Lieu): Observable<Lieu> {
     return this.http.post<Lieu>(`/api/lieu/create`, lieu);
   }
@@ -60,12 +70,16 @@ export class LieuService {
     );
   }
 
-  public findByFilters(nom: string, ville: string, type: string): Observable<Array<Lieu>>{
+  public findByFilters(nom: string, ville: string, type: string, bounds: mapSquare): Observable<Array<Lieu>>{
     return this.http.get<Array<Lieu>>(`/api/lieu/getByFilters`, {
       params: {
         nom: nom,
         ville: ville,
-        type: type
+        type: type,
+        latMax: bounds.latMax,
+        latMin: bounds.latMin,
+        longMax: bounds.longMax,
+        longMin: bounds.longMin
       }
     });
   }
