@@ -41,6 +41,7 @@ import { RouterExtService } from './services/router-ext.service';
 import { EditLieuComponent } from './edit-lieu/edit-lieu.component';
 import { ActiviteFormComponent } from './activite-form/activite-form.component';
 import { EditActiviteComponent } from './edit-activite/edit-activite.component';
+import { ContactComponent } from './contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { EditActiviteComponent } from './edit-activite/edit-activite.component';
     AnnulerReservationComponent,
     EditLieuComponent,
     ActiviteFormComponent,
-    EditActiviteComponent
+    EditActiviteComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,

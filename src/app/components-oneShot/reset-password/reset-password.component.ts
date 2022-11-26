@@ -53,7 +53,8 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
         confirmPassword: ['', Validators.required]
       },
       {
-        validator: this.confirmedValidator('password', 'confirmPassword')} as AbstractControlOptions);
+        validator: this.confirmedValidator('password', 'confirmPassword')
+      } as AbstractControlOptions);
   }
 
   confirmedValidator(controlName: string, matchingControlName: string) {

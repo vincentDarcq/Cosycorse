@@ -18,6 +18,7 @@ import { StripeRedirectComponent } from './components-oneShot/stripe-redirect/st
 import { EditLieuComponent } from './edit-lieu/edit-lieu.component';
 import { ActiviteFormComponent } from './activite-form/activite-form.component';
 import { EditActiviteComponent } from './edit-activite/edit-activite.component';
+import { ContactComponent } from './contact/contact.component';
 
 const routes: Routes = [
   { path: '', component: MainPageComponent },
@@ -37,6 +38,7 @@ const routes: Routes = [
   { path: 'reset_password/:token', component: ResetPasswordComponent},
   { path: 'reponseLogementReservation/:id', component: ReponseLogementReservationComponent},
   { path: 'stripe/redirect', component: StripeRedirectComponent},
+  { path: 'contact', component: ContactComponent},
   { path: '**', component: MainPageComponent }
 ];
 
