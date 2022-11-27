@@ -26,10 +26,10 @@ import { AuthenticationService } from '../services/authentication.service';
 })
 export class LogementComponent implements OnInit, OnDestroy {
 
-  public logement?: Logement;
-  public subActivatedRoute?: Subscription;
-  public subLogements?: Subscription;
-  public subUser?: Subscription;
+  public logement: Logement;
+  public subActivatedRoute: Subscription;
+  public subLogements: Subscription;
+  public subUser: Subscription;
   id: string = "";
   serverImg: String = "/upload?img=";
   galleryOptions: NgxGalleryOptions[] = galleryOptions;
@@ -41,9 +41,9 @@ export class LogementComponent implements OnInit, OnDestroy {
   todayDate: Date = new Date(Date.now());
   calendarMaxDate: Date = new Date(8640000000000000);
   maxDate: Date = this.calendarMaxDate;
-  datesUnavailable = new Array();
+  datesUnavailable = new Array<Date>();
   mail: MailContactLogement = new MailContactLogement();
-  prixTotal?: number;
+  prixTotal: number;
   public user: User;
 
   constructor(
@@ -87,26 +87,27 @@ export class LogementComponent implements OnInit, OnDestroy {
 
   getReservations(){
     this.logementService.getReservationsByLogementId(this.logement._id).subscribe( (reservations: Array<LogementReservation>) => {
-      reservations.forEach( res => {
-        const dd = res.dateDebut.split("/");
-        const df = res.dateFin.split("/");
-        const dateFin = df[1] + "-" + df[0] + "-" + df[2];
-        const dateDebut = dd[1] + "-" + dd[0] + "-" + dd[2];
-        console.log(dateDebut, dateFin)
-        const nuits = this.getNbNuits(new Date(dateFin), new Date(dateDebut));
-        for(let i = 0; i < nuits; i++){
-          this.datesUnavailable.push(new Date(new Date(dateDebut).getTime() + i*(1000 * 60 * 60 * 24)))
+      reservations.forEach(res => {
+        if(res.status !== "annulée" && res.status !== "refusée"){
+          const dd = res.dateDebut.split("/");
+          const df = res.dateFin.split("/");
+          const dateFin = df[1] + "-" + df[0] + "-" + df[2];
+          const dateDebut = dd[1] + "-" + dd[0] + "-" + dd[2];
+          const nuits = this.getNbNuits(new Date(dateFin), new Date(dateDebut));
+          for(let i = 0; i < nuits; i++){
+            this.datesUnavailable.push(new Date(new Date(dateDebut).getTime() + i*(1000 * 60 * 60 * 24)))
+          }
         }
       })
     })
   }
 
   completeLogement() {
-    this.logement!.galleryImages = [];
-    this.logement?.images?.forEach(image => {
-      this.logement?.galleryImages?.push(new galleryImage(this.serverImg + image, this.serverImg + image, this.serverImg + image))
+    this.logement.galleryImages = [];
+    this.logement.images.forEach(image => {
+      this.logement.galleryImages?.push(new galleryImage(this.serverImg + image, this.serverImg + image, this.serverImg + image))
     })
-    this.logement?.equipements.forEach(equipement => {
+    this.logement.equipements.forEach(equipement => {
       let eq = this.equipementsList.find(e => e.element === equipement);
       if (typeof eq === "undefined") {
         eq = this.equipementsSecuriteList.find(e => e.element === equipement);
@@ -116,15 +117,18 @@ export class LogementComponent implements OnInit, OnDestroy {
   }
 
   filterDates = (d: Date | null): boolean => {
-    if(new Date(Date.now()).getTime() > d!.getTime() || !this.logement.exposer){
+    if(new Date(Date.now()).getTime() > d.getTime() || !this.logement.exposer){
       return false;
     }
-    const day = d!.getDate();
-    const month = d!.getMonth();
-    const year = d!.getFullYear();
+    const day = d.getDate();
+    const month = d.getMonth();
+    const year = d.getFullYear();
     let available = true;
+    if(this.dateDebut && d.getTime() < this.dateDebut.getTime()){
+      available = false;
+    }
     for(let i = 0; i < this.datesUnavailable.length; i++){
-      if (day === this.datesUnavailable[i].getDate() && month === this.datesUnavailable[i].getMonth() && year === this.datesUnavailable[i].getFullYear()) {
+      if (day === this.datesUnavailable[i].getDate()+1 && month === this.datesUnavailable[i].getMonth() && year === this.datesUnavailable[i].getFullYear()) {
         available = false;
         break;
       }
@@ -135,13 +139,10 @@ export class LogementComponent implements OnInit, OnDestroy {
   startDateChanged(e: any) {
     const date = e.value;
     if (date) {
-      const day = date.getDate();
+      const dateTime = date.getTime();
       for (let i = 0; i < this.datesUnavailable.length; i++) {
-        if (day < this.datesUnavailable[i].getDate()) {
+        if (dateTime <= this.datesUnavailable[i].getTime()) {
           this.maxDate = this.datesUnavailable[i];
-          if (day + 1 === this.datesUnavailable[i].getDate()) {
-            this.dateFin = date;
-          }
           break;
         }
       }
@@ -152,9 +153,9 @@ export class LogementComponent implements OnInit, OnDestroy {
   
   endDateChanged(){
     if(this.dateDebut && this.dateFin){
-      const time = this.dateFin!.getTime() - this.dateDebut!.getTime();
+      const time = this.dateFin.getTime() - this.dateDebut.getTime();
       const nights = Math.floor((time / 1000) / 3600) / 24;
-      this.prixTotal = nights * (this.logement!.prix + (this.logement!.prix * 10/100));
+      this.prixTotal = nights * (this.logement.prix + (this.logement.prix * 10/100));
     }
   }
 
@@ -168,14 +169,14 @@ export class LogementComponent implements OnInit, OnDestroy {
       if(result){
         this.mail.message = result.message;
         this.mail.from = result.from;
-        this.mail.to = this.logement!.emailAnnonceur;
-        this.mail.subject = this.logement!.ville + " " + this.logement!.adresse;
+        this.mail.to = this.logement.emailAnnonceur;
+        this.mail.subject = this.logement.ville + " " + this.logement.adresse;
         this.mailsService.contactHost(this.mail).subscribe(
           res => {
             this.infoService.popupInfo("mail envoyé avec succès");
           },
           err => {
-            this.infoService.popupInfo("Une erreur s'est produite lors de l'envoi du mail : "+err.statusText);
+            this.infoService.popupInfo("Une erreur s'est produite lors de l'envoi du mail : "+err.error);
           })
       }
     });
@@ -201,16 +202,20 @@ export class LogementComponent implements OnInit, OnDestroy {
     }else {
       let logementReservation : LogementReservation = new LogementReservation();
       const nuits = this.getNbNuits(this.dateFin, this.dateDebut);
+      if(nuits === 0){
+        this.infoService.popupInfo("La date d'arrivée ne peut pas être la même que la date de départ");
+        return;
+      }
       logementReservation.nuits = nuits;
       logementReservation.prix = this.prixTotal = nuits * (this.logement.prix + (this.logement.prix * 10/100));
       logementReservation.emailAnnonceur = this.logement.emailAnnonceur;
-      const dayDebut = this.dateDebut?.getDate().toString().length === 1 ? "0"+this.dateDebut?.getDate() : this.dateDebut?.getDate();
-      const dayFin = this.dateFin?.getDate().toString().length === 1 ? "0"+this.dateFin?.getDate() : this.dateFin?.getDate();
-      const monthDebut = this.dateDebut?.getMonth().toString().length === 1 ? "0"+this.dateDebut?.getMonth()+1 : this.dateDebut?.getMonth()+1;
-      const monthFin = this.dateFin?.getMonth().toString().length === 1 ? "0"+this.dateFin?.getMonth()+1 : this.dateFin?.getMonth()+1;
-      logementReservation.dateDebut = dayDebut + "/" + monthDebut + "/" + this.dateDebut?.getFullYear();
-      logementReservation.dateFin = dayFin + "/" + monthFin + "/" + this.dateFin?.getFullYear();
-      logementReservation.logementId = this.logement?._id;
+      const dayDebut = this.dateDebut.getDate().toString().length === 1 ? "0"+this.dateDebut.getDate() : this.dateDebut.getDate();
+      const dayFin = this.dateFin.getDate().toString().length === 1 ? "0"+this.dateFin.getDate() : this.dateFin.getDate();
+      const monthDebut = this.dateDebut.getMonth().toString().length === 1 ? "0"+this.dateDebut.getMonth()+1 : this.dateDebut.getMonth()+1;
+      const monthFin = this.dateFin.getMonth().toString().length === 1 ? "0"+this.dateFin.getMonth()+1 : this.dateFin.getMonth()+1;
+      logementReservation.dateDebut = dayDebut + "/" + monthDebut + "/" + this.dateDebut.getFullYear();
+      logementReservation.dateFin = dayFin + "/" + monthFin + "/" + this.dateFin.getFullYear();
+      logementReservation.logementId = this.logement._id;
       const dialogRef = this.dialog.open(PopupReservationLogementComponent, {
         width: '450px',
         data: {logementReservation: logementReservation, logement: this.logement},
@@ -228,7 +233,7 @@ export class LogementComponent implements OnInit, OnDestroy {
               },
               err => {
                 sessionStorage.removeItem('token');
-                this.infoService.popupInfo(err.statusText);
+                this.infoService.popupInfo(err.error);
               })
           })
         }

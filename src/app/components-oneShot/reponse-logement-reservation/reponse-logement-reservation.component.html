@@ -3,8 +3,8 @@
         <p>{{ logement.adresse }}</p>
         <p>email du locataire : {{ logementReservation.emailDemandeur }}</p>
         <p>{{ logementReservation.dateDebut }} - {{ logementReservation.dateFin }}</p>
-        <p>{{ logementReservation.prix }}€ (Vous percevrez 90% de ce montant)</p>
-        <p>Si vous acceptez, le paiement sera effectué au début du voyage de votre locataire</p>
+        <p>{{ logementReservation.prix * 100/110 }}€</p>
+        <p>Si vous acceptez, le transfert sur votre compte Stripe sera effectué au début du voyage de votre locataire</p>
         <div fxLayout="row" fxLayoutGap="50px" class="buttons">
             <button (click)="accept()" class="btn btn-success">Accepter</button>
             <button (click)="refuse()" class="btn btn-danger">Refuser</button>

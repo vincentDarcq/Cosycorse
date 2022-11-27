@@ -9,7 +9,7 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field class="with_100pourcent">
+            <mat-form-field appearance="fill" class="with_100pourcent">
                 <input matInput type="text" formControlName="mail" placeholder="mail">
                 <div class="red" *ngIf="formRequest.get('mail')!.invalid && 
                 (formRequest.get('mail')!.dirty || formRequest.get('mail')!.touched)">Email obligatoire</div>

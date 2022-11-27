@@ -21,8 +21,8 @@ export class PopupReservationLogementComponent implements OnInit, AfterViewInit,
   public subStripe: Subscription;
   public user: User;
   publishableKey: string;
-  stripe;
-  card;
+  stripe: any;
+  card: any;
 
   @ViewChild('cardInfo') cardInfo: ElementRef;
 
@@ -57,6 +57,7 @@ export class PopupReservationLogementComponent implements OnInit, AfterViewInit,
       
       const elements = this.stripe.elements();
       this.card = elements.create('card', {
+        hidePostalCode: true,
         style
       });
       this.card.mount(this.cardInfo.nativeElement);

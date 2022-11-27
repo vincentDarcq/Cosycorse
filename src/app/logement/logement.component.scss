@@ -56,11 +56,16 @@
   margin-left: 1%;
 }
 
+.prix_nuit {
+  background-color: rgb(242, 254, 253);
+  border-radius: 5px;
+}
+
 ::ng-deep .mat-form-field-wrapper {
   padding-bottom: 0 !important;
 }
 
-.prix_nuit {
-  background-color: rgb(242, 254, 253);
-  border-radius: 5px;
+::ng-deep mat-form-field > .mat-form-field-wrapper > .mat-form-field-underline{
+  position: relative;
+  bottom: 0;
 }
