@@ -11,11 +11,13 @@ import { UserService } from '../services/user.service';
 import { Subscription } from 'rxjs';
 import { User } from '../models/user.model';
 import { mapSquare } from '../models/mapSquare';
+import { SlideInOutAnimation } from '../animations/paragrapheInOut';
 
 @Component({
   selector: 'app-lieux',
   templateUrl: './lieux.component.html',
-  styleUrls: ['./lieux.component.scss']
+  styleUrls: ['./lieux.component.scss'],
+  animations: [SlideInOutAnimation]
 })
 export class LieuxComponent implements OnInit, OnDestroy {
 
@@ -56,7 +58,11 @@ export class LieuxComponent implements OnInit, OnDestroy {
     });
     this.lieuService.fetchLieux().subscribe((lieux: Array<Lieu>) => {
       this.lieux = lieux;
-      this.lieux.forEach(l => l.indexImage = 0);
+      this.lieux.forEach(l => {
+        l.indexImage = 0;
+        l.animationState = "false";
+      }
+      );
       if(this.map){
         this.layers.forEach(l => this.map.removeLayer(l));
         this.addLieuxOnMap(lieux);
@@ -86,6 +92,10 @@ export class LieuxComponent implements OnInit, OnDestroy {
     if (index > 0) {
       lieux[indexLieu].indexImage--;
     }
+  }
+
+  expandDescription(animationState: string, index: number){
+    this.lieux[index].animationState = animationState === 'false' ? 'true' : 'false';
   }
 
   private initializeMap() {

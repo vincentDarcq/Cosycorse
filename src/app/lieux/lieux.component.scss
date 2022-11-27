@@ -2,6 +2,10 @@
     background-color: rgb(247, 253, 254);
 }
 
+.relative {
+    position: relative;
+}
+
 .grid {
     display: grid;
     grid-template-columns: 70% 20%;
@@ -48,8 +52,16 @@
     bottom: 35%;
 }
 
+.arrow {
+    position: relative;
+    left: 50%;
+    bottom: 35%;
+}
+
 .arrow-left:hover,
-.arrow-right:hover {
+.arrow-right:hover,
+.arrow-down:hover,
+.arrow-up:hover {
     opacity: .4;
 }
 

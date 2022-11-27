@@ -10,7 +10,7 @@ import { Equipements } from '../models/equipements';
 import { EquipementsSecurite } from '../models/equipementsSecurite';
 import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 import { mapSquare } from '../models/mapSquare';
-import { SlideInOutAnimation } from '../animations/animations';
+import { SlideInOutAnimation } from '../animations/slideInOut';
 
 @Component({
   selector: 'app-logements',

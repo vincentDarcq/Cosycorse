@@ -9,6 +9,7 @@ export class Lieu {
     longitude: number;
     annonceur: string;
     images: Array<string>;
+    animationState: string;
 
     constructor(){}
 }
