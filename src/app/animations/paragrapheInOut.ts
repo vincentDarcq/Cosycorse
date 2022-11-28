@@ -19,8 +19,7 @@ export const SlideInOutAnimation = [
             {params: {leftValue: 0}}),
         state('false', 
             style({
-            'display': 'none',
-            'transform': 'translateY(-400px)'
+            'display': 'none'
             })
         ),
         transition('true => false', [group([
@@ -33,59 +32,37 @@ export const SlideInOutAnimation = [
                 'width': '300%',
                 'padding': '5%',
                 'z-index': '1',
-                'transform': 'translateY(-95px)',
-            })),
-            animate('300ms ease-in-out', style({
-                'display': 'block',
-                'position': 'absolute',
-                'background-color': 'white',
-                'opacity': '.7',
-                'left': '{{leftValue}}%',
-                'width': '300%',
-                'padding': '5%',
-                'z-index': '1',
-                'transform': 'translateY(-100px)',
+                'top': '70%',
             })),
             animate('600ms ease-in-out', style({
                 'display': 'block',
                 'position': 'absolute',
                 'background-color': 'white',
-                'opacity': '.3',
+                'opacity': '0',
+                'left': '{{leftValue}}%',
+                'width': '300%',
+                'padding': '5%',
+                'z-index': '1',
+                'transform': 'translateY(-150px)',
+            }))
+        ]
+        )]),
+        transition('false => true', [group([
+            animate('1ms ease-in-out', style({
+                'display': 'block',
+                'position': 'absolute',
+                'opacity': '0',
+                'background-color': 'white',
                 'left': '{{leftValue}}%',
                 'width': '300%',
                 'padding': '5%',
                 'z-index': '1',
                 'transform': 'translateY(-200px)',
-            }))
-        ]
-        )]),
-        transition('false => true', [group([
-            animate('200ms ease-in-out', style({
-                'display': 'block',
-                'position': 'absolute',
-                'opacity': '.1',
-                'background-color': 'white',
-                'left': '{{leftValue}}%',
-                'width': '300%',
-                'padding': '5%',
-                'z-index': '1',
-                'transform': 'translateY(-400px)',
-            })),
-            animate('400ms ease-in-out', style({
-                'display': 'block',
-                'position': 'absolute',
-                'opacity': '.3',
-                'background-color': 'white',
-                'left': '{{leftValue}}%',
-                'width': '300%',
-                'padding': '5%',
-                'z-index': '1',
-                'transform': 'translateY(-200px)'
             })),
             animate('600ms ease-in-out', style({
                 'display': 'block',
                 'position': 'absolute',
-                'opacity': '.8',
+                'opacity': '1',
                 'background-color': 'white',
                 'left': '{{leftValue}}%',
                 'width': '300%',
