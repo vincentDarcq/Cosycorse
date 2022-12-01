@@ -28,10 +28,18 @@
                     (click)="selectArrow(i, a.indexImage, $event)"></i>
                 <i class='fas fa-angle-left arrow-left'
                     (click)="selectLeftArrow(i, a.indexImage, $event)"></i>
+                <i class="fas arrow" [ngClass]="{ 
+                    'fa-angle-down' : a.animationState === 'false',
+                    'fa-angle-up' : a.animationState === 'true'
+                    }"
+                    (click)="expandDescription(a.animationState, i)"></i>
                 <div class="details" fxLayout="column">
                     <span><b>{{ a.ville }}</b></span>
                     <span>{{ a.titre }}</span>
                     <span>{{ a.duree }}</span>
+                </div>
+                <div [@slideInOut]="a.animationState">
+                    {{ a.description }}
                 </div>
             </div>
         </div>

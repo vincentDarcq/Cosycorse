@@ -52,8 +52,16 @@
     left: -100%;
 }
 
+.arrow {
+    position: relative;
+    left: -50%;
+    bottom: -25%;
+}
+
 .arrow-left:hover,
-.arrow-right:hover {
+.arrow-right:hover,
+.arrow-down:hover,
+.arrow-up:hover {
     opacity: .4;
 }
 

@@ -11,7 +11,7 @@ import { UserService } from '../services/user.service';
 import { Subscription } from 'rxjs';
 import { User } from '../models/user.model';
 import { mapSquare } from '../models/mapSquare';
-import { SlideInOutAnimation } from '../animations/paragrapheInOut';
+import { SlideInOutAnimation } from '../animations/lieuDescriptionInOut';
 
 @Component({
   selector: 'app-lieux',
@@ -95,6 +95,11 @@ export class LieuxComponent implements OnInit, OnDestroy {
   }
 
   expandDescription(animationState: string, index: number){
+    for(let i = 0; i < this.lieux.length; i++){
+      if(i !== index){
+        this.lieux[i].animationState = 'false';
+      }
+    }
     this.lieux[index].animationState = animationState === 'false' ? 'true' : 'false';
   }
 

@@ -10,6 +10,7 @@ export class Activite {
     longitude: number;
     proposeur: string;
     images: Array<string>;
+    animationState: string;
 
     constructor(){}
 }

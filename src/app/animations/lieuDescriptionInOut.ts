@@ -57,7 +57,7 @@ export const SlideInOutAnimation = [
                 'width': '300%',
                 'padding': '5%',
                 'z-index': '1',
-                'transform': 'translateY(-200px)',
+                'transform': 'translateY(-100%)',
             })),
             animate('600ms ease-in-out', style({
                 'display': 'block',
@@ -68,7 +68,7 @@ export const SlideInOutAnimation = [
                 'width': '300%',
                 'padding': '5%',
                 'z-index': '1',
-                'transform': 'translateY(-95px)'
+                'transform': 'translateY(-54%)'
             }))
         ]
         )])

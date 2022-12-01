@@ -3,6 +3,7 @@ import { MatRadioButton } from '@angular/material/radio';
 import { Router } from '@angular/router';
 import { LatLngBounds, Layer, Map, MapOptions, marker } from 'leaflet';
 import { Subscription } from 'rxjs';
+import { SlideInOutAnimation } from '../animations/activiteDescriptionInOut';
 import { Activite } from '../models/activite';
 import { mapSquare } from '../models/mapSquare';
 import { ActivitesType } from '../models/type-activite';
@@ -15,7 +16,8 @@ import { UserService } from '../services/user.service';
 @Component({
   selector: 'app-activites',
   templateUrl: './activites.component.html',
-  styleUrls: ['./activites.component.scss']
+  styleUrls: ['./activites.component.scss'],
+  animations: [SlideInOutAnimation]
 })
 export class ActivitesComponent implements OnInit {
 
@@ -56,7 +58,10 @@ export class ActivitesComponent implements OnInit {
     });
     this.activiteService.fetchActivites().subscribe((activites: Array<Activite>) => {
       this.activites = activites;
-      this.activites.forEach(a => a.indexImage = 0);
+      this.activites.forEach(a => {
+        a.indexImage = 0;
+        a.animationState = "false";
+      });
       if(this.map){
         this.layers.forEach(l => this.map.removeLayer(l));
         this.addActivitesOnMap(activites);
@@ -72,6 +77,15 @@ export class ActivitesComponent implements OnInit {
         this.actualiser();
       }
     });
+  }
+
+  expandDescription(animationState: string, index: number){
+    for(let i = 0; i < this.activites.length; i++){
+      if(i !== index){
+        this.activites[i].animationState = 'false';
+      }
+    }
+    this.activites[index].animationState = animationState === 'false' ? 'true' : 'false';
   }
 
   private initializeMap() {
