@@ -1,7 +1,7 @@
 <div class="component">
     <div class="adresses">
         <mat-form-field appearance="fill">
-            <mat-label>aller à une annonce</mat-label>
+            <mat-label translate>MES_ANNONCES.LIST_ANNONCE</mat-label>
             <mat-select>
                 <mat-option *ngFor="let a of adresses" (click)="navigaToAnnonce(a)">
                     {{a}}
@@ -10,7 +10,7 @@
         </mat-form-field>
     </div>
     <div class="logements" *ngFor="let l of modifyLogement; let indexLogement = index" id="{{ l.logement.adresse }}">
-        <div class="logementType"><b>{{ l.logement.logement }}</b> | <b>{{ l.logement.ville }}</b></div>
+        <div class="logementType"><b>{{ translate('LOGEMENTS.TYPES.'+l.logement.logement) }}</b> | <b>{{ l.logement.ville }}</b></div>
         <div class="addresse">{{ l.logement.adresse }}</div>
         <div class="images">
             <div *ngFor="let im of l.logement.images; let i = index" fxLayout="column" class="img_box">
@@ -26,7 +26,7 @@
             </div>
         </div>
         <ngx-dropzone (change)="onDropZone($event, indexLogement)">
-            <ngx-dropzone-label>Ajoutez/Deposez des photos</ngx-dropzone-label>
+            <ngx-dropzone-label>{{translate('LOGEMENTS.FORM.PHOTOS')}}</ngx-dropzone-label>
             <ngx-dropzone-preview *ngFor="let f of l.files" [removable]="true" (removed)="onRemove(f, indexLogement)">
                 <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
             </ngx-dropzone-preview>
@@ -34,20 +34,20 @@
         <div class="informations">
             <div fxLayout="row">
                 <mat-form-field appearance="fill">
-                    <mat-label>Modifier les équipements</mat-label>
+                    <mat-label translate>LOGEMENTS.EQUIPEMENTS.MODIFIER</mat-label>
                     <mat-select [(ngModel)]="modifyLogement[indexLogement].logement.equipements" multiple>
                         <mat-option *ngFor="let e of equipementsList" [value]="e.element">
                             <i [ngClass]="e.logo"></i>
-                                {{e.element}}
+                                {{ translate('LOGEMENTS.EQUIPEMENTS.'+e.element)}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field appearance="fill">
-                    <mat-label>Modifier les équipements de sécurité</mat-label>
+                    <mat-label translate>LOGEMENTS.EQUIPEMENTS.MODIFIER_SECURITE</mat-label>
                     <mat-select [(ngModel)]="modifyLogement[indexLogement].logement.equipements" multiple>
                         <mat-option *ngFor="let e of equipementsSecuriteList" [value]="e.element">
                             <i [ngClass]="e.logo"></i>
-                                {{e.element}}
+                                {{ translate('LOGEMENTS.EQUIPEMENTS.'+e.element)}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -68,39 +68,39 @@
                 <div class="item_title">details</div>
                 <div class="details" fxLayout="row" fxLayoutGap="5%">
                     <div fxLayout="column">
-                        <label>voyageurs :</label>
+                        <label translate>LOGEMENTS.FILTRES.VOYAGEURS</label>
                         <input matInput type="number" name="nbVoyageur" [(ngModel)]="l.logement.voyageurs">
                     </div>
                     <div fxLayoutGap="column">
-                        <label>lits :</label>
+                        <label translate>LOGEMENTS.FILTRES.LITS</label>
                         <input matInput type="number" name="lits" [(ngModel)]="l.logement.lits">
                     </div>
                     <div fxLayoutGap="column">
-                        <label>salle de bains :</label>
+                        <label translate>LOGEMENTS.FILTRES.SDB</label>
                         <input matInput type="number" name="sdbs" [(ngModel)]="l.logement.sdbs">
                     </div>
                 </div>
                 <div fxLayout="row" fxLayoutGap="10px" class="details">
                     <mat-radio-group [(ngModel)]="l.logement.fumeur" fxLayoutGap="3%">
-                        <mat-radio-button [value]="true">fumeur</mat-radio-button>
-                        <mat-radio-button [value]="false">non fumeur</mat-radio-button>
+                        <mat-radio-button [value]="true" translate>LOGEMENTS.FORM.FUMEUR</mat-radio-button>
+                        <mat-radio-button [value]="false" translate>LOGEMENTS.FORM.NON_FUMEUR</mat-radio-button>
                     </mat-radio-group>
                     <mat-radio-group [(ngModel)]="l.logement.animaux" fxLayoutGap="3%">
-                        <mat-radio-button [value]="true">animaux autorisés</mat-radio-button>
-                        <mat-radio-button [value]="false">animaux autorisés non autorisés</mat-radio-button>
+                        <mat-radio-button [value]="true" translate>LOGEMENTS.FORM.ANIMAUX</mat-radio-button>
+                        <mat-radio-button [value]="false" translate>LOGEMENTS.FORM.NO_ANIMAUX</mat-radio-button>
                     </mat-radio-group>
                     <mat-radio-group [(ngModel)]="l.logement.access_handicap" fxLayoutGap="3%">
-                        <mat-radio-button [value]="true">accès handicapé</mat-radio-button>
-                        <mat-radio-button [value]="false">pas d'accès handicapé</mat-radio-button>
+                        <mat-radio-button [value]="true" translate>LOGEMENTS.FORM.ACCES_HANDICAP</mat-radio-button>
+                        <mat-radio-button [value]="false" translate>LOGEMENTS.FORM.NO_ACCES_HANDICAP</mat-radio-button>
                     </mat-radio-group>
                     <mat-radio-group [(ngModel)]="l.logement.exposer" fxLayoutGap="3%">
-                        <mat-radio-button [value]="true">exposer l'annonce</mat-radio-button>
-                        <mat-radio-button [value]="false">cacher l'annonce</mat-radio-button>
+                        <mat-radio-button [value]="true" translate>LOGEMENTS.FORM.EXPOSER</mat-radio-button>
+                        <mat-radio-button [value]="false" translate>LOGEMENTS.FORM.NO_EXPOSER</mat-radio-button>
                     </mat-radio-group>
                 </div>
             </div>
             <div fxLaout="column" class="item">
-                <div class="item_title">prix</div>
+                <div class="item_title" translate>LOGEMENTS.FORM.PRIX</div>
                 <div fxLayout="row" class="prix">
                     <input matInput type="number" name="prix" [(ngModel)]="l.logement.prix">
                     <span>€</span>
@@ -108,8 +108,8 @@
             </div>
         </div>
         <div class="update">
-            <button class="modifier_logement btn btn-warning" (click)="modifier(indexLogement)">Modifier</button>
-            <button class="supprimer_logement btn btn-danger" (click)="supprimer(indexLogement)">Supprimer</button>
+            <button class="modifier_logement btn btn-warning" (click)="modifier(indexLogement)" translate>LOGEMENTS.FORM.MODIFIER</button>
+            <button class="supprimer_logement btn btn-danger" (click)="supprimer(indexLogement)" translate>LOGEMENTS.FORM.SUPPRIMER</button>
         </div>
     </div>
 </div>

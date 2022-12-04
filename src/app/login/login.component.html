@@ -5,10 +5,10 @@
             <input matInput type="text" name="email" placeholder="email" required formControlName="email">
         </mat-form-field>
         <mat-form-field>
-            <input matInput type="password" name="password" placeholder="mot de passe" required formControlName="password">
+            <input matInput type="password" name="password" [placeholder]="translate('LOGIN.PASS')" required formControlName="password">
         </mat-form-field>
-        <a routerLink="/creation_compte">Pas de compte ? créez un compte</a>
-        <p class="reset_mdp" (click)="openPopupResetMdp()">Mot de passe oublié ?</p>
-        <button type="submit" [disabled]="!form.valid">Connexion</button>
+        <a routerLink="/creation_compte" translate>LOGIN.LINK_CREATION</a>
+        <p class="reset_mdp" (click)="openPopupResetMdp()" translate>LOGIN.MDP_OUBLIE</p>
+        <button type="submit" [disabled]="!form.valid" translate>LOGIN.CONNEXION</button>
     </form>
 </div>

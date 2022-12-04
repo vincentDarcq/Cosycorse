@@ -1,6 +1,6 @@
 .component {
     width: 100%;
-    background-color: rgb(247, 253, 254);
+    background-color: rgb(224, 250, 255);
 }
 
 .item,
@@ -31,7 +31,7 @@ mat-radio-group {
 
 .step,
 ngx-dropzone {
-    background-color: rgb(243, 248, 234);
+    background-color: white;
     margin: 5px 0;
 }
 
@@ -62,7 +62,7 @@ ngx-dropzone {
 
 input[type=number] {
     width: 20%;
-    background-color: rgb(214, 251, 162);
+    background-color: rgb(243, 248, 234);
 }
 
 mat-checkbox {
@@ -74,7 +74,7 @@ mat-checkbox {
     height: 1%;
     padding: 1%;
     margin: 2% 35%;
-    background-color: rgb(187, 247, 74);
+    border-radius: 10px;
 }
 
 textarea {

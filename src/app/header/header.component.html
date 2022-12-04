@@ -1,20 +1,29 @@
 <div class="header d-flex">
-    <img class="p-1" src="../../assets/cosycorse.png" alt="logo" routerLink="/">
+    <img class="p-1 img" src="../../assets/img/cosycorse.png" alt="logo" routerLink="/">
     <h2 class="p-1 m-3 link" routerLink="/">COSYCORSE</h2>
     <div class="p-1 m-3 link" routerLink="/logements">
-        <i class="fas fa-home fa-2x"></i><button>Logements</button>
+        <i class="fas fa-home fa-2x"></i><button translate>HEADER.LOGEMENTS</button>
     </div>
     <div class="p-1 m-3 link" routerLink="/activites">
-        <i class="fas fa-hiking fa-2x"></i><button>Activités</button>
+        <i class="fas fa-hiking fa-2x"></i><button translate>HEADER.ACTIVITES</button>
     </div>
     <div class="p-1 m-3 link" routerLink="/lieux">
-        <i class="fas fa-map-marker fa-2x"></i><button>Lieux d'intérêt</button>
+        <i class="fas fa-map-marker fa-2x"></i><button translate>HEADER.LIEUX</button>
     </div>
     <div class="p-1 m-3 link" routerLink="/contact">
-        <i class="fas fa-envelope fa-2x"></i><button>Contact</button>
+        <i class="fas fa-envelope fa-2x"></i><button translate>HEADER.CONTACT</button>
     </div>
+    <mat-form-field class="p-1 m-2">
+        <mat-select name="langue" id="langue" [placeholder]="getLang()">
+            <mat-option value="english"><button (click)="setLang('English')" class="btn_lang"><img
+                src="assets/img/drapeau_en.png">  English</button></mat-option>
+            <mat-option value="français"><button (click)="setLang('Français')" class="btn_lang"><img
+                  src="assets/img/drapeau_fr.png">  Français</button>
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
     <div class="ms-auto p-1 m-3 link" *ngIf="!isAuthenticated" routerLink="/connexion">
-        <i class="fas fa-user fa-2x"></i><button>Connexion</button>
+        <i class="fas fa-user fa-2x"></i><button translate>HEADER.CONNEXION</button>
     </div>
     <div class="ms-auto p-1 m-3" *ngIf="isAuthenticated">
         <i class="fas fa-user fa-2x"></i>{{ user.prenom }}
@@ -23,12 +32,12 @@
     <div *ngIf="list" class="select-bars">
         <div fxLayout="row">
             <div>
-                <div class="link popup-item" (click)="displayList()" routerLink="/creation_annonce">Ajouter une annonce</div>
-                <div class="link popup-item" (click)="displayList()" routerLink="/creation_lieu">Créer un lieu à visiter</div>
-                <div class="link popup-item" (click)="displayList()" routerLink="/creation_activite">Créer une activité</div>
-                <div class="link popup-item" (click)="displayList()" routerLink="/mes_annonces">Voir mes annonces</div>
-                <div class="link popup-item" (click)="displayList()" routerLink="/mon_compte">Mon compte</div>
-                <div class="link popup-item" (click)="logOut()">Deconnexion</div>
+                <div class="link popup-item" (click)="displayList()" routerLink="/creation_annonce" translate>HEADER.CREER_LOGEMENT</div>
+                <div class="link popup-item" (click)="displayList()" routerLink="/creation_lieu" translate>HEADER.CREER_LIEU</div>
+                <div class="link popup-item" (click)="displayList()" routerLink="/creation_activite" translate>HEADER.CREER_ACTIVITE</div>
+                <div class="link popup-item" (click)="displayList()" routerLink="/mes_annonces" translate>HEADER.VOIR_ANNONCE</div>
+                <div class="link popup-item" (click)="displayList()" routerLink="/mon_compte" translate>HEADER.COMPTE</div>
+                <div class="link popup-item" (click)="logOut()" translate>HEADER.DECONNEXION</div>
             </div>
             <a class="fas fa-times" (click)="displayList()"></a>
         </div>

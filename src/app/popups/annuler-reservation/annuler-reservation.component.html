@@ -3,13 +3,13 @@
         <mat-form-field appearance="fill">
             <mat-label>Message</mat-label>
             <textarea matInput formControlName="message" rows="4"></textarea>
-            <p *ngIf="form.get('message').invalid && (form.get('message').dirty || form.get('message').touched)">
-                Vous devez laisser un message au voyageur
+            <p *ngIf="form.get('message').invalid && (form.get('message').dirty || form.get('message').touched)" translate>
+                POPUP.MESSAGE_VOYAGEUR
             </p>
         </mat-form-field>
     </div>
     <div mat-dialog-actions>
-        <button mat-button (click)="cancel()" type="button">Ne pas annuler</button>
-        <button mat-button [disabled]="form.invalid" type="submit" cdkFocusInitial>Confirmer l'annulation</button>
+        <button mat-button (click)="cancel()" type="button" translate>POPUP.NO_ANNULER</button>
+        <button mat-button [disabled]="form.invalid" type="submit" cdkFocusInitial translate>POPUP.CONFIRM</button>
     </div>
 </form>

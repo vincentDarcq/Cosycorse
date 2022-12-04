@@ -2,31 +2,31 @@
     <div class="request_cosycorse">
         <form [formGroup]="formRequest" (ngSubmit)="submitRequest()">
             <mat-form-field appearance="fill" class="with_50pourcent motif">
-                <mat-label>Motif</mat-label>
+                <mat-label translate>CONTACT.MOTIF</mat-label>
                 <mat-select formControlName="motifRequest">
                     <mat-option *ngFor="let m of motifs" [value]="m">
-                        {{ m }}
+                        {{ translate('CONTACT.'+m) }}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field appearance="fill" class="with_100pourcent">
                 <input matInput type="text" formControlName="mail" placeholder="mail">
                 <div class="red" *ngIf="formRequest.get('mail')!.invalid && 
-                (formRequest.get('mail')!.dirty || formRequest.get('mail')!.touched)">Email obligatoire</div>
+                (formRequest.get('mail')!.dirty || formRequest.get('mail')!.touched)" translate>CONTACT.MAIL_OBLIGATOIRE</div>
             </mat-form-field>
             <mat-form-field appearance="fill" class="with_100pourcent">
-                <textarea type="text" 
-                        placeholder="message" 
+                <textarea type="text"
+                        placeholder="message"
                         matInput
-                        formControlName="message" 
-                        name="message" 
+                        formControlName="message"
+                        name="message"
                         id="message"
                         class="m_1pourcent width_300p"
                     rows="4"></textarea>
                 <div class="red" *ngIf="formRequest.get('message')!.invalid && 
-                (formRequest.get('message')!.dirty || formRequest.get('message')!.touched)">Message obligatoire</div>
+                (formRequest.get('message')!.dirty || formRequest.get('message')!.touched)" translate>CONTACT.MESSAGE_OBLIGATOIRE</div>
             </mat-form-field>
-            <button type="submit" class="btn btn-light" [disabled]="formRequest.invalid">Envoyer</button>
+            <button type="submit" class="btn btn-light" [disabled]="formRequest.invalid" translate>CONTACT.ENVOYER</button>
         </form>
     </div>
 </div>

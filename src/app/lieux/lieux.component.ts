@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 import { User } from '../models/user.model';
 import { mapSquare } from '../models/mapSquare';
 import { SlideInOutAnimation } from '../animations/lieuDescriptionInOut';
+import { TranslatorService } from '../services/translator.service';
 
 @Component({
   selector: 'app-lieux',
@@ -46,7 +47,8 @@ export class LieuxComponent implements OnInit, OnDestroy {
     private mapService: MapService,
     private zone: NgZone,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private translator: TranslatorService
   ) {
     this.lieux = new Array();
     this.lieuxFiltered = new Array();
@@ -169,6 +171,10 @@ export class LieuxComponent implements OnInit, OnDestroy {
     this.layers.forEach(l => this.map.removeLayer(l));
     this.addLieuxOnMap(this.lieux);
     this.filtre = false;
+  }
+
+  translate(s: string): string {
+    return this.translator.get(s);
   }
 
   ngOnDestroy(): void {

@@ -2,7 +2,7 @@
     border-bottom: solid 1px gray; 
 }
 
-img{
+.img{
     height: 90px;
     width: 60px;
 }
@@ -58,4 +58,8 @@ button{
 
 .popup-item{
     margin-bottom: 10%;
+}
+
+mat-form-field{
+    width: 100px;
 }

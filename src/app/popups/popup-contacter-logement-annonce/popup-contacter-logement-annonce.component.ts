@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { TranslatorService } from 'src/app/services/translator.service';
 import { MailContactLogement } from '../../models/mailContactLogement';
 
 @Component({
@@ -15,7 +16,8 @@ export class PopupContacterLogementAnnonceComponent implements OnInit{
   constructor(
     public dialogRef: MatDialogRef<PopupContacterLogementAnnonceComponent>,
     @Inject(MAT_DIALOG_DATA) public mail: MailContactLogement,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private translator: TranslatorService
   ) { }
 
   ngOnInit(): void {
@@ -31,6 +33,10 @@ export class PopupContacterLogementAnnonceComponent implements OnInit{
 
   submit(){
     this.dialogRef.close(this.form.value);
+  }
+
+  translate(s: string): string {
+    return this.translator.get(s);
   }
 
 }

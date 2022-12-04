@@ -1,4 +1,4 @@
-import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { GeoResponse } from '../models/geo-response.model';
 import { LogementsType } from '../models/logement-type';
 import { Equipements } from '../models/equipements';
@@ -16,7 +16,8 @@ import { UserService } from '../services/user.service';
 import { LogementService } from '../services/logement.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import Swal from 'sweetalert2';
+import { TranslatorService } from '../services/translator.service';
+import { InfoService } from '../services/info.service';
 
 @Component({
   selector: 'app-annonce-form',
@@ -50,14 +51,15 @@ export class AnnonceFormComponent implements OnInit, OnDestroy {
   constructor(
     private geoService: GeoService,
     private mapService: MapService,
-    private zone: NgZone,
+    private infoService: InfoService,
     private userService: UserService,
     private logementService: LogementService,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private translator: TranslatorService
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.form = this.formBuilder.group({
       logement: ['', Validators.required],
       ville: ['', Validators.required],
@@ -70,16 +72,14 @@ export class AnnonceFormComponent implements OnInit, OnDestroy {
       animaux: '',
       access_handicap: '',
       prix: ['', [Validators.required, Validators.min(1)]]
-    })
+    });
+    while (typeof this.userService.currentUser.value._id === 'undefined') {
+      await new Promise(f => setTimeout(f, 200));
+    }
     this.subscription = this.userService.currentUser.subscribe( (user: User | null) => {
       this.user = new User(user._id, user.email, user.nom);
       if(!user.stripeUserId){
-        Swal.fire({
-          title: "Votre compte Stripe n'est pas configuré, vous ne pouvez pas créer d'annonce. \n Vous pouvez le faire en allant sur votre compte",
-          confirmButtonText: 'Ok'
-        }).then(() => {
-          this.router.navigate(['/mon_compte'])
-        })
+        this.infoService.popupInfo(`${this.translate('LOGEMENTS.FORM.STRIPE_NOT_VALID')}`);
       }
     })
   }
@@ -110,14 +110,6 @@ export class AnnonceFormComponent implements OnInit, OnDestroy {
 
   public onMapReady(map: Map) {
     this.map = map;
-    this.map.on('click', (e) => {
-      this.zone.run(() => {
-        var coord = e.latlng;
-        var lat = coord.lat;
-        var lng = coord.lng;
-        console.log("You clicked the map at latitude: " + lat + " and longitude: " + lng);
-      })
-    })
     this.mapPoint = this.mapService.newPoint(this.latAdresse, this.longAdresse);
     const point = this.mapService.createPoint(this.mapPoint)
     this.lastLayer = marker(point).setIcon(this.mapService.getRedIcon()).addTo(this.map);
@@ -192,11 +184,16 @@ export class AnnonceFormComponent implements OnInit, OnDestroy {
         this.form.value.nbVoyageur, this.form.value.nbLits, this.form.value.nbSdb, this.latAdresse, this.longAdresse,
         this.user.email, this.form.value.prix, this.equipements, this.form.value.fumeur, this.form.value.animaux, 
         this.form.value.access_handicap);
-      this.logementService.createLogement(logement).subscribe( (log: Logement) => {
-        this.logementService.uploadPhotos(this.formData, log._id ).subscribe( (l: Logement) => {
-          this.router.navigate(['/']);
-        })
-      })
+      this.logementService.createLogement(logement).subscribe( 
+        (log: Logement) => {
+          this.logementService.uploadPhotos(this.formData, log._id ).subscribe( (l: Logement) => {
+            this.router.navigate(['/']);
+          })
+        },
+        err => {
+          this.infoService.popupInfo(this.translate(err))
+        }
+      )
     }
   }
   
@@ -206,6 +203,10 @@ export class AnnonceFormComponent implements OnInit, OnDestroy {
       return false;
     }
     return true;
+  }
+
+  translate(s: string): string {
+    return this.translator.get(s);
   }
 
   ngOnDestroy(): void {

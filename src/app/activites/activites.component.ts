@@ -1,4 +1,4 @@
-import { Component, NgZone, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { MatRadioButton } from '@angular/material/radio';
 import { Router } from '@angular/router';
 import { LatLngBounds, Layer, Map, MapOptions, marker } from 'leaflet';
@@ -11,6 +11,7 @@ import { User } from '../models/user.model';
 import { Villes } from '../models/villes';
 import { ActiviteService } from '../services/activite.service';
 import { MapService } from '../services/map.service';
+import { TranslatorService } from '../services/translator.service';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -19,7 +20,7 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./activites.component.scss'],
   animations: [SlideInOutAnimation]
 })
-export class ActivitesComponent implements OnInit {
+export class ActivitesComponent implements OnInit, OnDestroy {
 
   displayMap: boolean = false;
   filtre: boolean = false;
@@ -46,7 +47,8 @@ export class ActivitesComponent implements OnInit {
     private mapService: MapService,
     private zone: NgZone,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private translator: TranslatorService
   ) { 
     this.activites = new Array();
     this.activitesFiltered = new Array();
@@ -160,6 +162,14 @@ export class ActivitesComponent implements OnInit {
     this.layers.forEach(l => this.map.removeLayer(l));
     this.addActivitesOnMap(this.activites);
     this.filtre = false;
+  }
+
+  translate(s: string): string {
+    return this.translator.get(s);
+  }
+
+  ngOnDestroy(): void {
+    if(this.subscription){this.subscription.unsubscribe();}
   }
 
 }

@@ -1,24 +1,24 @@
 <div class="component">
     <div class="grid">
         <div class="stripe">
-            <h4>La réception de paiements lorsque vous proposez un logement se fait au travers d'un compte Stripe</h4>
+            <h4 translate>MON_COMPTE.STRIPE_DESCRIPTION</h4>
             <div *ngIf="user && !user.stripeUserId">
-                <h6>Vous n'avez pas configuré votre compte</h6>
-                <p (click)="setUpPaiementStripe()" class="configure_compte_stripe">Configurer votre compte stripe</p>
+                <h6 translate>MON_COMPTE.NO_STRIPE_ACCOUNT</h6>
+                <p (click)="setUpPaiementStripe()" class="configure_compte_stripe" translate>MON_COMPTE.STRIPE_CONFIGURE</p>
             </div>
             <div *ngIf="user && user.stripeUserId">
-                <h6>Votre compte Stripe est correctement enregistré</h6>
-                <p (click)="linkToStripe()" class="configure_compte_stripe">Consulter votre compte stripe</p>
+                <h6>MON_COMPTE.STRIPE_ACCOUNT</h6>
+                <p (click)="linkToStripe()" class="configure_compte_stripe" translate>MON_COMPTE.STRIPE_CONSULT</p>
             </div>
         </div>
         <div class="suppression">
             <p>{{ user.prenom }} {{ user.nom }}</p>
             <p>{{ user.email }}</p>
-            <button class="btn btn-danger" (click)="deleteAccount()">Supprimer mon compte</button>
+            <button class="btn btn-danger" (click)="deleteAccount()" translate>MON_COMPTE.DELETE_ACCOUNT</button>
         </div>
     </div>
     <div class="voyages" *ngIf="mesVoyages.length > 0">
-        <h3>Mes voyages</h3>
+        <h3 translate>MON_COMPTE.MES_VOYAGES</h3>
         <div fxLayout="row wrap" fxLayout.sm="column" fxLayout.xs="column" fxLayoutGap="2%" class="voyage">
             <div class="button-effect" *ngFor="let mv of mesVoyages; let indexMCV = index">
                 <div class="details">
@@ -32,31 +32,36 @@
                     <i class='fas fa-angle-left arrow-left'
                         (click)="selectLeftArrow(mesVoyages, indexMCV, mv.logement.indexImage)"></i>
                     <div fxLayout="row" fxLayoutGap="15px" class="buttons">
-                        <button [routerLink]="['/logement', mv.logementReservation.logementId]" class="btn btn-primary">Voir l'annonce</button>
-                        <button (click)="annulerVoyage(mv, indexMCV)" class="btn btn-danger">Annuler</button>
+                        <button [routerLink]="['/logement', mv.logementReservation.logementId]" class="btn btn-primary" translate>MON_COMPTE.VOIR_ANNONCE</button>
+                        <button (click)="annulerVoyage(mv, indexMCV)" class="btn btn-danger" translate>MON_COMPTE.ANNULER</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="reservations" *ngIf="mesReservations.length > 0">        
-        <h3>Les reservations de mes voyageurs</h3>
+        <h3 translate>MON_COMPTE.MES_RESERVATION</h3>
         <div fxLayout="row wrap" fxLayout.sm="column" fxLayout.xs="column" fxLayoutGap="2%" class="reservation">
             <div class="button-effect" *ngFor="let mr of mesReservations; let indexMCR = index">
                 <div class="details">
-                    <p><b>voyageur : </b>{{ mr.user.prenom }} {{ mr.user.nom }}</p>
-                    <p><b>adresse : </b>{{ mr.logement.adresse }}</p>
-                    <p><b>dates : </b>{{ mr.logementReservation.dateDebut }} - {{ mr.logementReservation.dateFin }}</p>
-                    <p><b>prix : </b>{{ mr.logementReservation.prix *(100/110) }}€</p>
+                    <p><b translate>MON_COMPTE.VOYAGEUR</b>{{ mr.user.prenom }} {{ mr.user.nom }}</p>
+                    <p><b translate>MON_COMPTE.ADRESSE</b>{{ mr.logement.adresse }}</p>
+                    <p><b translate>MON_COMPTE.DATES</b>{{ mr.logementReservation.dateDebut }} - {{ mr.logementReservation.dateFin }}</p>
+                    <p><b translate>MON_COMPTE.PRIX</b>{{ mr.logementReservation.prix *(100/110) }}€</p>
                     <div fxLayout="row" class="buttons" *ngIf="mr.logementReservation.status === 'attente'">
-                        <button (click)="acceptReservation(mr.logementReservation._id, mr.user)" class="btn btn-success">Accepter</button>
-                        <button (click)="rejectReservation(mr.logementReservation._id, mr.user)" class="btn btn-danger">Refuser</button>
+                        <button (click)="acceptReservation(mr.logementReservation._id, mr.user)" class="btn btn-success" translate>
+                            REPONSE_LOGEMENT_RESERVATION.ACCEPTER</button>
+                        <button (click)="rejectReservation(mr.logementReservation._id, mr.user)" class="btn btn-danger" translate>
+                            REPONSE_LOGEMENT_RESERVATION.REFUSER</button>
                     </div>
                     <div fxLayout="row" fxLayoutGap="5px" class="buttons" *ngIf="mr.logementReservation.status === 'acceptée'">
-                        <button [routerLink]="['/logement', mr.logementReservation.logementId]" class="btn btn-success">Voir l'annonce</button>
-                        <button *ngIf="mr.logement.exposer" (click)="cacherAnnonce(indexMCR, mr.logement._id)" class="btn btn-primary">Ne plus exposer cette annonce</button>
-                        <button *ngIf="!mr.logement.exposer" (click)="exposerAnnonce(indexMCR, mr.logement._id)" class="btn btn-primary">Exposer cette annonce</button>
-                        <button (click)="annulerReservation(mr, indexMCR)" class="btn btn-danger">Annuler</button>
+                        <button [routerLink]="['/logement', mr.logementReservation.logementId]" class="btn btn-success" translate>
+                            MON_COMPTE.VOIR_ANNONCE</button>
+                        <button *ngIf="mr.logement.exposer" (click)="cacherAnnonce(indexMCR, mr.logement._id)" class="btn btn-primary" translate>
+                            LOGEMENTS.FORM.NO_EXPOSER</button>
+                        <button *ngIf="!mr.logement.exposer" (click)="exposerAnnonce(indexMCR, mr.logement._id)" class="btn btn-primary" translate>
+                            LOGEMENTS.FORM.EXPOSER</button>
+                        <button (click)="annulerReservation(mr, indexMCR)" class="btn btn-danger" translate>MON_COMPTE.ANNULER</button>
                     </div>
                 </div>
             </div>

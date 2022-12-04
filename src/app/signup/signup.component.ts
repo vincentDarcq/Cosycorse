@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from '../models/user.model';
 import { AuthenticationService } from '../services/authentication.service';
+import { TranslatorService } from '../services/translator.service';
 
 @Component({
   selector: 'app-signup',
@@ -19,7 +20,8 @@ export class SignupComponent implements OnInit {
   constructor(
     private authenticationService: AuthenticationService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private translator: TranslatorService
   ) { }
 
   ngOnInit(): void {
@@ -43,9 +45,13 @@ export class SignupComponent implements OnInit {
         this.router.navigate(['/']);
       },
       err => {
-        this.erreur = err.error;
+        this.erreur = this.translate(err);
       }
     )
+  }
+
+  translate(s: string): string {
+    return this.translator.get(s);
   }
 
 }

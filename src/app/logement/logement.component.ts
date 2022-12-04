@@ -18,6 +18,7 @@ import { InfoService } from '../services/info.service';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
 import { AuthenticationService } from '../services/authentication.service';
+import { TranslatorService } from '../services/translator.service';
 
 @Component({
   selector: 'app-logement',
@@ -54,7 +55,8 @@ export class LogementComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private infoService: InfoService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private translator: TranslatorService
   ) {
   }
 
@@ -173,10 +175,10 @@ export class LogementComponent implements OnInit, OnDestroy {
         this.mail.subject = this.logement.ville + " " + this.logement.adresse;
         this.mailsService.contactHost(this.mail).subscribe(
           res => {
-            this.infoService.popupInfo("mail envoyé avec succès");
+            this.infoService.popupInfo(this.translate(res));
           },
           err => {
-            this.infoService.popupInfo("Une erreur s'est produite lors de l'envoi du mail : "+err.error);
+            this.infoService.popupInfo(`${this.translate('MAIL.ERROR')}`+err.error);
           })
       }
     });
@@ -194,16 +196,16 @@ export class LogementComponent implements OnInit, OnDestroy {
       sessionStorage.setItem('redirectUrl', path);
       this.router.navigate(['/connexion']);
     }else if(this.dateFin === null || this.dateDebut === null){
-      this.infoService.popupInfo("Les dates séléctionnées sont invalides");
+      this.infoService.popupInfo(`${this.translate('LOGEMENTS.FILTRES.INVALID_DATES')}`);
       return;
     }else if(!this.logement.exposer){
-      this.infoService.popupInfo("Vous ne pouvez pas faire de réservation pour ce logement");
+      this.infoService.popupInfo(`${this.translate('LOGEMENTS.FILTRES.UNAVAILABLE')}`);
       return;
     }else {
       let logementReservation : LogementReservation = new LogementReservation();
       const nuits = this.getNbNuits(this.dateFin, this.dateDebut);
       if(nuits === 0){
-        this.infoService.popupInfo("La date d'arrivée ne peut pas être la même que la date de départ");
+        this.infoService.popupInfo(`${this.translate('LOGEMENTS.FILTRES.ARRIVEE_EQUAL_DEPART')}`);
         return;
       }
       logementReservation.nuits = nuits;
@@ -229,11 +231,11 @@ export class LogementComponent implements OnInit, OnDestroy {
             this.logementService.reserverLocation(logementReservation).subscribe( 
               (res: string) => {
                 sessionStorage.removeItem('token');
-                this.infoService.popupInfo(res);
+                this.infoService.popupInfo(this.translate(res));
               },
               err => {
                 sessionStorage.removeItem('token');
-                this.infoService.popupInfo(err.error);
+                this.infoService.popupInfo(`${this.translate('CONTACT.ERROR')} ${this.translate(err)}`);
               })
           })
         }
@@ -244,6 +246,10 @@ export class LogementComponent implements OnInit, OnDestroy {
   getNbNuits(dateFin: Date, dateDebut: Date): number {
     const time = dateFin.getTime() - dateDebut.getTime();
     return Math.floor((time / 1000) / 3600) / 24;
+  }
+
+  translate(s: string): string {
+    return this.translator.get(s);
   }
 
   ngOnDestroy(): void {

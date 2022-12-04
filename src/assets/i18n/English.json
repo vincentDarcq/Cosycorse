@@ -1,0 +1,265 @@
+{
+    "HEADER": {
+        "LOGEMENTS": "Accommodation",
+        "ACTIVITES": "Activities",
+        "LIEUX": "Places of interest",
+        "CONTACT": "Contact",
+        "CONNEXION": "Login",
+        "DECONNEXION": "Logout",
+        "CREER_LOGEMENT": "Create an accommodation",
+        "CREER_LIEU": "Create a place to visit",
+        "CREER_ACTIVITE": "Create an activity",
+        "VOIR_ANNONCE": "Check my accommodations",
+        "COMPTE": "My account"
+    },
+    "LOGEMENTS" : {
+        "TYPES": {
+            "APPARTEMENT": "Apartment",
+            "MAISON": "House",
+            "VILLA": "Villa",
+            "MAISON_HOTE": "Guest house",
+            "DEPENDANCE": "house outbuilding",
+            "CHATEAU": "Castle",
+            "MOBILE_HOME": "Mobile home"
+        },
+        "DETAILS": {
+            "FUMEUR": "Smoking",
+            "NO_FUMEUR": "No smoking",
+            "ANIMAUX": "Pets",
+            "ANIMAUX_ACCEPTES": "Pets allowed",
+            "ANIMAUX_NON_ACCEPTES": "Pets not allowed",
+            "ACCES_HANDICAPE": "Handicap access",
+            "NO_ACCES_HANDICAPE": "No Handicap access",
+            "PRIX_TOTAL": "Total price",
+            "VIDER_DATES": "Clear dates",
+            "CONTACT_HOTE": "Contact the host",
+            "RESERVER": "Book",
+            "INDISPONIBLE": "The selected dates are unavailable for this accommodation"
+        },
+        "FILTRES": {
+            "ARRIVEE": "Arrival",
+            "DEPART": "Departure",
+            "VILLE": "City",
+            "VOYAGEURS": "Travelers",
+            "LITS": "Beds",
+            "SDB": "Bathrooms",
+            "PRIX": "max price/night",
+            "ACTUALISER" : "Refresh",
+            "EQUIPEMENTS": "Equipments",
+            "EFFACER_FILTRES": "Clear filters",
+            "INVALID_DATES": "The selected dates are invalid",
+            "UNAVAILABLE": "You cannot make a reservation for this accommodation",
+            "ARRIVEE_EQUAL_DEPART": "The arrival date cannot be the same as the departure date"
+        },
+        "EQUIPEMENTS": {
+            "EQUIPEMENTS": "Equipments",
+            "PISCINE": "Swimming pool",
+            "JACUZZI": "Hot tub",
+            "BARBECUE": "Barbecue",
+            "CHEMINEE": "Chimney",
+            "TV": "Television",
+            "APPAREILS_FITNESS": "fitness equipment",
+            "WIFI": "Wifi",
+            "LAVE_LINGE": "Washing machine",
+            "LAVE_VAISSELLE": "Dishwasher",
+            "CLIMATISATION": "Air conditioner",
+            "PARKING_GRATUIT": "Free parking",
+            "VOITURE": "Car",
+            "VELO": "Bike",
+            "LINGE_MAISON": "Household linen",
+            "SECHE_CHEVEUX": "Hair dryer",
+            "FER_REPASSER": "Iron",
+            "DETECTEUR_FUMEE": "Smoke detector",
+            "KIT_SECOURS": "First aid kit",
+            "DETECTEUR_MONOXYDE": "Carbon monoxide detector",
+            "EXTINCTEUR": "Extinguisher",
+            "MODIFIER": "Modify equipments",
+            "MODIFIER_SECURITE": "Modify safety equipments"
+        },
+        "DATAS": {
+            "NUIT": "night",
+            "VOYAGEURS": "travelers",
+            "LITS": "beds",
+            "SDB": "bathrooms"
+        },
+        "FORM": {
+            "QUESTION_TYPE": "What type of accommodation do you offer ?",
+            "TYPE_OBLIGATOIRE": "Selection mandatory",
+            "VILLE_OBLIGATOIRE": "City mandatory",
+            "SEARCH_LOCATION": "Find",
+            "MAUVAISE_ADRESSE": "This address is not in Corsica",
+            "CLICK_TO_SEARCH": "Click the Search button to verify the correct location",
+            "ADRESSE_OBLIGATOIRE": "Address mandatory",
+            "QUESTION_VOYAGEURS": "How many travelers ?",
+            "NOMBRE_POSITIF": "The number muste be > 0",
+            "QUESTION_LITS": "How many beds do you offer ?",
+            "QUESTION_SDB": "How many bathrooms ?",
+            "QUESTION_EQUIPEMENTS": "Equipments of your accommodation ?",
+            "PHOTOS": "Add/Drop photos",
+            "DESCRIPTION": "Describe your accommodation in more detail :",
+            "FUMEUR": "Smoking allowed",
+            "NON_FUMEUR": "Smoking not allowed",
+            "ANIMAUX": "Pets allowed",
+            "NO_ANIMAUX": "Pets not allowed",
+            "ACCES_HANDICAP": "handicap access",
+            "NO_ACCES_HANDICAP": "no handicap access",
+            "PRIX": "Price for the night ?",
+            "CREER": "Create the announce",
+            "EXPOSER": "Expose accommodation",
+            "NO_EXPOSER": "Hide accommodation",
+            "MODIFIER": "Modify",
+            "SUPPRIMER": "Delete",
+            "STRIPE_NOT_VALID": "Your Stripe account is not configured, you cannot create an accommodation. \n You can do this by going to your account"
+        }
+    },
+    "LIEUX": {
+        "TYPE": {
+            "PLAGE": "Beach",
+            "GOLFE": "Gulf",
+            "CALANQUES": "Creeks",
+            "RESERVE_NATURELLE": "Wildlife park",
+            "VILLAGE_CLASS": "Listed village",
+            "GROTTE": "Cave",
+            "MAISON": "House"
+        },
+        "FILTRES": {
+            "NOM": "name",
+            "VILLE": "city",
+            "ACTUALISER": "Refresh",
+            "EFFACER_FILTRES": "Clear filters"
+        }
+    },
+    "ACTIVITES": {
+        "TYPE": {
+            "VISITE": "Visit",
+            "CIRCUIT": "Circuit",
+            "LOCATION": "Rentals",
+            "ZOO": "Zoo",
+            "RANDONNEE": "Ramble",
+            "CULINAIRE": "Culinary",
+            "SPECTACLE": "Spectacle",
+            "ROAD_TRIP": "Road-trip"
+        },
+        "FILTRES": {
+            "TITRE": "title",
+            "VILLE": "city",
+            "ACTUALISER": "Refresh",
+            "EFFACER_FILTRES": "Clear filters"
+        }
+    },
+    "REPONSE_LOGEMENT_RESERVATION": {
+        "EMAIL_LOCATAIRE": "tenant email :",
+        "STRIPE_TRANSFERT": "If you accept, the transfer to your Stripe account will be made at the start of your tenant's trip",
+        "ACCEPTER": "Accept",
+        "REFUSER": "Refuse",
+        "DEMANDE_TRAITEE": "The booking request has already been processed",
+        "REPONSE_RESA_ACCEPTEE": "A confirmation email has been sent to the traveler",
+        "NOT_ANNULABLE": "A cancellation is only possible 48 hours in advance, you have passed this deadline"
+    },
+    "RESET_PASS": {
+        "NEW_PASS": "New password",
+        "PASS_MANDATORY": "The password must be filled",
+        "CONFIRM": "Confirm the password",
+        "SUCCESS": "password changed successfully"
+    },
+    "STRIPE_REDIRECT": {
+        "TITRE_H3": "The configuration of your account is almost finished"
+    },
+    "CONTACT": {
+        "MOTIF": "Reason",
+        "INFORMATION": "Information",
+        "PROBLEME_RESA": "Problem with a reservation",
+        "PROBLEME_COMPTE": "Problem with an account",
+        "NO_LIEU": "A place does not appear in the section",
+        "NO_ACTIVITE": "An activity does not appear in the section",
+        "AMELIORATION": "Improvement suggestion",
+        "AUTRE": "Other",
+        "MAIL_OBLIGATOIRE": "Email mandatory",
+        "MESSAGE_OBLIGATOIRE": "Message mandatory",
+        "ENVOYER": "Send",
+        "ERROR": "An error occured : "
+    },
+    "LOGIN": {
+        "PASS": "Password",
+        "LINK_CREATION": "No account ? Create an account",
+        "MDP_OUBLIE": "Forgot your password ?",
+        "CONNEXION": "Connection"
+    },
+    "MES_ANNONCES": {
+        "LIST_ANNONCE": "Go to an accommodation",
+        "ERROR_MODIFY_IMAGE": "Error trying to change the image : ",
+        "ANNONCE_MODIFIEE_1": "Your accommodation for the adress ",
+        "ANNONCE_MODIFIEE_2": " has been modified successfully",
+        "SUPPRIMER_CONFIRM": "Delete your accommodation ?"
+    },
+    "MAIL": {
+        "SUCCESS": "mail sent successfully",
+        "ERROR": "An error occured sending email : ",
+        "RESERVATION_REJETEE": "A refusal email has been sent to the traveler",
+        "DEMANDE_ENVOYEE_SUCCESS": "Request sent successfully",
+        "EMAIL_TO_YOUR_ADDRESS": "An email has been sent to your address",
+        "ANNULATION_TO_HOST": "A cancellation email has just been sent to the host",
+        "ANNULATION_TO_TRAVELER": "A cancellation email has just been sent to the traveler"
+    },
+    "MON_COMPTE": {
+        "STRIPE_DESCRIPTION": "Receiving payments when you offer accommodation is done through a Stripe account",
+        "NO_STRIPE_ACCOUNT": "You have not configured your account",
+        "STRIPE_ACCOUNT": "Your Stripe account is correctly registered",
+        "STRIPE_CONFIGURE": "Configure your stripe account",
+        "STRIPE_CONSULT": "Check your stripe account",
+        "DELETE_ACCOUNT": "Delete my account",
+        "CONFIRM_DELETE_ACCOUNT": "Are you sure you want to delete your account ?",
+        "MES_VOYAGES": "My trips",
+        "VOIR_ANNONCE": "See the announcement",
+        "ANNULER": "Cancel",
+        "MES_RESERVATION": "The reservations of my travelers",
+        "VOYAGEUR": "Traveler : ",
+        "ADRESSE": "Adress : ",
+        "DATES": "Dates : ",
+        "PRIX": "Price : ",
+        "POP_UP_STRIPE": "Your Stripe account has been successfully configured",
+        "ACCEPT_RESA": "Accept reservation from ",
+        "REFUSE_RESA": "Refuse reservation from ",
+        "OUI": "Yes",
+        "NON": "No",
+        "MESSAGE_ANNULATION_RESA_VIDE": "Your message was empty, the cancellation was not successful",
+        "CACHER_ANNONCE_EXPLICATION": "Don't want to move your accommodation up in search results? \n By clicking on hide, travelers will no longer be able to book your accommodation even by going to the page of your accommodation. \n note: To delete your accommodation, go to the 'Check my accommodations' section",
+        "CACHER": "Hide",
+        "EXPOSER": "Expose",
+        "AFTER_HIDE": "Your accommodation will no longer appear in search results",
+        "REEXPOSER": "You want to re-expose your accommodation ?",
+        "AFTER_EXPOSE": "Your accommodation will come up again in the search results"
+    },
+    "POPUP": {
+        "MESSAGE_VOYAGEUR": "You must leave a message for the traveler",
+        "NO_ANNULER": "Do not cancel",
+        "ANNULER": "Cancel",
+        "CONFIRM": "Confirm cancellation",
+        "ADRESSE_INVALIDE": "invalid address",
+        "MESSAGE_VIDE": "empty message",
+        "VOTRE_EMAIL": "Your email",
+        "PRIX": "Price : ",
+        "RESERVATION_DU": "Reservation from ",
+        "AU": " to ",
+        "FACULTATIF": "optional"
+    },
+    "AUTH": {
+        "NO_AUTHENTICATED": "You are not authenticated",
+        "TOKEN_EXPIRED": "Token expired",
+        "WRONG_TOKEN": "Reservation token is wrong",
+        "NO_RESERVATION_TOKEN": "No reservation token",
+        "LIEN_EXPIRED": "This link has expired",
+        "SIGNIN_FAILED": "Connection failed, credentials are incorrect",
+        "UNKNOW_MAIL": "Unknown email address",
+        "EMAIL_EXIST": "This email is already registered",
+        "WRONG_OLD_PWD": "Invalid old password",
+        "ERR_CHGT_PWD": "An error occurred while changing the password"
+    },
+    "USER": {
+        "NOM": "firstname",
+        "PRENOM": "lastname",
+        "MDP": "password",
+        "CREER_COMPTE": "Create my account",
+        "SUPPRIMER_COMPTE_IMPOSSIBLE": "You have at least one traveler who has not started their trip yet, you can only delete your account when you have no more upcoming bookings."
+    }
+}

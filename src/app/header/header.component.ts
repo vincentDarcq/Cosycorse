@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { User } from '../models/user.model';
 import { AuthenticationService } from '../services/authentication.service';
+import { TranslatorService } from '../services/translator.service';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -18,7 +19,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthenticationService,
-    private userService: UserService
+    private userService: UserService,
+    private translator: TranslatorService
   ) { }
   
   ngOnInit(): void {
@@ -37,6 +39,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   
   displayList(){
     this.list = !this.list;
+  }
+
+  getLang(): string {
+    return this.translator.getLang();
+  }
+  
+  setLang(lang: string): void {
+    this.translator.setLang(lang);
   }
   
   ngOnDestroy(): void {

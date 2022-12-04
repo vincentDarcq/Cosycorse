@@ -11,6 +11,7 @@ import { EquipementsSecurite } from '../models/equipementsSecurite';
 import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 import { mapSquare } from '../models/mapSquare';
 import { SlideInOutAnimation } from '../animations/slideInOut';
+import { TranslatorService } from '../services/translator.service';
 
 @Component({
   selector: 'app-logements',
@@ -50,7 +51,8 @@ export class LogementsComponent implements OnInit, OnDestroy {
     private logementService: LogementService,
     private mapService: MapService,
     private router: Router,
-    private zone: NgZone
+    private zone: NgZone,
+    private translator: TranslatorService
   ) {
     this.logementService.getRecentsLogement();
   }
@@ -181,7 +183,6 @@ export class LogementsComponent implements OnInit, OnDestroy {
     });
     this.layers.forEach(l => this.map.removeLayer(l));
     this.addLogementsOnMap(this.logementsRandom);
-    console.log(this.logementsRandom.length)
   }
 
   filterDates = (d: Date): boolean => {
@@ -202,6 +203,10 @@ export class LogementsComponent implements OnInit, OnDestroy {
 
   expandFilters(){
     this.animationState = this.animationState === 'false' ? 'true' : 'false';
+  }
+
+  translate(s: string): string {
+    return this.translator.get(s);
   }
 
   ngOnDestroy(): void {

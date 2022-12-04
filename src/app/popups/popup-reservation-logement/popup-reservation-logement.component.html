@@ -1,13 +1,13 @@
 <form [formGroup]="form" (ngSubmit)="submit()">
   <div mat-dialog-content fxLayout="column">
-    <p>Réservation du {{ datas.logementReservation.dateDebut }} au {{ datas.logementReservation.dateFin }}</p>
-    <p>Prix : {{ datas.logementReservation.prix }}€</p>
+    <p>{{translate('POPUP.RESERVATION_DU')}}{{datas.logementReservation.dateDebut}}{{translate('POPUP.AU')}}{{datas.logementReservation.dateFin}}</p>
+    <p>{{translate('POPUP.PRIX')}}{{ datas.logementReservation.prix }}€</p>
     <mat-form-field appearance="fill">
-      <mat-label>Votre email *</mat-label>
+      <mat-label>{{ translate('POPUP.VOTRE_EMAIL') }}</mat-label>
       <input matInput formControlName="emailDemandeur">
       <div class="control" 
-      *ngIf="form.get('emailDemandeur')!.invalid && (form.get('emailDemandeur')!.dirty || form.get('emailDemandeur')!.touched)">
-        adresse invalide.
+      *ngIf="form.get('emailDemandeur')!.invalid && (form.get('emailDemandeur')!.dirty || form.get('emailDemandeur')!.touched)" translate>
+        POPUP.ADRESSE_INVALIDE
       </div>
     </mat-form-field>
     <div id="card-element" #cardInfo>
@@ -17,12 +17,12 @@
       <!-- Display error message to your customers here -->
     </div>
     <mat-form-field appearance="fill">
-      <mat-label>Message (facultatif):</mat-label>
+      <mat-label>Message {{translate('POPUP.FACULTATIF')}}:</mat-label>
       <textarea matInput formControlName="message" rows="4"></textarea>
     </mat-form-field>
   </div>
   <div mat-dialog-actions>
-    <button mat-button (click)="cancel()" type="button">Annuler</button>
+    <button mat-button (click)="cancel()" type="button">{{ translate('POPUP.ANNULER') }}</button>
     <button mat-button [disabled]="form.invalid" type="submit" cdkFocusInitial>Ok</button>
   </div>
 </form>

@@ -2,6 +2,7 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { AbstractControlOptions, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { TranslatorService } from 'src/app/services/translator.service';
 import { ResetPassword } from '../../models/resetPassword';
 import { User } from '../../models/user.model';
 import { AuthenticationService } from '../../services/authentication.service';
@@ -29,7 +30,8 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     private authentService: AuthenticationService,
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private infoService: InfoService
+    private infoService: InfoService,
+    private translator: TranslatorService
   ) { }
   
   ngOnInit(): void {
@@ -40,7 +42,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
           this.user = new User(user._id, user.email, user.firstName, user.lastName);
         },
         err => {
-          this.error = err.error;
+          this.error = this.translate(err);
         }
       )
     },
@@ -94,14 +96,18 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   submit(){
     this.userService.resetPassword(this.form.value).subscribe( 
       (user: User) => {
-        this.infoService.popupInfo("mot de passe modifié avec succès");
+        this.infoService.popupInfo(`${this.translate('RESET_PASS.SUCCESS')}`);
       },
       err => {
-        this.infoService.popupInfo(err);
+        this.infoService.popupInfo(`${this.translate('CONTACT.ERROR')} ${err}`);
       }
     )
   }
 
+  translate(s: string): string {
+    return this.translator.get(s);
+  }
+  
   ngOnDestroy(): void {
     if(this.subActivatedRoute){this.subActivatedRoute.unsubscribe();};
   }

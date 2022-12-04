@@ -7,6 +7,7 @@ import { User } from '../models/user.model';
 import { PopupResetPasswordComponent } from '../popups/popup-reset-password/popup-reset-password.component';
 import { AuthenticationService } from '../services/authentication.service';
 import { InfoService } from '../services/info.service';
+import { TranslatorService } from '../services/translator.service';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -26,7 +27,8 @@ export class LoginComponent implements OnInit {
     private infoService: InfoService,
     private router: Router,
     private dialog: MatDialog,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private translator: TranslatorService
   ) { }
 
   ngOnInit(): void {
@@ -40,15 +42,17 @@ export class LoginComponent implements OnInit {
     let user = new User();
     user.email = this.form.value.email;
     user.password = this.form.value.password;
-    this.loginSub = this.authenticationService.login(user).subscribe( () => {
-      if(sessionStorage.getItem("redirectUrl")){
-        this.router.navigate([sessionStorage.getItem("redirectUrl")]);
-      }else {
-        this.router.navigate(['/']);
-      }
-    }, err => {
-      this.error = err.error;
-    })
+    this.loginSub = this.authenticationService.login(user).subscribe( 
+      () => {
+        if(sessionStorage.getItem("redirectUrl")){
+          this.router.navigate([sessionStorage.getItem("redirectUrl")]);
+        }else {
+          this.router.navigate(['/']);
+        }
+      }, 
+      err => {
+        this.error = this.translate(err);
+      })
   }
 
   openPopupResetMdp(){
@@ -58,10 +62,19 @@ export class LoginComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.userService.forgotPassword(result.mail).subscribe( (res: string) => {
-        this.infoService.popupInfo(res);
-      })
+      this.userService.forgotPassword(result.mail).subscribe( 
+        (res: string) => {
+          this.infoService.popupInfo(res);
+        },
+        err => {
+          this.infoService.popupInfo(this.translate(err))
+        }
+      )
     });
+  }
+
+  translate(s: string): string {
+    return this.translator.get(s);
   }
 
 }

@@ -1,10 +1,12 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LoginComponent } from './login/login.component';
 
 //Material
@@ -42,6 +44,11 @@ import { EditLieuComponent } from './edit-lieu/edit-lieu.component';
 import { ActiviteFormComponent } from './activite-form/activite-form.component';
 import { EditActiviteComponent } from './edit-activite/edit-activite.component';
 import { ContactComponent } from './contact/contact.component';
+
+export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+}
+
 
 @NgModule({
   declarations: [
@@ -83,7 +90,14 @@ import { ContactComponent } from './contact/contact.component';
     LeafletModule,
     NgxDropzoneModule,
     ReactiveFormsModule,
-    NgxGalleryModule
+    NgxGalleryModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient],
+      },
+    })
   ],
   providers: [
     {

@@ -29,6 +29,8 @@
     "@geoapify/geocoder-autocomplete": "^1.1.2",
     "@kolkov/ngx-gallery": "^2.0.1",
     "@material-ui/pickers": "^3.3.10",
+    "@ngx-translate/core": "^14.0.0",
+    "@ngx-translate/http-loader": "^7.0.0",
     "@stripe/stripe-js": "^1.42.1",
     "bootstrap": "^5.2.0",
     "leaflet": "^1.7.1",

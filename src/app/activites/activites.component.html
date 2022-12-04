@@ -1,11 +1,11 @@
 <div class="component">
     <div class="p_1pourcent" fxLayout="row" fxLayoutGap="10px">
         <mat-form-field class="width_10pourcent pl_1pourcent">
-            <input matInput type="text" name="nomSearch" placeholder="titre"
+            <input matInput type="text" name="nomSearch" [placeholder]="translate('ACTIVITES.FILTRES.TITRE')"
              [(ngModel)]="titreSearch">
         </mat-form-field>
         <mat-form-field class="width_10pourcent pl_1pourcent">
-            <input matInput type="text" name="villeSearch" placeholder="ville"
+            <input matInput type="text" name="villeSearch" [placeholder]="translate('ACTIVITES.FILTRES.VILLE')"
              [(ngModel)]="villeSearch" [matAutocomplete]="villescomplete">
         </mat-form-field>
         <mat-autocomplete #villescomplete="matAutocomplete">
@@ -14,10 +14,10 @@
             </mat-option>
         </mat-autocomplete>
         <mat-radio-group [(ngModel)]="typeSearch" name="typeSearch" *ngFor="let type of activite_types">
-            <mat-radio-button #radioButton [value]="type">{{ type }}</mat-radio-button>
+            <mat-radio-button #radioButton [value]="type">{{ translate('ACTIVITES.TYPE.'+type) }}</mat-radio-button>
         </mat-radio-group>
-        <button class="btn btn-light" (click)="actualiser()">Actualiser</button>
-        <button class="btn btn-light" (click)="effacerFiltres()">Effacer les filtres</button>
+        <button class="btn btn-light" (click)="actualiser()" translate>ACTIVITES.FILTRES.ACTUALISER</button>
+        <button class="btn btn-light" (click)="effacerFiltres()" translate>ACTIVITES.FILTRES.EFFACER_FILTRES</button>
     </div>
     <div class="wrapper">
         <div class="activites" *ngIf="!filtre">
@@ -34,7 +34,7 @@
                     }"
                     (click)="expandDescription(a.animationState, i)"></i>
                 <div class="details" fxLayout="column">
-                    <span><b>{{ a.ville }}</b></span>
+                    <span><b>{{ translate('ACTIVITES.TYPE.'+a.type)}} | {{ a.ville }}</b></span>
                     <span>{{ a.titre }}</span>
                     <span>{{ a.duree }}</span>
                 </div>
@@ -52,7 +52,7 @@
                 <i class='fas fa-angle-left arrow-left'
                     (click)="selectLeftArrow(i, a.indexImage, $event)"></i>
                 <div class="details" fxLayout="column">
-                    <span><b>{{ a.ville }}</b></span>
+                    <span><b>{{ translate('ACTIVITES.TYPE.'+a.type)}} | {{ a.ville }}</b></span>
                     <span>{{ a.titre }}</span>
                     <span>{{ a.duree }}</span>
                 </div>

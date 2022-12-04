@@ -11,6 +11,7 @@ import { EquipementsSecurite } from '../models/equipementsSecurite';
 import Swal from 'sweetalert2';
 import { InfoService } from '../services/info.service';
 import { ViewportScroller } from '@angular/common';
+import { TranslatorService } from '../services/translator.service';
 
 @Component({
   selector: 'app-mes-annonces',
@@ -34,7 +35,8 @@ export class MesAnnoncesComponent implements OnInit, OnDestroy {
     private logementService: LogementService,
     private userService: UserService,
     private infoService: InfoService,
-    private scroller: ViewportScroller
+    private scroller: ViewportScroller,
+    private translator: TranslatorService
   ) {
   }
   
@@ -66,7 +68,7 @@ export class MesAnnoncesComponent implements OnInit, OnDestroy {
           this.modifyLogement[indexLogement].logement = logement;
         },
         err => {
-          this.infoService.popupInfo(`Erreur au changement de l'image : ${err.error}`);
+          this.infoService.popupInfo(`${this.translate('MES_ANNONCES.ERROR_MODIFY_IMAGE')} ${err.error}`);
         }
       )
     }
@@ -100,7 +102,7 @@ export class MesAnnoncesComponent implements OnInit, OnDestroy {
   modifier(indexLogement: number){
     this.logementService.updateLogement(this.modifyLogement[indexLogement].logement).subscribe( (l: Logement) => {
       this.modifyLogement[indexLogement].logement = l;
-      this.infoService.popupInfo(`votre annonce pour l'adresse ${l.adresse} a bien été modifiée`)
+      this.infoService.popupInfo(`${this.translate('MES_ANNONCES.ANNONCE_MODIFIEE_1')} ${l.adresse} ${this.translate('MES_ANNONCES.ANNONCE_MODIFIEE_2')}`)
     })
     let addImage = false;
     for(let i = 1; i < 14; i++){
@@ -118,7 +120,7 @@ export class MesAnnoncesComponent implements OnInit, OnDestroy {
 
   supprimer(indexLogement: number){
     Swal.fire({
-      title: 'Supprimer votre annonce ?',
+      title: `${this.translate('MES_ANNONCES.SUPPRIMER_CONFIRM')}`,
       showCancelButton: true,
       confirmButtonText: 'Ok',
       cancelButtonText: 'No'
@@ -133,6 +135,10 @@ export class MesAnnoncesComponent implements OnInit, OnDestroy {
 
   navigaToAnnonce(adresse: string){
     this.scroller.scrollToAnchor(adresse);
+  }
+
+  translate(s: string): string {
+    return this.translator.get(s);
   }
   
   ngOnDestroy(): void {

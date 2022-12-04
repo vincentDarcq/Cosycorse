@@ -16,6 +16,7 @@ import Swal from 'sweetalert2';
 import { RouterExtService } from '../services/router-ext.service';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
+import { TranslatorService } from '../services/translator.service';
 
 @Component({
   selector: 'app-mon-compte',
@@ -40,13 +41,14 @@ export class MonCompteComponent implements OnInit, OnDestroy {
     private infoService: InfoService,
     private routerExt: RouterExtService,
     private router: Router,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private translator: TranslatorService
   ) { }
   
   async ngOnInit() {
     const previousUrl = this.routerExt.getPreviousUrl();
     if(previousUrl.startsWith('/stripe/redirect')){
-      this.infoService.popupInfo("Votre compte Stripe a bien été configuré");
+      this.infoService.popupInfo(`${this.translate('MON_COMPTE.POP_UP_STRIPE')}`);
     }
     if(sessionStorage.getItem("redirectUrl")){
       sessionStorage.removeItem("redirectUrl")
@@ -85,41 +87,39 @@ export class MonCompteComponent implements OnInit, OnDestroy {
   }
 
   acceptReservation(id: string, user: User){
-    Swal.fire({
-      title: `Accepter la reservation de ${user.prenom} ${user.nom} ?`,
-      showCancelButton: true,
-      confirmButtonText: 'Oui',
-      cancelButtonText: 'Non'
-    }).then((result) => {
+    this.infoService.confirmPopup(
+      `${this.translate('MON_COMPTE.ACCEPT_RESA')}${user.prenom} ${user.nom} ?`,
+      `${this.translate('MON_COMPTE.OUI')}`,
+      `${this.translate('MON_COMPTE.NON')}`
+    ).then((result) => {
       if (result.value) {        
         this.subLogementService = this.logementService.confirmLogementReservation(id).subscribe( 
           (rep: string) => {
             let index = this.mesReservations.findIndex(mr => mr.logementReservation._id === id);
             this.mesReservations[index].logementReservation.status = "acceptée";
-            this.infoService.popupInfo(rep);
+            this.infoService.popupInfo(this.translate(rep));
           }
         )
       }
-    });
+    })
   }
 
   rejectReservation(id: string, user: User){
-    Swal.fire({
-      title: `Refuser la reservation de ${user.prenom} ${user.nom} ?`,
-      showCancelButton: true,
-      confirmButtonText: 'Oui',
-      cancelButtonText: 'Non'
-    }).then((result) => {
+    this.infoService.confirmPopup(
+      `${this.translate('MON_COMPTE.REFUSE_RESA')}${user.prenom} ${user.nom} ?`,
+      `${this.translate('MON_COMPTE.OUI')}`,
+      `${this.translate('MON_COMPTE.NON')}`
+    ).then((result) => {
       if (result.value) {        
         this.subLogementService = this.logementService.rejectLogementReservation(id).subscribe(
           (rep: string) => {
             let index = this.mesReservations.findIndex(mr => mr.logementReservation._id === id);
             this.mesReservations[index].logementReservation.status = "refusée";
-            this.infoService.popupInfo(rep);
+            this.infoService.popupInfo(this.translate(rep));
           }
         )
       }
-    }); 
+    })
   }
 
   annulerVoyage(monCompteVoyage: MonCompteVoyage, index: number){
@@ -131,10 +131,10 @@ export class MonCompteComponent implements OnInit, OnDestroy {
         this.logementService.cancelLogementReservationVoyageur(monCompteVoyage, message).subscribe( 
           mess => {
             this.mesVoyages.splice(index, 1);
-            this.infoService.popupInfo(mess);
+            this.infoService.popupInfo(this.translate(mess));
           },
           err => {
-            this.infoService.popupInfo(err);
+            this.infoService.popupInfo(`${this.translate('CONTACT.ERROR')}${err}`);
           }
         )
       }
@@ -152,14 +152,14 @@ export class MonCompteComponent implements OnInit, OnDestroy {
           this.logementService.cancelLogementReservationHote(monCompteReservation, message).subscribe( 
             mess => {
               this.mesReservations.splice(index, 1);
-              this.infoService.popupInfo(mess);
+              this.infoService.popupInfo(this.translate(mess));
             },
             err => {
-              this.infoService.popupInfo(err.error);
+              this.infoService.popupInfo(`${this.translate('CONTACT.ERROR')}${this.translate(err)}`);
             }
           );
         }else {
-          this.infoService.popupInfo("Votre message était vide, l'annulation n'a pas abouti");
+          this.infoService.popupInfo(`${this.translate('MON_COMPTE.MESSAGE_ANNULATION_RESA_VIDE')}`);
         }
       }
     })
@@ -178,17 +178,17 @@ export class MonCompteComponent implements OnInit, OnDestroy {
   }
 
   cacherAnnonce(index: number, id: string){
-    const message = `Voulez ne voulez pas faire remonter votre annonce dans les résultats de recherche ? \n
-    En cliquant sur cacher, les voyageurs ne pourront plus réserver votre logement même en allant sur la page 
-    de votre logement. \n note: Pour supprimer votre annonce, rendez-vous dans la rubrique "mes annonces"`
-    this.infoService.confirmPopup(message, 'Cacher', 'Annuler')
+    const message = `${this.translate('MON_COMPTE.CACHER_ANNONCE_EXPLICATION')}`
+    this.infoService.confirmPopup(
+      message, 
+      `${this.translate('MON_COMPTE.CACHER')}`, 
+      `${this.translate('MON_COMPTE.ANNULER')}`)
       .then((result) => {
-        console.log(result.value)
         if (result.value) {        
           this.logementService.cacherLogementAnnonce(id).subscribe(
             () => {
               this.mesReservations[index].logement.exposer = false;
-              this.infoService.popupInfo("Votre annonce ne remontera plus dans les résultats de recherche");
+              this.infoService.popupInfo(`${this.translate('MON_COMPTE.AFTER_HIDE')}`);
             }
           )
         }
@@ -196,14 +196,17 @@ export class MonCompteComponent implements OnInit, OnDestroy {
   }
 
   exposerAnnonce(index: number, id: string){
-    const message = `Vous souhaitez ré-exposer votre annonce ?`
-    this.infoService.confirmPopup(message, 'Exposer', 'Annuler')
+    const message = `${this.translate('MON_COMPTE.REEXPOSER')}`
+    this.infoService.confirmPopup(
+      message, 
+      `${this.translate('MON_COMPTE.EXPOSER')}`, 
+      `${this.translate('MON_COMPTE.ANNULER')}`)
       .then((result) => {
         if (result.value) {        
           this.logementService.exposerLogementAnnonce(id).subscribe(
             () => {
               this.mesReservations[index].logement.exposer = true;
-              this.infoService.popupInfo("Votre annonce remontera à nouveau dans les résultats de recherche");
+              this.infoService.popupInfo(`${this.translate('MON_COMPTE.AFTER_EXPOSE')}`);
             }
           )
         }
@@ -211,7 +214,10 @@ export class MonCompteComponent implements OnInit, OnDestroy {
   }
 
   deleteAccount(){
-    this.infoService.confirmPopup('Etes vous sûr de vouloir supprimer votre compte ?', 'Oui', 'Non')
+    this.infoService.confirmPopup(
+      `${this.translate('MON_COMPTE.CONFIRM_DELETE_ACCOUNT')}`, 
+      `${this.translate('MON_COMPTE.OUI')}`, 
+      `${this.translate('MON_COMPTE.NON')}`)
       .then((result) => {
         if (result.value) {        
           this.userService.deleteAccount(this.user._id, this.user.email, this.user.stripeUserId).subscribe( 
@@ -220,11 +226,15 @@ export class MonCompteComponent implements OnInit, OnDestroy {
               this.router.navigate(['/']);
             },
             err => {
-              this.infoService.popupInfo(`${err.error}`)
+              this.infoService.popupInfo(`${this.translate('CONTACT.ERROR')}${this.translate(err)}`)
             }
           )
         }
       })
+  }
+
+  translate(s: string): string {
+    return this.translator.get(s);
   }
   
   ngOnDestroy(): void {

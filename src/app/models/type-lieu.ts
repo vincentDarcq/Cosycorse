@@ -1,9 +1,9 @@
 export const LieuxType = [
-    'Plage',
-    'Golfe',
-    'Calanques',
-    'Réserve Naturelle',
-    'Village classé',
-    'Grotte',
-    'Maison'
+    'PLAGE',
+    'GOLFE',
+    'CALANQUES',
+    'RESERVE_NATURELLE',
+    'VILLAGE_CLASS',
+    'GROTTE',
+    'MAISON'
 ]

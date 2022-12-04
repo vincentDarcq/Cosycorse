@@ -1,0 +1,265 @@
+{
+    "HEADER": {
+        "LOGEMENTS": "Logements",
+        "ACTIVITES": "Activités",
+        "LIEUX": "Lieux d'intérêt",
+        "CONTACT": "Contact",
+        "CONNEXION": "Connexion",
+        "DECONNEXION": "Deconnexion",
+        "CREER_LOGEMENT": "Ajouter une annonce",
+        "CREER_LIEU": "Créer un lieu à visiter",
+        "CREER_ACTIVITE": "Créer une activité",
+        "VOIR_ANNONCE": "Voir mes annonces",
+        "COMPTE": "Mon Compte"
+    },
+    "LOGEMENTS" : {
+        "TYPES": {
+            "APPARTEMENT": "Appartement",
+            "MAISON": "Maison",
+            "VILLA": "Villa",
+            "MAISON_HOTE": "Maison d'hôte",
+            "DEPENDANCE": "Dépendance",
+            "CHATEAU": "Château",
+            "MOBILE_HOME": "Mobile home"
+        },
+        "DETAILS": {
+            "FUMEUR": "Fumeur",
+            "NO_FUMEUR": "non fumeur",
+            "ANIMAUX": "Animaux",
+            "ANIMAUX_ACCEPTES": "Animaux acceptés",
+            "ANIMAUX_NON_ACCEPTES": "Animaux non acceptés",
+            "ACCES_HANDICAPE": "Accès handicapé",
+            "NO_ACCES_HANDICAPE": "Pas d'accès handicapé",
+            "PRIX_TOTAL": "Prix total",
+            "VIDER_DATES": "Vider les dates",
+            "CONTACT_HOTE": "Contacter l'hôte",
+            "RESERVER": "Réserver",
+            "INDISPONIBLE": "Les dates sélectionnées sont indisponibles pour ce logement"
+        },
+        "FILTRES": {
+            "ARRIVEE": "Arrivée",
+            "DEPART": "Départ",
+            "VILLE": "Ville",
+            "VOYAGEURS": "Voyageurs",
+            "LITS": "Lits",
+            "SDB": "Salles de bain",
+            "PRIX": "prix max/nuit",
+            "ACTUALISER" : "Actualiser",
+            "EQUIPEMENTS": "Equipements",
+            "EFFACER_FILTRES": "Effacer les filtres",
+            "INVALID_DATES": "Les dates sélectionnées sont invalides",
+            "UNAVAILABLE": "Vous ne pouvez pas faire de réservation pour ce logement",
+            "ARRIVEE_EQUAL_DEPART": "La date d'arrivée ne peut pas être la même que la date de départ"
+        },
+        "EQUIPEMENTS": {
+            "EQUIPEMENTS": "Equipements",
+            "PISCINE": "Piscine",
+            "JACUZZI": "Jacuzzi",
+            "BARBECUE": "Barbecue",
+            "CHEMINEE": "Cheminée",
+            "TV": "Télévision",
+            "APPAREILS_FITNESS": "Appareils de fitness",
+            "WIFI": "Wifi",
+            "LAVE_LINGE": "Lave linge",
+            "LAVE_VAISSELLE": "Lave vaisselle",
+            "CLIMATISATION": "Climatisation",
+            "PARKING_GRATUIT": "Parking gratuit",
+            "VOITURE": "Voiture",
+            "VELO": "Vélo",
+            "LINGE_MAISON": "Linge de Maison",
+            "SECHE_CHEVEUX": "Sèche cheveux",
+            "FER_REPASSER": "Fer à repasser",
+            "DETECTEUR_FUMEE": "Detecteur de fumée",
+            "KIT_SECOURS": "Kit de premier secours",
+            "DETECTEUR_MONOXYDE": "Détecteur de monoxyde de carbone",
+            "EXTINCTEUR": "Extincteur",
+            "MODIFIER": "Modifier les équipements",
+            "MODIFIER_SECURITE": "Modifier les équipements de sécurité"
+        },
+        "DATAS": {
+            "NUIT": "nuit",
+            "VOYAGEURS": "voyageurs",
+            "LITS": "lits",
+            "SDB": "salles de bain"
+        },
+        "FORM": {
+            "QUESTION_TYPE": "Quel type de logement proposez-vous ?",
+            "TYPE_OBLIGATOIRE": "Seléction obligatoire",
+            "VILLE_OBLIGATOIRE": "Ville obligatoire",
+            "SEARCH_LOCATION": "Chercher",
+            "MAUVAISE_ADRESSE": "Cette adresse n'est pas en corse",
+            "CLICK_TO_SEARCH": "Cliquez sur le bouton Chercher pour vérifier la bonne localisation",
+            "ADRESSE_OBLIGATOIRE": "Adresse obligatoire",
+            "QUESTION_VOYAGEURS": "Combien de voyageurs ?",
+            "NOMBRE_POSITIF": "Le nombre doit être > 0",
+            "QUESTION_LITS": "Combien de lits avez-vous ?",
+            "QUESTION_SDB": "Combien de salle de bain ?",
+            "QUESTION_EQUIPEMENTS": "Equipements de votre logement ?",
+            "PHOTOS": "Ajoutez/Deposez des photos",
+            "DESCRIPTION": "Décrivez plus amplement votre logement :",
+            "FUMEUR": "Fumeur autorisé",
+            "NON_FUMEUR": "Non fumeur",
+            "ANIMAUX": "Animaux autorisés",
+            "NO_ANIMAUX": "Animaux non autorisés",
+            "ACCES_HANDICAP": "accessibilité handicapé",
+            "NO_ACCES_HANDICAP": "accessibilité handicapé",
+            "PRIX": "Prix à la nuit ?",
+            "CREER": "Créer l'annonce",
+            "EXPOSER": "Exposer l'annonce",
+            "NO_EXPOSER": "Cacher l'annonce",
+            "MODIFIER": "Modifier",
+            "SUPPRIMER": "Supprimer",
+            "STRIPE_NOT_VALID": "Votre compte Stripe n'est pas configuré, vous ne pouvez pas créer d'annonce. \n Vous pouvez le faire en allant sur votre compte"
+        }
+    },
+    "LIEUX": {
+        "TYPE": {
+            "PLAGE": "Plage",
+            "GOLFE": "Golfe",
+            "CALANQUES": "Calanques",
+            "RESERVE_NATURELLE": "Réserve Naturelle",
+            "VILLAGE_CLASS": "Village classé",
+            "GROTTE": "Grotte",
+            "MAISON": "Maison"
+        },
+        "FILTRES": {
+            "NOM": "nom",
+            "VILLE": "ville",
+            "ACTUALISER": "Actualiser",
+            "EFFACER_FILTRES": "Effacer les filtres"
+        }
+    },
+    "ACTIVITES": {
+        "TYPE": {
+            "VISITE": "Visite",
+            "CIRCUIT": "Circuit",
+            "LOCATION": "Locations",
+            "ZOO": "Zoo",
+            "RANDONNEE": "Randonnée",
+            "CULINAIRE": "Culinaire",
+            "SPECTACLE": "Spectacle",
+            "ROAD_TRIP": "Road-trip"
+        },
+        "FILTRES": {
+            "TITRE": "titre",
+            "VILLE": "ville",
+            "ACTUALISER": "Actualiser",
+            "EFFACER_FILTRES": "Effacer les filtres"
+        }
+    },
+    "REPONSE_LOGEMENT_RESERVATION": {
+        "EMAIL_LOCATAIRE": "email du locataire :",
+        "STRIPE_TRANSFERT": "Si vous acceptez, le transfert sur votre compte Stripe sera effectué au début du voyage de votre locataire",
+        "ACCEPTER": "Accepter",
+        "REFUSER": "Refuser",
+        "DEMANDE_TRAITEE": "La demande de réservation a déjà été traitée",
+        "REPONSE_RESA_ACCEPTEE": "Un mail de confirmation a été envoyé au voyageur",
+        "NOT_ANNULABLE": "Une annulation n'est possible que 48h à l'avance, vous avez passé ce délais"
+    },
+    "RESET_PASS": {
+        "NEW_PASS": "Nouveau mot de passe",
+        "PASS_MANDATORY": "Le mot de passe doit être rempli",
+        "CONFIRM": "Confirmez le mot de passe",
+        "SUCCESS": "mot de passe modifié avec succès"
+    },
+    "STRIPE_REDIRECT": {
+        "TITRE_H3": "La configuration de votre compte est presque terminée"
+    },
+    "CONTACT": {
+        "MOTIF": "Motif",
+        "INFORMATION": "Information",
+        "PROBLEME_RESA": "Problème avec une réservation",
+        "PROBLEME_COMPTE": "Problème avec mon compte",
+        "NO_LIEU": "Un lieu ne figure pas dans la rubrique",
+        "NO_ACTIVITE": "Une activité ne figure pas dans la rubrique",
+        "AMELIORATION": "Suggestion d'amélioration",
+        "AUTRE": "Autre",
+        "MAIL_OBLIGATOIRE": "Email obligatoire",
+        "MESSAGE_OBLIGATOIRE": "Message obligatoire",
+        "ENVOYER": "Envoyer",
+        "ERROR": "Une erreur s'est produite : "
+    },
+    "LOGIN": {
+        "PASS": "Mot de place",
+        "LINK_CREATION": "Pas de compte ? créez un compte",
+        "MDP_OUBLIE": "Mot de passe oublié ?",
+        "CONNEXION": "Connexion"
+    },
+    "MES_ANNONCES": {
+        "LIST_ANNONCE": "Aller à une annonce",
+        "ERROR_MODIFY_IMAGE": "Erreur au changement de l'image : ",
+        "ANNONCE_MODIFIEE_1": "votre annonce pour l'adresse ",
+        "ANNONCE_MODIFIEE_2": " a bien été modifiée",
+        "SUPPRIMER_CONFIRM": "Supprimer votre annonce ?"
+    },
+    "MAIL": {
+        "SUCCESS": "mail envoyé avec succès",
+        "ERROR": "Une erreur s'est produite lors de l'envoi du mail : ",
+        "RESERVATION_REJETEE": "Un mail de refus a été envoyé au voyageur",
+        "DEMANDE_ENVOYEE_SUCCESS": "Demande envoyée avec succès",
+        "EMAIL_TO_YOUR_ADDRESS": "Un email a été envoyé à votre adresse",
+        "ANNULATION_TO_HOST": "Un mail d'annulation vient d'être envoyé à l'hôte",
+        "ANNULATION_TO_TRAVELER": "Un mail d'annulation vient d'être envoyé au voyageur"
+    },
+    "MON_COMPTE": {
+        "STRIPE_DESCRIPTION": "La réception de paiements lorsque vous proposez un logement se fait au travers d'un compte Stripe",
+        "NO_STRIPE_ACCOUNT": "Vous n'avez pas configuré votre compte",
+        "STRIPE_ACCOUNT": "Votre compte Stripe est correctement enregistré",
+        "STRIPE_CONFIGURE": "Configurer votre compte stripe",
+        "STRIPE_CONSULT": "Consulter votre compte stripe",
+        "DELETE_ACCOUNT": "Supprimer mon compte",
+        "CONFIRM_DELETE_ACCOUNT": "Etes vous sûr de vouloir supprimer votre compte ?",
+        "MES_VOYAGES": "Mes voyages",
+        "VOIR_ANNONCE": "Voir l'annonce",
+        "ANNULER": "Annuler",
+        "MES_RESERVATION": "Les reservations de mes voyageurs",
+        "VOYAGEUR": "Voyageur : ",
+        "ADRESSE": "Adresse : ",
+        "DATES": "Dates : ",
+        "PRIX": "Prix : ",
+        "POP_UP_STRIPE": "Votre compte Stripe a bien été configuré",
+        "ACCEPT_RESA": "Accepter la réservation de ",
+        "REFUSE_RESA": "Refuser la réservation de ",
+        "OUI": "Oui",
+        "NON": "Non",
+        "MESSAGE_ANNULATION_RESA_VIDE": "Votre message était vide, l'annulation n'a pas abouti",
+        "CACHER_ANNONCE_EXPLICATION": "Voulez ne voulez pas faire remonter votre annonce dans les résultats de recherche ? \n En cliquant sur cacher, les voyageurs ne pourront plus réserver votre logement même en allant sur la page de votre logement. \n note: Pour supprimer votre annonce, rendez-vous dans la rubrique 'mes annonces'",
+        "CACHER": "Cacher",
+        "EXPOSER": "Exposer",
+        "AFTER_HIDE": "Votre annonce ne remontera plus dans les résultats de recherche",
+        "REEXPOSER": "Vous souhaitez ré-exposer votre annonce ?",
+        "AFTER_EXPOSE": "Votre annonce remontera à nouveau dans les résultats de recherche"
+    },
+    "POPUP": {
+        "MESSAGE_VOYAGEUR": "Vous devez laisser un message au voyageur",
+        "NO_ANNULER": "Ne pas annuler",
+        "ANNULER": "Annuler",
+        "CONFIRM": "Confirmer l'annulation",
+        "ADRESSE_INVALIDE": "adresse invalide",
+        "MESSAGE_VIDE": "message vide",
+        "VOTRE_EMAIL": "Votre email",
+        "PRIX": "Prix : ",
+        "RESERVATION_DU": "Réservation du ",
+        "AU": " au ",
+        "FACULTATIF": "facultatif"
+    },
+    "AUTH": {
+        "NO_AUTHENTICATED": "Vous n'êtes pas authentifié",
+        "TOKEN_EXPIRED": "Token expiré",
+        "WRONG_TOKEN": "Le token de réservation n'est pas bon",
+        "NO_RESERVATION_TOKEN": "Pas de token de réservation",
+        "LIEN_EXPIRED": "Ce lien a expiré",
+        "SIGNIN_FAILED": "La connexion a échoué, les identifiants sont incorrectes",
+        "UNKNOW_MAIL": "Adresse email inconnue",
+        "EMAIL_EXIST": "Cet email est déjà enregistré",
+        "WRONG_OLD_PWD": "Ancien mot de passe invalide",
+        "ERR_CHGT_PWD": "Une erreur s'est produite lors du changement de mot de passe"
+    },
+    "USER": {
+        "NOM": "nom",
+        "PRENOM": "prenom",
+        "MDP": "mot de passe",
+        "CREER_COMPTE": "Créer mon compte",
+        "SUPPRIMER_COMPTE_IMPOSSIBLE": "Vous avez au moins un voyageur qui n'a pas encore commencé son voyage, vous ne pouvez supprimer votre compte que lorsque vous n'avez plus de réservations à venir."
+    }
+}

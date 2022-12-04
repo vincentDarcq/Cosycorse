@@ -3,14 +3,14 @@
         <mat-form-field class="input-date" appearance="outline">
             <mat-label>Dates</mat-label>
             <mat-date-range-input [rangePicker]="picker" [dateFilter]="filterDates">
-              <input matStartDate placeholder="Arrivée" [(ngModel)]="dateDebut">
-              <input matEndDate placeholder="Départ" [(ngModel)]="dateFin">
+              <input matStartDate [placeholder]="translate('LOGEMENTS.FILTRES.ARRIVEE')" [(ngModel)]="dateDebut">
+              <input matEndDate [placeholder]="translate('LOGEMENTS.FILTRES.DEPART')" [(ngModel)]="dateFin">
             </mat-date-range-input>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-date-range-picker #picker></mat-date-range-picker>
           </mat-form-field>
         <mat-form-field class="input-size">
-            <input matInput type="text" name="villeSearch" placeholder="ville"
+            <input matInput type="text" name="villeSearch" [placeholder]="translate('LOGEMENTS.FILTRES.VILLE')"
              [(ngModel)]="villeSearch" [matAutocomplete]="villescomplete">
         </mat-form-field>
         <mat-autocomplete #villescomplete="matAutocomplete">
@@ -19,30 +19,30 @@
             </mat-option>
         </mat-autocomplete>
         <mat-form-field class="input-size">
-            <input matInput type="number" name="nbVoyageurs" placeholder="voyageurs"
+            <input matInput type="number" name="nbVoyageurs" [placeholder]="translate('LOGEMENTS.FILTRES.VOYAGEURS')"
                 [(ngModel)]="nbVoyageurs">
         </mat-form-field>
         <mat-form-field class="input-size">
-            <input matInput type="number" name="nbVoyageurs" placeholder="lits" [(ngModel)]="nbLits">
+            <input matInput type="number" name="nbVoyageurs" [placeholder]="translate('LOGEMENTS.FILTRES.LITS')" [(ngModel)]="nbLits">
         </mat-form-field>
         <mat-form-field class="input-size">
-            <input matInput type="number" name="nbSdbs" placeholder="Salles de bain" [(ngModel)]="nbSdbs">
+            <input matInput type="number" name="nbSdbs" [placeholder]="translate('LOGEMENTS.FILTRES.SDB')" [(ngModel)]="nbSdbs">
         </mat-form-field>
         <mat-form-field class="input-size">
-            <input matInput type="number" name="prix" placeholder="prix max/nuit" [(ngModel)]="prix_max">
+            <input matInput type="number" name="prix" [placeholder]="translate('LOGEMENTS.FILTRES.PRIX')" [(ngModel)]="prix_max">
         </mat-form-field>
-        <button class="btn btn-light" (click)="actualiser()">Actualiser</button>
-        <button (click)="expandFilters()" class="btn btn-light">Equipements</button>
-        <button class="btn btn-light" (click)="effacerFiltres()">Effacer les filtres</button>
+        <button class="btn btn-light" (click)="actualiser()" translate>LOGEMENTS.FILTRES.ACTUALISER</button>
+        <button (click)="expandFilters()" class="btn btn-light" translate>LOGEMENTS.FILTRES.EQUIPEMENTS</button>
+        <button class="btn btn-light" (click)="effacerFiltres()" translate>LOGEMENTS.FILTRES.EFFACER_FILTRES</button>
     </div>
     <div [@slideInOut]="animationState">
         <mat-checkbox #checkbox *ngFor="let e of equipementsList" value="{{e.element}}"
             (change)="valueChange(e.element, $event)">
-            <span>{{e.element}}</span>
+            <span>{{translate('LOGEMENTS.EQUIPEMENTS.'+e.element)}}</span>
         </mat-checkbox>
         <mat-checkbox #checkbox *ngFor="let e of equipementsSecuriteList" value="{{e.element}}"
             (change)="valueChange(e.element, $event)">
-            <span>{{e.element}}</span>
+            <span>{{translate('LOGEMENTS.EQUIPEMENTS.'+e.element)}}</span>
         </mat-checkbox>
     </div>
     <div class="logements">
@@ -56,11 +56,11 @@
                 <i class='fas fa-angle-left arrow-left'
                     (click)="selectLeftArrow(logementsRandom, indexLogement, logement.indexImage, $event)"></i>
                 <div class="details" fxLayout="column">
-                    <span>{{ logement.logement }} | {{ logement.ville }}</span>
-                    <span>{{ logement.prix + (logement.prix*10/100) }}€/nuit</span>
-                    <span>{{ logement.voyageurs }} voyageurs</span>
-                    <span>{{ logement.lits }} lits</span>
-                    <span>{{ logement.sdbs }} salles de bain</span>
+                    <span>{{ translate('LOGEMENTS.TYPES.'+logement.logement) }} | {{ logement.ville }}</span>
+                    <span>{{ logement.prix + (logement.prix*10/100) }}€/{{ translate('LOGEMENTS.DATAS.NUIT') }}</span>
+                    <span>{{ logement.voyageurs }} {{ translate('LOGEMENTS.DATAS.VOYAGEURS') }}</span>
+                    <span>{{ logement.lits }} {{ translate('LOGEMENTS.DATAS.LITS') }}</span>
+                    <span>{{ logement.sdbs }} {{ translate('LOGEMENTS.DATAS.SDB') }}</span>
                 </div>
             </div>
         </div>
@@ -74,11 +74,11 @@
                 <i class='fas fa-angle-left arrow-left'
                     (click)="selectLeftArrow(logementsFiltres, indexLogement, logement.indexImage, $event)"></i>
                 <div class="details" fxLayout="column">
-                    <span>{{ logement.logement }} | {{ logement.ville }}</span>
-                    <span>{{ logement.prix + (logement.prix*10/100) }}€/nuit</span>
-                    <span>{{ logement.voyageurs }} voyageurs</span>
-                    <span>{{ logement.lits }} lits</span>
-                    <span>{{ logement.sdbs }} salles de bain</span>
+                    <span>{{ translate('LOGEMENTS.TYPES.'+logement.logement) }} | {{ logement.ville }}</span>
+                    <span>{{ logement.prix + (logement.prix*10/100) }}€/{{ translate('LOGEMENTS.DATAS.NUIT') }}</span>
+                    <span>{{ logement.voyageurs }} {{ translate('LOGEMENTS.DATAS.VOYAGEURS') }}</span>
+                    <span>{{ logement.lits }} {{ translate('LOGEMENTS.DATAS.LITS') }}</span>
+                    <span>{{ logement.sdbs }} {{ translate('LOGEMENTS.DATAS.SDB') }}</span>
                 </div>
             </div>
         </div>

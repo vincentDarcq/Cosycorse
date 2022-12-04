@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { Logement } from 'src/app/models/logement';
 import { User } from 'src/app/models/user.model';
 import { StripeService } from 'src/app/services/stripe.service';
+import { TranslatorService } from 'src/app/services/translator.service';
 import { UserService } from 'src/app/services/user.service';
 import { LogementReservation } from '../../models/logementReservation';
 declare let Stripe: any;
@@ -31,7 +32,8 @@ export class PopupReservationLogementComponent implements OnInit, AfterViewInit,
     @Inject(MAT_DIALOG_DATA) public datas: {logementReservation: LogementReservation, logement: Logement},
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private stripeService: StripeService
+    private stripeService: StripeService,
+    private translator: TranslatorService
   ) { }
 
   ngOnInit(): void {
@@ -90,6 +92,10 @@ export class PopupReservationLogementComponent implements OnInit, AfterViewInit,
       logementReservation: this.datas.logementReservation,
       form: this.form.value
     });
+  }
+
+  translate(s: string): string {
+    return this.translator.get(s);
   }
 
   ngOnDestroy(): void {

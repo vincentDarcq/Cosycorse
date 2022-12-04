@@ -1,24 +1,24 @@
 <form [formGroup]="form" (ngSubmit)="submit()">
   <div mat-dialog-content fxLayout="column">
     <mat-form-field appearance="fill">
-      <mat-label>Votre email *</mat-label>
-      <input matInput formControlName="from">
+      <mat-label>{{ translate('POPUP.VOTRE_EMAIL') }}</mat-label>
+      <input matInput require formControlName="from">
       <div class="control" 
-      *ngIf="form.get('from')!.invalid && (form.get('from')!.dirty || form.get('from')!.touched)">
-        adresse invalide.
+      *ngIf="form.get('from')!.invalid && (form.get('from')!.dirty || form.get('from')!.touched)" translate>
+        POPUP.ADRESSE_INVALIDE
       </div>
     </mat-form-field>
     <mat-form-field appearance="fill">
-      <mat-label>Message *</mat-label>
-      <textarea matInput formControlName="message" rows="4"></textarea>
+      <mat-label>Message</mat-label>
+      <textarea matInput formControlName="message" require rows="4"></textarea>
       <div class="control" 
-        *ngIf="form.get('message')!.invalid">
-        message vide
+        *ngIf="form.get('message')!.invalid && (form.get('message')!.dirty || form.get('message')!.touched)">
+        POPUP.MESSAGE_VIDE
       </div>
     </mat-form-field>
   </div>
   <div mat-dialog-actions>
-    <button mat-button (click)="cancel()" type="button">Annuler</button>
+    <button mat-button (click)="cancel()" type="button">{{ translate('POPUP.ANNULER') }}</button>
     <button mat-button [disabled]="form.invalid" type="submit" cdkFocusInitial>Ok</button>
   </div>
 </form>

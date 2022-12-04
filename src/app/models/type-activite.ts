@@ -1,10 +1,10 @@
 export const ActivitesType = [
-    'Visite',
-    'Circuit',
-    'Locations',
-    'Zoo',
-    'Randonnée',
-    'Culinaire',
-    'Spectacle',
-    'Road-trip'
+    'VISITE',
+    'CIRCUIT',
+    'LOCATION',
+    'ZOO',
+    'RANDONNEE',
+    'CULINAIRE',
+    'SPECTACLE',
+    'ROAD_TRIP'
 ]

@@ -1,13 +1,13 @@
 <div class="component" *ngIf="logement && logementReservation">
     <div class="margin">
         <p>{{ logement.adresse }}</p>
-        <p>email du locataire : {{ logementReservation.emailDemandeur }}</p>
+        <p translate>{{ translate('REPONSE_LOGEMENT_RESERVATION.EMAIL_LOCATAIRE')}}{{ logementReservation.emailDemandeur }}</p>
         <p>{{ logementReservation.dateDebut }} - {{ logementReservation.dateFin }}</p>
         <p>{{ logementReservation.prix * 100/110 }}€</p>
-        <p>Si vous acceptez, le transfert sur votre compte Stripe sera effectué au début du voyage de votre locataire</p>
+        <p translate>REPONSE_LOGEMENT_RESERVATION.STRIPE_TRANSFERT</p>
         <div fxLayout="row" fxLayoutGap="50px" class="buttons">
-            <button (click)="accept()" class="btn btn-success">Accepter</button>
-            <button (click)="refuse()" class="btn btn-danger">Refuser</button>
+            <button (click)="accept()" class="btn btn-success" translate>REPONSE_LOGEMENT_RESERVATION.ACCEPTER</button>
+            <button (click)="refuse()" class="btn btn-danger" translate>REPONSE_LOGEMENT_RESERVATION.REFUSER</button>
         </div>
     </div>
 </div>

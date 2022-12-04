@@ -9,16 +9,17 @@
         class="ngx-gallery"></ngx-gallery>
       <div class="commodites" fxLayout="column" fxLayoutGap="10px">
         <div fxLayout="row" fxLayoutGap="10px">
-          <span>pour {{ logement.voyageurs }} voyageurs max</span>
-          <span>{{ logement.lits }} lits</span>
-          <span>{{ logement.sdbs }} salles de bain</span>
+          <span>{{ logement.voyageurs }} {{translate('LOGEMENTS.FILTRES.VOYAGEURS')}} max</span>
+          <span>{{ logement.lits }} {{translate('LOGEMENTS.FILTRES.LITS')}}</span>
+          <span>{{ logement.sdbs }} {{translate('LOGEMENTS.FILTRES.SDB')}}</span>
         </div>
         <div fxLayout="row" fxLayoutGap="10px">
-          <span *ngIf="logement.fumeur">fumeur</span>
-          <span *ngIf="!logement.fumeur">non fumeur</span>
-          <span *ngIf="logement.animaux">animaux acceptés</span>
-          <span *ngIf="!logement.animaux">animaux non acceptés</span>
-          <span *ngIf="logement.access_handicap">accès handicapé</span>
+          <span *ngIf="logement.fumeur" translate>LOGEMENTS.DETAILS.FUMEUR</span>
+          <span *ngIf="!logement.fumeur" translate>LOGEMENTS.DETAILS.NO_FUMEUR</span>
+          <span *ngIf="logement.animaux" translate>LOGEMENTS.DETAILS.ANIMAUX_ACCEPTES</span>
+          <span *ngIf="!logement.animaux" translate>LOGEMENTS.DETAILS.ANIMAUX_NON_ACCEPTES</span>
+          <span *ngIf="logement.access_handicap" translate>LOGEMENTS.DETAILS.ACCES_HANDICAPE</span>
+          <span *ngIf="!logement.access_handicap" translate>LOGEMENTS.DETAILS.NO_ACCES_HANDICAPE</span>
         </div>
       </div>
     </div>
@@ -26,24 +27,24 @@
       <mat-form-field class="custom-filter-field" appearance="outline">
         <mat-label>Dates</mat-label>
         <mat-date-range-input [rangePicker]="picker" [dateFilter]="filterDates" [max]="maxDate">
-          <input matStartDate placeholder="Arrivée" (dateChange)="startDateChanged($event)" [(ngModel)]="dateDebut">
-          <input matEndDate placeholder="Départ" (dateChange)="endDateChanged()" [(ngModel)]="dateFin">
+          <input matStartDate [placeholder]="translate('LOGEMENTS.FILTRES.ARRIVEE')" (dateChange)="startDateChanged($event)" [(ngModel)]="dateDebut">
+          <input matEndDate [placeholder]="translate('LOGEMENTS.FILTRES.DEPART')" (dateChange)="endDateChanged()" [(ngModel)]="dateFin">
         </mat-date-range-input>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-date-range-picker #picker></mat-date-range-picker>
       </mat-form-field>
-      <p class="prix_nuit">{{ logement.prix + (logement.prix * 10/100) }}€/nuit</p>
-      <p class="prix_nuit" *ngIf="prixTotal">Prix total : {{ prixTotal }}€</p>
-      <button type="button" class="btn btn-info" (click)="clearSelection()">Vider les dates</button>
-      <button type="button" class="btn btn-primary" (click)="openFormContact()">Contacter l'hôte</button>
-      <button type="button" class="btn btn-success" (click)="schedule()">Réserver</button>
+      <p class="prix_nuit">{{ logement.prix + (logement.prix * 10/100) }}€/{{ translate('LOGEMENTS.DATAS.NUIT') }}</p>
+      <p class="prix_nuit" *ngIf="prixTotal">{{translate('LOGEMENTS.DETAILS.PRIX_TOTAL')}} : {{ prixTotal }}€</p>
+      <button type="button" class="btn btn-info" (click)="clearSelection()" translate>LOGEMENTS.DETAILS.VIDER_DATES</button>
+      <button type="button" class="btn btn-primary" (click)="openFormContact()" translate>LOGEMENTS.DETAILS.CONTACT_HOTE</button>
+      <button type="button" class="btn btn-success" (click)="schedule()" translate>LOGEMENTS.DETAILS.RESERVER</button>
     </div>
   </div>
   <div class="equipements" fxLayoutGap="10px">
-    <span class="equipement_titre">Equipements : </span>
+    <span class="equipement_titre" translate>LOGEMENTS.EQUIPEMENTS.EQUIPEMENTS</span>
     <span *ngFor="let equipement of equipements">
       <i [ngClass]="equipement.logo"></i>
-      {{ equipement.element }}
+      {{ translate('LOGEMENTS.EQUIPEMENTS.'+equipement.element) }}
     </span>
   </div>
 </div>
