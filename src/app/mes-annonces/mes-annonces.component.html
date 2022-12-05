@@ -82,20 +82,20 @@
                 </div>
                 <div fxLayout="row" fxLayoutGap="10px" class="details">
                     <mat-radio-group [(ngModel)]="l.logement.fumeur" fxLayoutGap="3%">
-                        <mat-radio-button [value]="true" translate>LOGEMENTS.FORM.FUMEUR</mat-radio-button>
-                        <mat-radio-button [value]="false" translate>LOGEMENTS.FORM.NON_FUMEUR</mat-radio-button>
+                        <mat-radio-button [value]="true">{{ translate('LOGEMENTS.FORM.FUMEUR') }}</mat-radio-button>
+                        <mat-radio-button [value]="false">{{ translate('LOGEMENTS.FORM.NON_FUMEUR') }}</mat-radio-button>
                     </mat-radio-group>
                     <mat-radio-group [(ngModel)]="l.logement.animaux" fxLayoutGap="3%">
-                        <mat-radio-button [value]="true" translate>LOGEMENTS.FORM.ANIMAUX</mat-radio-button>
-                        <mat-radio-button [value]="false" translate>LOGEMENTS.FORM.NO_ANIMAUX</mat-radio-button>
+                        <mat-radio-button [value]="true">{{ translate('LOGEMENTS.FORM.ANIMAUX') }}</mat-radio-button>
+                        <mat-radio-button [value]="false">{{ translate('LOGEMENTS.FORM.NO_ANIMAUX') }}</mat-radio-button>
                     </mat-radio-group>
                     <mat-radio-group [(ngModel)]="l.logement.access_handicap" fxLayoutGap="3%">
-                        <mat-radio-button [value]="true" translate>LOGEMENTS.FORM.ACCES_HANDICAP</mat-radio-button>
-                        <mat-radio-button [value]="false" translate>LOGEMENTS.FORM.NO_ACCES_HANDICAP</mat-radio-button>
+                        <mat-radio-button [value]="true">{{ translate('LOGEMENTS.FORM.ACCES_HANDICAP') }}</mat-radio-button>
+                        <mat-radio-button [value]="false">{{ translate('LOGEMENTS.FORM.NO_ACCES_HANDICAP') }}</mat-radio-button>
                     </mat-radio-group>
                     <mat-radio-group [(ngModel)]="l.logement.exposer" fxLayoutGap="3%">
-                        <mat-radio-button [value]="true" translate>LOGEMENTS.FORM.EXPOSER</mat-radio-button>
-                        <mat-radio-button [value]="false" translate>LOGEMENTS.FORM.NO_EXPOSER</mat-radio-button>
+                        <mat-radio-button [value]="true">{{ translate('LOGEMENTS.FORM.EXPOSER') }}</mat-radio-button>
+                        <mat-radio-button [value]="false">{{ translate('LOGEMENTS.FORM.NO_EXPOSER') }}</mat-radio-button>
                     </mat-radio-group>
                 </div>
             </div>

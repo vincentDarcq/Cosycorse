@@ -1,5 +1,9 @@
 .header {
-    border-bottom: solid 1px gray; 
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background-color: white;
+    border-bottom: solid 1px gray;
 }
 
 .img{
@@ -42,7 +46,7 @@ button{
     padding: 10px;
     position: absolute;
     background: white;
-    height: 45%;
+    height: fit-content;
     width: 10%;
     top: 5px;
     right: 15px;
