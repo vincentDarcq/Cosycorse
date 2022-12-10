@@ -14,14 +14,14 @@
     width: 100px;
 }
 
-.logements {
+.wrapper {
     display: flex; 
     flex-flow: row wrap;
 }
-.propositions::-webkit-scrollbar{
+.logements::-webkit-scrollbar{
     display: none;
 }
-.propositions {
+.logements {
     flex: 1 1 70%;
     display: flex;
     flex-direction: row;

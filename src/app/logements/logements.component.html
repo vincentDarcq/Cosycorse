@@ -45,8 +45,8 @@
             <span>{{translate('LOGEMENTS.EQUIPEMENTS.'+e.element)}}</span>
         </mat-checkbox>
     </div>
-    <div class="logements">
-        <div class="propositions" *ngIf="logementsFiltres.length === 0">
+    <div class="wrapper">
+        <div class="logements" *ngIf="logementsFiltres.length === 0">
             <div class="m_2pourcent box" *ngFor="let logement of logementsRandom; let indexLogement = index"
                 (click)="openLogementInNewWindow(logement._id)">
                 <img *ngIf="logement && logement.images" [src]="serverImg + logement.images[logement.indexImage]"
