@@ -19,52 +19,9 @@
         <button class="btn btn-light" (click)="actualiser()" translate>LIEUX.FILTRES.ACTUALISER</button>
         <button class="btn btn-light" (click)="effacerFiltres()" translate>LIEUX.FILTRES.EFFACER_FILTRES</button>
     </div>
-    <div class="grid">
-        <div class="lieux" *ngIf="!filtre">
-            <div class="margin relative" *ngFor="let lieu of lieux; let indexLieu = index">
-                <img *ngIf="lieu && lieu.images" [src]="serverImg + lieu.images[lieu.indexImage]"
-                        alt="">
-                <p>{{ lieu.nom }}</p>
-                <i class='fas fa-angle-right arrow-right'
-                    (click)="selectArrow(lieux, indexLieu, lieu.indexImage, $event)"></i>
-                <i class='fas fa-angle-left arrow-left'
-                    (click)="selectLeftArrow(lieux, indexLieu, lieu.indexImage, $event)"></i>
-                <i class="fas arrow" [ngClass]="{ 
-                    'fa-angle-down' : lieu.animationState === 'false',
-                    'fa-angle-up' : lieu.animationState === 'true'
-                  }"
-                    (click)="expandDescription(lieu.animationState, indexLieu)"></i>
-                <div *ngIf="indexLieu%3 === 0" [@slideInOut]="{ value: lieu.animationState, params: { leftValue: 0}}">
-                    {{ lieu.description }}
-                </div>
-                <div *ngIf="indexLieu%3 === 1" [@slideInOut]="{ value: lieu.animationState, params: { leftValue: -100}}">
-                    {{ lieu.description }}
-                </div>
-                <div *ngIf="indexLieu%3 === 2" [@slideInOut]="{ value: lieu.animationState, params: { leftValue: -200}}">
-                    {{ lieu.description }}
-                </div>
-            </div>
-        </div>
-        <div class="lieux" *ngIf="filtre">
-            <div class="margin" *ngFor="let lieu of lieuxFiltered; let indexLieu = index">
-                <img *ngIf="lieu && lieu.images" [src]="serverImg + lieu.images[lieu.indexImage]"
-                        alt="">
-                <p>{{ lieu.nom }}</p>
-                <i class='fas fa-angle-right arrow-right'
-                    (click)="selectArrow(lieux, indexLieu, lieu.indexImage, $event)"></i>
-                <i class='fas fa-angle-left arrow-left'
-                    (click)="selectLeftArrow(lieux, indexLieu, lieu.indexImage, $event)"></i>
-                <div *ngIf="indexLieu%3 === 0" [@slideInOut]="{ value: lieu.animationState, params: { leftValue: 0}}">
-                    {{ lieu.description }}
-                </div>
-                <div *ngIf="indexLieu%3 === 1" [@slideInOut]="{ value: lieu.animationState, params: { leftValue: -100}}">
-                    {{ lieu.description }}
-                </div>
-                <div *ngIf="indexLieu%3 === 2" [@slideInOut]="{ value: lieu.animationState, params: { leftValue: -200}}">
-                    {{ lieu.description }}
-                </div>
-            </div>
-        </div>
+    <div class="wrapper">
+        <app-item-card class="lieux" *ngIf="!filtre" [items]="lieux"></app-item-card>
+        <app-item-card class="lieux" *ngIf="filtre" [items]="lieux"></app-item-card>
         <div id="map" leaflet *ngIf="displayMap" (leafletMapReady)="onMapReady($event)" [leafletOptions]="mapOptions">
         </div>
     </div>

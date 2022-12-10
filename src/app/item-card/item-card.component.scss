@@ -1,0 +1,43 @@
+.box {
+    border: 1px solid rgba(149, 149, 149, 0.98);
+    cursor: pointer;
+}
+
+.fas {
+    width: 0;
+    height: 0;
+    font-size: 36px;
+    cursor: pointer;
+    opacity: 1;
+    -webkit-text-fill-color: white;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: black;
+}
+
+.arrow-right {
+    position: relative;
+    left: -10%;
+}
+
+.arrow-left {
+    position: relative;
+    left: -100%;
+}
+
+.arrow {
+    position: relative;
+    left: -50%;
+    bottom: -80px;
+}
+
+.arrow-left:hover,
+.arrow-right:hover,
+.arrow-down:hover,
+.arrow-up:hover {
+    opacity: .4;
+}
+
+.details {
+    text-align: center;
+    width: 300px;
+}

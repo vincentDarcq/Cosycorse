@@ -11,14 +11,14 @@ import { UserService } from '../services/user.service';
 import { Subscription } from 'rxjs';
 import { User } from '../models/user.model';
 import { mapSquare } from '../models/mapSquare';
-import { SlideInOutAnimation } from '../animations/lieuDescriptionInOut';
+import { LieuInOutAnimation } from '../animations/lieuDescriptionInOut';
 import { TranslatorService } from '../services/translator.service';
 
 @Component({
   selector: 'app-lieux',
   templateUrl: './lieux.component.html',
   styleUrls: ['./lieux.component.scss'],
-  animations: [SlideInOutAnimation]
+  animations: [LieuInOutAnimation]
 })
 export class LieuxComponent implements OnInit, OnDestroy {
 

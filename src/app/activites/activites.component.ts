@@ -3,7 +3,7 @@ import { MatRadioButton } from '@angular/material/radio';
 import { Router } from '@angular/router';
 import { LatLngBounds, Layer, Map, MapOptions, marker } from 'leaflet';
 import { Subscription } from 'rxjs';
-import { SlideInOutAnimation } from '../animations/activiteDescriptionInOut';
+import { ActiviteInOutAnimation } from '../animations/activiteDescriptionInOut';
 import { Activite } from '../models/activite';
 import { mapSquare } from '../models/mapSquare';
 import { ActivitesType } from '../models/type-activite';
@@ -18,7 +18,7 @@ import { UserService } from '../services/user.service';
   selector: 'app-activites',
   templateUrl: './activites.component.html',
   styleUrls: ['./activites.component.scss'],
-  animations: [SlideInOutAnimation]
+  animations: [ActiviteInOutAnimation]
 })
 export class ActivitesComponent implements OnInit, OnDestroy {
 

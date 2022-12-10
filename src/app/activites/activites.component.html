@@ -20,44 +20,8 @@
         <button class="btn btn-light" (click)="effacerFiltres()" translate>ACTIVITES.FILTRES.EFFACER_FILTRES</button>
     </div>
     <div class="wrapper">
-        <div class="activites" *ngIf="!filtre">
-            <div class="m_2pourcent box" *ngFor="let a of activites; let i = index">
-                <img *ngIf="a && a.images" [src]="serverImg + a.images[a.indexImage]"
-                    alt="">
-                <i class='fas fa-angle-right arrow-right'
-                    (click)="selectArrow(i, a.indexImage, $event)"></i>
-                <i class='fas fa-angle-left arrow-left'
-                    (click)="selectLeftArrow(i, a.indexImage, $event)"></i>
-                <i class="fas arrow" [ngClass]="{ 
-                    'fa-angle-down' : a.animationState === 'false',
-                    'fa-angle-up' : a.animationState === 'true'
-                    }"
-                    (click)="expandDescription(a.animationState, i)"></i>
-                <div class="details" fxLayout="column">
-                    <span><b>{{ translate('ACTIVITES.TYPE.'+a.type)}} | {{ a.ville }}</b></span>
-                    <span>{{ a.titre }}</span>
-                    <span>{{ a.duree }}</span>
-                </div>
-                <div [@slideInOut]="a.animationState">
-                    {{ a.description }}
-                </div>
-            </div>
-        </div>
-        <div class="activites" *ngIf="filtre">
-            <div class="m_2pourcent box" *ngFor="let a of activitesFiltered; let i = index">
-                <img *ngIf="a && a.images" [src]="serverImg + a.images[a.indexImage]"
-                    alt="">
-                <i class='fas fa-angle-right arrow-right'
-                    (click)="selectArrow(i, a.indexImage, $event)"></i>
-                <i class='fas fa-angle-left arrow-left'
-                    (click)="selectLeftArrow(i, a.indexImage, $event)"></i>
-                <div class="details" fxLayout="column">
-                    <span><b>{{ translate('ACTIVITES.TYPE.'+a.type)}} | {{ a.ville }}</b></span>
-                    <span>{{ a.titre }}</span>
-                    <span>{{ a.duree }}</span>
-                </div>
-            </div>
-        </div>
+        <app-item-card class="activites" *ngIf="!filtre" [items]="activites"></app-item-card>
+        <app-item-card class="activites" *ngIf="filtre" [items]="activitesFiltered"></app-item-card>
         <div id="map" leaflet *ngIf="displayMap" (leafletMapReady)="onMapReady($event)" [leafletOptions]="mapOptions">
         </div>
     </div>
