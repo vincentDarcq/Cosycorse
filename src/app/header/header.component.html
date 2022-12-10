@@ -13,15 +13,15 @@
     <div class="p-1 m-3 link" routerLink="/contact">
         <i class="fas fa-envelope fa-2x"></i><button translate>HEADER.CONTACT</button>
     </div>
-    <mat-form-field class="p-1 m-2">
-        <mat-select name="langue" id="langue" [placeholder]="getLang()">
-            <mat-option value="english"><button (click)="setLang('English')" class="btn_lang"><img
-                src="assets/img/drapeau_en.png">  English</button></mat-option>
-            <mat-option value="français"><button (click)="setLang('Français')" class="btn_lang"><img
-                  src="assets/img/drapeau_fr.png">  Français</button>
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
+    <div class="p-1 m-3 link">
+        <select name="langue" id="langue" #l (change)="setLang(l.value)">
+            <option value="" disabled selected>{{getLang()}}</option>
+            <option value="English"><img
+                src="assets/img/drapeau_en.png">  English</option>
+            <option value="Français"><img
+                src="assets/img/drapeau_fr.png">  Français</option>
+        </select>
+    </div>
     <div class="ms-auto p-1 m-3 link" *ngIf="!isAuthenticated" routerLink="/connexion">
         <i class="fas fa-user fa-2x"></i><button translate>HEADER.CONNEXION</button>
     </div>
