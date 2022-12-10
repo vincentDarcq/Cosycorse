@@ -44,6 +44,8 @@ import { EditLieuComponent } from './edit-lieu/edit-lieu.component';
 import { ActiviteFormComponent } from './activite-form/activite-form.component';
 import { EditActiviteComponent } from './edit-activite/edit-activite.component';
 import { ContactComponent } from './contact/contact.component';
+import { CarouselComponent } from './carousel/carousel.component';
+import { ItemCardComponent } from './item-card/item-card.component';
 
 export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -76,7 +78,9 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
     EditLieuComponent,
     ActiviteFormComponent,
     EditActiviteComponent,
-    ContactComponent
+    ContactComponent,
+    CarouselComponent,
+    ItemCardComponent
   ],
   imports: [
     BrowserModule,

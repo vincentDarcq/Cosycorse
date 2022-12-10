@@ -1,100 +1,69 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { trigger, style, animate, transition, state } from '@angular/animations';
 import { LogementService } from '../services/logement.service';
-import { UserService } from '../services/user.service';
+import { ActiviteService } from '../services/activite.service';
+import { Activite } from '../models/activite';
+import { Subscription } from 'rxjs';
+import { Lieu } from '../models/lieu';
+import { LieuService } from '../services/lieu.service';
+import { Section } from '../models/sections';
 
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.scss'],
-  animations: [
-    trigger("fade", [
-      transition("false=>true", [
-        style({ opacity: 1 }),
-        animate("2500ms", style({ opacity: 1 }))
-      ]),
-      transition("true=>false", [
-        style({ opacity: 1 }),
-        animate("1500ms", style({ opacity: 0.7 }))
-      ])
-    ])
-  ]
+  animations: [ ]
 })
-export class MainPageComponent implements OnInit {
+export class MainPageComponent implements OnInit, OnDestroy {
+
+  activites: Array<Activite>;
+  lieux: Array<Lieu>;
+  subActivites: Subscription;
+  subLieux: Subscription;
+  sectionsActivites: Array<Section>;
+  sectionsLieux: Array<Section>;
 
   constructor(
     private logementService: LogementService,
+    private activiteService: ActiviteService,
+    private lieuService: LieuService
   ) {
-
+    this.activites = new Array();
+    this.lieux = new Array();
+    this.sectionsActivites = new Array();
+    this.sectionsLieux = new Array();
   }
+  
   ngOnInit(): void {
     this.logementService.getRecentsLogement();
+    this.subActivites = this.activiteService.fetchActivites().subscribe((activites: Array<Activite>) => {
+      this.activites = activites;
+      this.activites.forEach(a => {
+        a.indexImage = 0;
+        a.animationState = "false";
+      });
+      for(let i = 0; i < this.activites.length; i+= 4){
+        const section = new Section([this.activites[i], this.activites[i+1], this.activites[i+2], this.activites[i+3]]);
+        this.sectionsActivites.push(section);
+      }
+    });
+    this.subLieux = this.lieuService.fetchLieux().subscribe((lieux: Array<Lieu>) => {
+      this.lieux = lieux;
+      this.lieux.forEach(l => {
+        l.indexImage = 0;
+        l.animationState = "false";
+      });
+      for(let i = 0; i < this.lieux.length; i+= 4){
+        const section = new Section([this.lieux[i], this.lieux[i+1], this.lieux[i+2], this.lieux[i+3]]);
+        this.sectionsLieux.push(section);
+      }
+    })
   }
 
-  imageArray1 = [
-    "../../assets/cosycorseimage01.png",
-    "../../assets/cosycorseimage02.png"
-  ];
 
-  imageArray2 = [
-    "../../assets/cosycorseimage03.png",
-    "../../assets/cosycorseimage04.png"
-  ];
-
-  imageArray3 = [
-    "../../assets/cosycorseimage05.png",
-    "../../assets/cosycorseimage06.png"
-  ];
-
-  imageArray4 = [
-    "../../assets/cosycorseimage07.png",
-    "../../assets/cosycorseimage08.png"
-  ];
-
-  imageArray5 = [
-    "../../assets/cosycorseimage09.png",
-    "../../assets/cosycorseimage10.png"
-  ];
-
-  imageArray6 = [
-    "../../assets/cosycorseimage11.png",
-    "../../assets/cosycorseimage12.png"
-  ];
-
-  imageArray7 = [
-    "../../assets/cosycorseimage13.png",
-    "../../assets/cosycorseimage14.png"
-  ];
-
-  imageArray8 = [
-    "../../assets/cosycorseimage15.png",
-    "../../assets/cosycorseimage16.png"
-  ];
-
-  imageArray9 = [
-    "../../assets/cosycorseimage17.png",
-    "../../assets/cosycorseimage18.png"
-  ];
-
-  imageArray10 = [
-    "../../assets/cosycorseimage19.png",
-    "../../assets/cosycorseimage20.png"
-  ];
-
-  imageArray11 = [
-    "../../assets/cosycorseimage21.png",
-    "../../assets/cosycorseimage22.png"
-  ];
-
-  toogle = false;
-  count: number = 0;
-
-  toogle2 = true;
-  count2: number = 0;
-  onFade(event: any) {
-    if (event.fromState)
-      this.count = (this.count + 1) % 2;
-    this.toogle = !this.toogle;
+  ngOnDestroy(): void {
+    if(this.subActivites){this.subActivites.unsubscribe();}
+    if(this.subLieux){this.subLieux.unsubscribe();}
   }
 
 }

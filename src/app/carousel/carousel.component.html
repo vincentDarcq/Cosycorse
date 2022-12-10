@@ -1,0 +1,11 @@
+ <div class="wrapper">
+    <section *ngFor="let section of sections; let i = index" attr.id="{{i}}">
+        <a href="#{{i === 0 ? sections.length-1 : i-1}}">‹</a>
+        <div class="item" *ngFor="let item of section.items">
+            <p>{{ item.ville }}</p>
+            <span>{{ item.titre ?  item.titre : item.nom}}</span>
+            <img *ngIf="item && item.images" [src]="serverImg + item.images[item.indexImage]" alt="">
+        </div>
+        <a href="#{{i === sections.length-1 ? 0 : i+1}}">›</a>
+    </section>
+</div>
