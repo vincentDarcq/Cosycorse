@@ -12,7 +12,7 @@
       <mat-label>Message</mat-label>
       <textarea matInput formControlName="message" require rows="4"></textarea>
       <div class="control" 
-        *ngIf="form.get('message')!.invalid && (form.get('message')!.dirty || form.get('message')!.touched)">
+        *ngIf="form.get('message')!.invalid && (form.get('message')!.dirty || form.get('message')!.touched)" translate>
         POPUP.MESSAGE_VIDE
       </div>
     </mat-form-field>
