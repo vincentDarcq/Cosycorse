@@ -24,7 +24,6 @@ export class LieuxComponent implements OnInit, OnDestroy {
 
   villes = Villes;
   displayMap: boolean = false;
-  filtre: boolean = false;
   mapOptions!: MapOptions;
   map!: Map;
   lieux!: Array<Lieu>;
@@ -155,10 +154,12 @@ export class LieuxComponent implements OnInit, OnDestroy {
       this.bounds
     ).subscribe((lieux: Array<Lieu>) => {
       this.lieuxFiltered = lieux;
-      this.lieuxFiltered.forEach(l => l.indexImage = 0);
+      this.lieuxFiltered.forEach(l => {
+        l.indexImage = 0;
+        l.animationState = "false";
+      });
       this.layers.forEach(l => this.map.removeLayer(l));
       this.addLieuxOnMap(this.lieuxFiltered);
-      this.filtre = true;
     })
   }
 
@@ -170,7 +171,6 @@ export class LieuxComponent implements OnInit, OnDestroy {
     });
     this.layers.forEach(l => this.map.removeLayer(l));
     this.addLieuxOnMap(this.lieux);
-    this.filtre = false;
   }
 
   translate(s: string): string {

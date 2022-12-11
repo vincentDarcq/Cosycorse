@@ -1,18 +1,19 @@
 <div class="m_2pourcent box" 
-     *ngFor="let item of items; let i = index" 
-     [ngStyle]="{ 'height' : item.titre || item.logement ? '330px': 'fit-content'}">
+     *ngFor="let item of items; let i = index"
+     [ngStyle]="{ 'height' : item.titre || item.logement ? '330px': '200px'}">
     <img *ngIf="item && item.images" [src]="serverImg + item.images[item.indexImage]"
         alt="">
     <i class='fas fa-angle-right arrow-right'
         (click)="selectArrow(i, item.indexImage, $event)"></i>
     <i class='fas fa-angle-left arrow-left'
         (click)="selectLeftArrow(i, item.indexImage, $event)"></i>
-    <i class="fas arrow" [ngClass]="{ 
-        'fa-angle-down' : item.animationState === 'false',
-        'fa-angle-up' : item.animationState === 'true'
+        <i class="fas arrow" [ngClass]="{ 
+            'fa-angle-down' : item.animationState === 'false',
+            'fa-angle-up' : item.animationState === 'true'
         }"
         (click)="expandDescription(item.animationState, i)"
         *ngIf="!item.logement"></i>
+    <div class="nom" *ngIf="item.nom">{{ item.nom }}</div>
     <div class="details" *ngIf="item.titre" fxLayout="column">
         <span><b>{{ translate('ACTIVITES.TYPE.'+item.type)}} | {{ item.ville }}</b></span>
         <span>{{ item.titre }}</span>

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Section } from '../models/sections';
 
 @Component({
@@ -6,7 +6,7 @@ import { Section } from '../models/sections';
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.scss']
 })
-export class CarouselComponent implements OnInit, AfterViewInit {
+export class CarouselComponent implements OnInit, OnChanges {
 
   @Input() sections: Array<Section>;
   serverImg: String = "/upload?img=";
@@ -16,7 +16,7 @@ export class CarouselComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
   }
   
-  ngAfterViewInit(): void {
-    console.log(this.sections);
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
   }
 }

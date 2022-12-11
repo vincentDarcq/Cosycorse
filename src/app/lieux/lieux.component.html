@@ -20,8 +20,7 @@
         <button class="btn btn-light" (click)="effacerFiltres()" translate>LIEUX.FILTRES.EFFACER_FILTRES</button>
     </div>
     <div class="wrapper">
-        <app-item-card class="lieux" *ngIf="!filtre" [items]="lieux"></app-item-card>
-        <app-item-card class="lieux" *ngIf="filtre" [items]="lieux"></app-item-card>
+        <app-item-card class="lieux" [items]="lieuxFiltered.length > 0 ? lieuxFiltered : lieux"></app-item-card>
         <div id="map" leaflet *ngIf="displayMap" (leafletMapReady)="onMapReady($event)" [leafletOptions]="mapOptions">
         </div>
     </div>

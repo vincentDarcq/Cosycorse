@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { ActiviteInOutAnimation } from '../animations/activiteDescriptionInOut';
 import { LieuInOutAnimation } from '../animations/lieuDescriptionInOut';
 import { TranslatorService } from '../services/translator.service';
@@ -9,7 +9,7 @@ import { TranslatorService } from '../services/translator.service';
   styleUrls: ['./item-card.component.scss'],
   animations: [ActiviteInOutAnimation, LieuInOutAnimation]
 })
-export class ItemCardComponent implements OnInit {
+export class ItemCardComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() items: Array<any>;
   serverImg: String = "/upload?img=";
@@ -19,6 +19,10 @@ export class ItemCardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes['items'].currentValue);
   }
 
   expandDescription(animationState: string, index: number){
@@ -46,6 +50,10 @@ export class ItemCardComponent implements OnInit {
 
   translate(s: string): string {
     return this.translator.get(s);
+  }
+
+  ngOnDestroy(): void {
+    console.log("destroy");
   }
 
 }

@@ -23,7 +23,6 @@ import { UserService } from '../services/user.service';
 export class ActivitesComponent implements OnInit, OnDestroy {
 
   displayMap: boolean = false;
-  filtre: boolean = false;
   mapOptions: MapOptions;
   map: Map;
   activites: Array<Activite>;
@@ -146,22 +145,23 @@ export class ActivitesComponent implements OnInit, OnDestroy {
       this.bounds
     ).subscribe((activites: Array<Activite>) => {
       this.activitesFiltered = activites;
-      this.activitesFiltered.forEach(a => a.indexImage = 0);
+      this.activitesFiltered.forEach(a => {
+        a.indexImage = 0;
+        a.animationState = "false";
+      });
       this.layers.forEach(l => this.map.removeLayer(l));
       this.addActivitesOnMap(this.activitesFiltered);
-      this.filtre = true;
     })
   }
 
   effacerFiltres(){
     this.villeSearch = this.titreSearch = "";
-    this.activitesFiltered = [];
+    this.activitesFiltered = new Array();
     this.radioButtons.forEach((element) => {
       element.checked = false;
     });
     this.layers.forEach(l => this.map.removeLayer(l));
     this.addActivitesOnMap(this.activites);
-    this.filtre = false;
   }
 
   translate(s: string): string {

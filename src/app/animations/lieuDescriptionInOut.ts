@@ -6,15 +6,12 @@ export const LieuInOutAnimation = [
             style({
             'display': 'block',
             'position': 'absolute',
-            'top': '70%',
-            'left': '{{leftValue}}%',
-            'width': '300%',
+            'background-color': 'white',
+            'left': '0',
+            'width': '75%',
             'z-index': '1',
-            'padding': '5%',
-            'color': 'black',
-            'background-color': 'white'
-            }),
-            {params: {leftValue: 0}}),
+            'padding': '1%'
+            })),
         state('false', 
             style({
             'display': 'none'
@@ -24,24 +21,14 @@ export const LieuInOutAnimation = [
             animate('1ms ease-in-out', style({
                 'display': 'block',
                 'position': 'absolute',
-                'background-color': 'white',
                 'opacity': '1',
-                'left': '{{leftValue}}%',
-                'width': '300%',
-                'padding': '5%',
+                'width': '75%',
+                'padding': '1%',
                 'z-index': '1',
-                'top': '70%',
             })),
             animate('600ms ease-in-out', style({
-                'display': 'block',
-                'position': 'absolute',
-                'background-color': 'white',
                 'opacity': '0',
-                'left': '{{leftValue}}%',
-                'width': '300%',
-                'padding': '5%',
-                'z-index': '1',
-                'transform': 'translateY(-150px)',
+                'transform': 'translateY(-100px)',
             }))
         ]
         )]),
@@ -50,23 +37,18 @@ export const LieuInOutAnimation = [
                 'display': 'block',
                 'position': 'absolute',
                 'opacity': '0',
-                'background-color': 'white',
-                'left': '{{leftValue}}%',
-                'width': '300%',
-                'padding': '5%',
+                'left': '0',
+                'width': '75%',
+                'padding': '1%',
                 'z-index': '1',
-                'transform': 'translateY(-200px)',
+                'transform': 'translateY(-100px)',
             })),
             animate('600ms ease-in-out', style({
                 'display': 'block',
                 'position': 'absolute',
                 'opacity': '1',
                 'background-color': 'white',
-                'left': '{{leftValue}}%',
-                'width': '300%',
-                'padding': '5%',
-                'z-index': '1',
-                'transform': 'translateY(-95px)'
+                'transform': 'translateY(0px)'
             }))
         ]
         )])
