@@ -7,6 +7,7 @@ export const LieuInOutAnimation = [
             'display': 'block',
             'position': 'absolute',
             'background-color': 'white',
+            'border': 'solid 1px black',
             'left': '0',
             'width': '75%',
             'z-index': '1',
@@ -42,13 +43,16 @@ export const LieuInOutAnimation = [
                 'padding': '1%',
                 'z-index': '1',
                 'transform': 'translateY(-100px)',
+                'border': 'solid 1px black'
             })),
             animate('600ms ease-in-out', style({
                 'display': 'block',
                 'position': 'absolute',
                 'opacity': '1',
+                'padding': '1%',
                 'background-color': 'white',
-                'transform': 'translateY(0px)'
+                'transform': 'translateY(0px)',
+                'border': 'solid 1px black'
             }))
         ]
         )])

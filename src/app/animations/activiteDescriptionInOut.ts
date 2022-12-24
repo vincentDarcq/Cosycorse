@@ -6,12 +6,10 @@ export const ActiviteInOutAnimation = [
             style({
             'display': 'block',
             'position': 'absolute',
-            'top': '70%',
             'left': '0',
             'width': '70%',
             'z-index': '1',
             'padding': '1%',
-            'color': 'black',
             'border': 'solid 1px black',
             'background-color': 'white'
             })),
@@ -25,12 +23,10 @@ export const ActiviteInOutAnimation = [
                 'display': 'block',
                 'position': 'absolute',
                 'background-color': 'white',
-                'opacity': '1',
                 'left': '0',
                 'width': '70%',
                 'padding': '1%',
-                'z-index': '1',
-                'top': '70%',
+                'z-index': '1'
             })),
             animate('600ms ease-in-out', style({
                 'display': 'block',
@@ -68,7 +64,7 @@ export const ActiviteInOutAnimation = [
                 'padding': '1%',
                 'z-index': '1',
                 'border': 'solid 1px black',
-                'transform': 'translateY(-40px)'
+                'transform': 'translateY(0)'
             }))
         ]
         )])
